@@ -170,7 +170,10 @@ export default function CallWaiterModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[130] flex items-end justify-center p-0 sm:items-center sm:p-4">
+      <div
+        className="fixed inset-0 z-[130] flex items-end justify-center p-0 sm:items-center sm:p-4"
+        data-lenis-prevent="true"
+      >
         <motion.div
           initial={{
             opacity: 0,
@@ -203,7 +206,14 @@ export default function CallWaiterModal({
           role="dialog"
           aria-modal="true"
           aria-labelledby="waiter-modal-title"
-          className="relative w-full max-w-lg space-y-5 overflow-hidden rounded-t-[2.5rem] border-t border-[var(--color-border)] bg-[var(--color-surface)] p-5 pb-8 text-[var(--color-text)] shadow-2xl sm:rounded-3xl sm:border sm:p-6 sm:pb-6"
+          data-lenis-prevent="true"
+          onWheel={(event) =>
+            event.stopPropagation()
+          }
+          onTouchMove={(event) =>
+            event.stopPropagation()
+          }
+          className="relative w-full max-w-lg space-y-5 overflow-y-auto overscroll-contain rounded-t-[2.5rem] border-t border-[var(--color-border)] bg-[var(--color-surface)] p-5 pb-8 text-[var(--color-text)] shadow-2xl sm:max-h-[90vh] sm:rounded-3xl sm:border sm:p-6 sm:pb-6"
         >
           <div className="flex justify-center pb-1 sm:hidden">
             <div className="h-1 w-12 rounded-full bg-[var(--color-border-strong)]" />

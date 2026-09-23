@@ -16,6 +16,7 @@ import {
 } from "framer-motion";
 
 import { useGastro } from "@/context/gastro-context";
+import { useRestaurantContext } from "@/hooks/use-restaurant-context";
 import { useLenis } from "@/hooks/use-scroll";
 import { useThemeStore } from "@/store/use-theme-store";
 import { useCartStore } from "@/store/use-cart-store";
@@ -45,8 +46,16 @@ export default function Navbar() {
   const { scrollTo } =
     useLenis();
 
-  const { config } =
+  const {
+    config,
+    niche,
+  } =
     useGastro();
+
+  const {
+    tableNumber,
+  } =
+    useRestaurantContext();
 
   const {
     navigation,
@@ -60,6 +69,17 @@ export default function Navbar() {
   const ctaTarget =
     content.hero.ctaHref ||
     "menu";
+
+  const orderHref =
+    tableNumber
+      ? `/pedido?type=${encodeURIComponent(
+          niche,
+        )}&mesa=${encodeURIComponent(
+          tableNumber,
+        )}`
+      : `/pedido?type=${encodeURIComponent(
+          niche,
+        )}`;
 
   const totalItems =
     items.reduce(
@@ -344,7 +364,7 @@ export default function Navbar() {
               </button>
 
               <a
-                href="/pedido"
+                href={orderHref}
                 aria-label={
                   navbarUi.ariaOpenOrder
                 }

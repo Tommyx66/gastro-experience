@@ -56,9 +56,10 @@ import {
 import {
   Button,
   buttonVariants,
-} from "@/components/ui/button";
+} from "@/components/ui/Button";
 
 import TextAnimate from "@/components/ui/text-animate";
+import DemoSwitcher from "@/components/ui/DemoSwitcher";
 
 type FulfillmentMode =
   | "delivery"
@@ -217,10 +218,19 @@ function Header({
   const copy =
     config.content.checkout;
 
+  const hasMesaReference =
+    Boolean(tableNumber);
+
   const backHref =
-    `/?type=${encodeURIComponent(
-      niche,
-    )}#menu`;
+    hasMesaReference
+      ? `/?type=${encodeURIComponent(
+          niche,
+        )}&mesa=${encodeURIComponent(
+          tableNumber ?? "",
+        )}#menu`
+      : `/?type=${encodeURIComponent(
+          niche,
+        )}#menu`;
 
   return (
     <header
@@ -321,7 +331,9 @@ function Header({
           >
             {isTableMode
               ? "Servicio en mesa"
-              : "Pedido online"}
+              : hasMesaReference
+                ? "Pedido con referencia de mesa"
+                : "Pedido online"}
           </span>
         </div>
 
@@ -1129,13 +1141,37 @@ function CheckoutContent() {
       tableNumber,
     );
 
+  const tableReference =
+    tableNumber?.trim() ||
+    null;
+
+  const supportsCounter =
+    preset.operation.supported.includes(
+      "counter",
+    );
+
   const hasDelivery =
     preset.capabilities.delivery &&
     features.delivery;
 
   const hasPickup =
-    preset.capabilities.pickup &&
+    (preset.capabilities
+      .pickup ||
+      preset.capabilities
+        .takeaway ||
+      supportsCounter) &&
     features.pickup;
+
+  const pickupLabel =
+    supportsCounter &&
+    !preset.capabilities
+      .takeaway
+      ? "Mostrador"
+      : preset.capabilities
+            .takeaway
+        ? "Take Away"
+        : copy.form
+            .pickup;
 
   const defaultFulfillment:
     FulfillmentMode =
@@ -1329,6 +1365,16 @@ function CheckoutContent() {
               9000,
         )}`;
 
+      const mergedNotes = [
+        notes.trim(),
+        !isTableMode &&
+        tableReference
+          ? `Mesa de referencia: ${tableReference}`
+          : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
       const newOrder:
         ActiveOrder = {
         orderId,
@@ -1344,9 +1390,7 @@ function CheckoutContent() {
             : fulfillmentMode,
 
         tableNumber:
-          isTableMode
-            ? tableNumber
-            : null,
+          tableReference,
 
         customerName:
           customerName.trim(),
@@ -1359,7 +1403,7 @@ function CheckoutContent() {
         discountAmount,
 
         notes:
-          notes.trim(),
+          mergedNotes,
 
         items: [
           ...items,
@@ -1421,7 +1465,7 @@ function CheckoutContent() {
               .confirmedToastTitle,
             {
               description:
-                `${copy.confirmation.confirmedToastDescriptionPrefix} ${tableNumber}.`,
+                `${copy.confirmation.confirmedToastDescriptionPrefix} ${tableReference}.`,
             },
           );
 
@@ -1442,7 +1486,7 @@ function CheckoutContent() {
               fulfillmentMode,
 
             tableNumber:
-              null,
+              tableReference,
 
             address:
               address.trim(),
@@ -1452,7 +1496,7 @@ function CheckoutContent() {
             discountAmount,
 
             notes:
-              notes.trim(),
+              mergedNotes,
 
             items,
 
@@ -2272,9 +2316,17 @@ function CheckoutContent() {
             </p>
 
             <Link
-              href={`/?type=${encodeURIComponent(
-                niche,
-              )}#menu`}
+              href={
+                tableReference
+                  ? `/?type=${encodeURIComponent(
+                      niche,
+                    )}&mesa=${encodeURIComponent(
+                      tableReference,
+                    )}#menu`
+                  : `/?type=${encodeURIComponent(
+                      niche,
+                    )}#menu`
+              }
               className={buttonVariants(
                 {
                   variant:
@@ -2897,10 +2949,7 @@ function CheckoutContent() {
                             />
 
                             <span className="truncate">
-                              {
-                                copy.form
-                                  .pickup
-                              }
+                              {pickupLabel}
                             </span>
                           </button>
                         )}
@@ -3488,6 +3537,7 @@ export default function OrderPage() {
   return (
     <GastroProvider>
       <GastroCheckout />
+      <DemoSwitcher />
     </GastroProvider>
   );
 }

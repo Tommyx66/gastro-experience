@@ -23,10 +23,13 @@ import {
 import {
   useCartStore,
 } from "@/store/use-cart-store";
+import {
+  useRestaurantContext,
+} from "@/hooks/use-restaurant-context";
 
 import {
   buttonVariants,
-} from "@/components/ui/button";
+} from "@/components/ui/Button";
 
 import {
   BackgroundImageTexture,
@@ -480,6 +483,11 @@ export default function CartDrawer() {
     menu,
   } = useGastro();
 
+  const {
+    tableNumber,
+  } =
+    useRestaurantContext();
+
   const copy =
     config.content.cart;
 
@@ -513,9 +521,15 @@ export default function CartDrawer() {
     );
 
   const checkoutHref =
-    `/pedido?type=${encodeURIComponent(
-      niche,
-    )}`;
+    tableNumber
+      ? `/pedido?type=${encodeURIComponent(
+          niche,
+        )}&mesa=${encodeURIComponent(
+          tableNumber,
+        )}`
+      : `/pedido?type=${encodeURIComponent(
+          niche,
+        )}`;
 
   return (
     <AnimatePresence>
@@ -554,6 +568,7 @@ export default function CartDrawer() {
               damping: 30,
               stiffness: 320,
             }}
+            data-lenis-prevent="true"
             className="
               absolute
               right-0
@@ -630,8 +645,11 @@ export default function CartDrawer() {
             </BackgroundImageTexture>
 
             <div
-              data-lenis-prevent
+              data-lenis-prevent="true"
               onWheel={(event) =>
+                event.stopPropagation()
+              }
+              onTouchMove={(event) =>
                 event.stopPropagation()
               }
               className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"
