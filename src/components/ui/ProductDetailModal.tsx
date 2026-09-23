@@ -418,12 +418,14 @@ export default function ProductDetailModal({
         <motion.div
           ref={modalRootRef}
           data-product-modal-scroll
-          data-lenis-prevent
+          data-lenis-prevent="true"
           initial={{ y: 26, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 20, opacity: 0 }}
           transition={{ type: "spring", stiffness: 330, damping: 30 }}
           onClick={(event) => event.stopPropagation()}
+          onWheel={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
           className="
             relative
             z-10
@@ -543,9 +545,15 @@ export default function ProductDetailModal({
               {/* ÁREA SCROLLEABLE DE OPCIONES */}
               <div
                 ref={rightScrollRef}
-                data-lenis-prevent
+                data-lenis-prevent="true"
                 data-lenis-prevent-wheel
                 data-lenis-prevent-touch
+                onWheel={(event) =>
+                  event.stopPropagation()
+                }
+                onTouchMove={(event) =>
+                  event.stopPropagation()
+                }
                 className="
                   flex-1
                   px-5

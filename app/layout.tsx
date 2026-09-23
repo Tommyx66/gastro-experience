@@ -1,15 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
 
 import { siteConfig, themeProfiles } from "@/config/site";
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
-
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-});
 
 export const metadata: Metadata = {
   title: siteConfig.seo.title,
@@ -39,6 +33,19 @@ const initialTheme = siteConfig.theme.mode;
 const initialThemeColors =
   themeProfiles[initialTheme];
 
+const preHydrationThemeScript =
+  `(()=>{` +
+  `const map={restaurant:"dark",cafe:"light",brewery:"dark",bakery:"light",icecream:"light",bodegon:"hybrid",catering:"dark"};` +
+  `const params=new URLSearchParams(window.location.search);` +
+  `const type=params.get("type")||"restaurant";` +
+  `const theme=map[type]||"dark";` +
+  `const root=document.documentElement;` +
+  `root.dataset.theme=theme;` +
+  `root.classList.remove("theme-dark","theme-light","theme-hybrid","dark");` +
+  `root.classList.add("theme-"+theme);` +
+  `if(theme==="dark"){root.classList.add("dark");}` +
+  `})();`;
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -58,11 +65,18 @@ export default function RootLayout({
           ? "es"
           : "en"
       }
-      className={`theme-${initialTheme} ${geist.variable}`}
+      className={`theme-${initialTheme}`}
       data-theme={initialTheme}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html:
+              preHydrationThemeScript,
+          }}
+        />
         {children}
         <Toaster />
       </body>

@@ -1,6 +1,7 @@
 export type ThemeMode =
   | "dark"
-  | "light";
+  | "light"
+  | "hybrid";
 
 /* =========================================================
    THEME
@@ -160,6 +161,51 @@ export const themeProfiles: Record<
     success: "#059669",
     warning: "#B45309",
     danger: "#DC2626",
+  },
+
+  hybrid: {
+    bg: "#10151A",
+    bgElevated: "#131A20",
+
+    surface: "#171F27",
+    surfaceElevated: "#1E2A35",
+    surfaceInverse: "#F4F1EA",
+
+    text: "#F1EEE6",
+    textMuted: "#C5C1B8",
+    textSubtle: "#939A9F",
+
+    accent: "#C89B3C",
+    accentStrong: "#E6BE66",
+    accentContrast: "#12171C",
+
+    accentSoft:
+      "rgba(200, 155, 60, 0.15)",
+
+    accentFaint:
+      "rgba(200, 155, 60, 0.07)",
+
+    accentBorder:
+      "rgba(200, 155, 60, 0.35)",
+
+    border:
+      "rgba(241, 238, 230, 0.12)",
+
+    borderStrong:
+      "rgba(241, 238, 230, 0.22)",
+
+    overlay:
+      "rgba(16, 21, 26, 0.9)",
+
+    control:
+      "rgba(241, 238, 230, 0.06)",
+
+    controlHover:
+      "rgba(241, 238, 230, 0.1)",
+
+    success: "#34D399",
+    warning: "#F59E0B",
+    danger: "#F87171",
   },
 };
 

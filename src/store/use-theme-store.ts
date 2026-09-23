@@ -22,6 +22,30 @@ interface ThemeStore {
 const initialTheme:
   ThemeMode = "dark";
 
+function resolveInitialTheme():
+  ThemeMode {
+  if (
+    typeof document ===
+    "undefined"
+  ) {
+    return initialTheme;
+  }
+
+  const rawTheme =
+    document.documentElement
+      .dataset.theme;
+
+  if (
+    rawTheme === "dark" ||
+    rawTheme === "light" ||
+    rawTheme === "hybrid"
+  ) {
+    return rawTheme;
+  }
+
+  return initialTheme;
+}
+
 function applyThemeToDOM(
   theme: ThemeMode
 ) {
@@ -70,11 +94,11 @@ export const useThemeStore =
   create<ThemeStore>()(
     (set, get) => ({
       theme:
-        initialTheme,
+        resolveInitialTheme(),
 
       colors:
         themeProfiles[
-          initialTheme
+          resolveInitialTheme()
         ],
 
       setTheme: (

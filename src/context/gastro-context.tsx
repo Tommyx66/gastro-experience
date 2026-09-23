@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from "react";
@@ -93,6 +94,34 @@ function getPresetTheme(
     presetWithLegacy.defaultThemeMode ??
     "dark"
   );
+}
+
+function resolveNicheFromLocation():
+  GastroNiche | null {
+  if (
+    typeof window ===
+    "undefined"
+  ) {
+    return null;
+  }
+
+  const params =
+    new URLSearchParams(
+      window.location.search,
+    );
+
+  const requested =
+    params.get("type");
+
+  if (
+    isGastroNiche(
+      requested,
+    )
+  ) {
+    return requested;
+  }
+
+  return null;
 }
 
 /* =========================================================
@@ -417,27 +446,35 @@ export function GastroProvider({
      Resolve niche from URL
      ------------------------------------------------------- */
 
-  useEffect(() => {
-    const params =
-      new URLSearchParams(
-        window.location.search,
-      );
-
-    const requested =
-      params.get(
-        "type",
-      );
+  useLayoutEffect(() => {
+    const requestedNiche =
+      resolveNicheFromLocation();
 
     if (
-      isGastroNiche(
-        requested,
-      )
+      !requestedNiche ||
+      requestedNiche === niche
     ) {
-      setNicheState(
-        requested,
-      );
+      return;
     }
-  }, []);
+
+    const requestedPreset =
+      getPreset(
+        requestedNiche,
+      );
+
+    setTheme(
+      getPresetTheme(
+        requestedPreset,
+      ),
+    );
+
+    setNicheState(
+      requestedNiche,
+    );
+  }, [
+    niche,
+    setTheme,
+  ]);
 
   /* -------------------------------------------------------
      Sync niche -> cart
@@ -483,7 +520,7 @@ export function GastroProvider({
      Apply preset + active theme
      ------------------------------------------------------- */
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     clearPresetInlineStyles();
 
     applyPresetTheme(
@@ -511,6 +548,13 @@ export function GastroProvider({
     setNicheState(
       nextNiche,
     );
+
+    if (
+      typeof window ===
+      "undefined"
+    ) {
+      return;
+    }
 
     const url =
       new URL(
