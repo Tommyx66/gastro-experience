@@ -1,26 +1,97 @@
-// src/components/layout/SmoothScroll.tsx
 "use client";
 
-import { useEffect } from "react";
+import {
+  useEffect,
+} from "react";
+
 import Lenis from "lenis";
 
-export function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
-    (window as any).lenis = lenis;
+    const prefersReducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    if (
+      prefersReducedMotion
+    ) {
+      return;
     }
-    const rafId = requestAnimationFrame(raf);
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) =>
+        Math.min(
+          1,
+          1.001 -
+            Math.pow(
+              2,
+              -10 * t
+            )
+        ),
+      orientation: "vertical",
+      gestureOrientation:
+        "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+
+      prevent: (
+        node
+      ) =>
+        Boolean(
+          node.closest?.(
+            "[data-lenis-prevent]"
+          )
+        ),
+    });
+
+    (
+      window as Window & {
+        lenis?: Lenis;
+      }
+    ).lenis = lenis;
+
+    let frameId = 0;
+
+    const raf = (
+      time: number
+    ) => {
+      lenis.raf(time);
+      frameId =
+        requestAnimationFrame(
+          raf
+        );
+    };
+
+    frameId =
+      requestAnimationFrame(
+        raf
+      );
 
     return () => {
-      cancelAnimationFrame(rafId);
+      cancelAnimationFrame(
+        frameId
+      );
+
       lenis.destroy();
-      (window as any).lenis = null;
+
+      delete (
+        window as Window & {
+          lenis?: Lenis;
+        }
+      ).lenis;
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+    </>
+  );
 }

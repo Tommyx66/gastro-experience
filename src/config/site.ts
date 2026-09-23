@@ -1,228 +1,1212 @@
-// src/config/site.ts — ARCHITECT SHOWCASE
+export type ThemeMode =
+  | "dark"
+  | "light";
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+export interface RestaurantThemeColors {
+  bg: string;
+  bgElevated: string;
+
+  surface: string;
+  surfaceElevated: string;
+  surfaceInverse: string;
+
+  text: string;
+  textMuted: string;
+  textSubtle: string;
+
+  accent: string;
+  accentStrong: string;
+  accentContrast: string;
+
+  accentSoft: string;
+  accentFaint: string;
+  accentBorder: string;
+
+  border: string;
+  borderStrong: string;
+
+  overlay: string;
+
+  control: string;
+  controlHover: string;
+
+  success: string;
+  warning: string;
+  danger: string;
+}
+
+export interface RestaurantTheme {
+  mode: ThemeMode;
+
+  colors: RestaurantThemeColors;
+
+  typography: {
+    display: string;
+    body: string;
+    ui: string;
+    mono: string;
+  };
+}
+
+/* =========================================================
+   STORY
+   ========================================================= */
+
+export interface StoryArchiveItem {
+  titulo: string;
+  subtitulo: string;
+  nota: string;
+  origen: string;
+  src: string;
+}
+
+/* =========================================================
+   THEME PROFILES
+   ========================================================= */
+
+export const themeProfiles: Record<
+  ThemeMode,
+  RestaurantThemeColors
+> = {
+  dark: {
+    bg: "#050505",
+    bgElevated: "#0A0908",
+
+    surface: "#0E0D0C",
+    surfaceElevated: "#171412",
+    surfaceInverse: "#F7F4EF",
+
+    text: "#F8F5EF",
+    textMuted: "#C8C1B8",
+    textSubtle: "#888178",
+
+    accent: "#D4AF37",
+    accentStrong: "#F0D77A",
+    accentContrast: "#050505",
+
+    accentSoft:
+      "rgba(212, 175, 55, 0.14)",
+
+    accentFaint:
+      "rgba(212, 175, 55, 0.07)",
+
+    accentBorder:
+      "rgba(212, 175, 55, 0.38)",
+
+    border:
+      "rgba(255, 255, 255, 0.11)",
+
+    borderStrong:
+      "rgba(255, 255, 255, 0.18)",
+
+    overlay:
+      "rgba(5, 5, 5, 0.82)",
+
+    control:
+      "rgba(255, 255, 255, 0.045)",
+
+    controlHover:
+      "rgba(255, 255, 255, 0.09)",
+
+    success: "#34D399",
+    warning: "#F59E0B",
+    danger: "#F87171",
+  },
+
+  light: {
+    bg: "#F5F0E8",
+    bgElevated: "#FBF9F5",
+
+    surface: "#FFFFFF",
+    surfaceElevated: "#EEE8DD",
+    surfaceInverse: "#171513",
+
+    text: "#171513",
+    textMuted: "#5D574F",
+    textSubtle: "#81796F",
+
+    accent: "#9A7418",
+    accentStrong: "#76550C",
+    accentContrast: "#FFFFFF",
+
+    accentSoft:
+      "rgba(154, 116, 24, 0.11)",
+
+    accentFaint:
+      "rgba(154, 116, 24, 0.055)",
+
+    accentBorder:
+      "rgba(154, 116, 24, 0.32)",
+
+    border:
+      "rgba(23, 21, 19, 0.11)",
+
+    borderStrong:
+      "rgba(23, 21, 19, 0.2)",
+
+    overlay:
+      "rgba(245, 240, 232, 0.88)",
+
+    control:
+      "rgba(23, 21, 19, 0.045)",
+
+    controlHover:
+      "rgba(23, 21, 19, 0.08)",
+
+    success: "#059669",
+    warning: "#B45309",
+    danger: "#DC2626",
+  },
+};
+
+/* =========================================================
+   SITE CONFIG
+   ========================================================= */
+
 export const siteConfig = {
-  name: "Residence 01",
-  nombre: "Residence 01",
-  tagline: "Living Architecture",
-  description:
-    "Una experiencia digital cinematográfica para presentar el proyecto como se merece.",
-  logo: "/logo.svg", // reemplazá por tu isotipo/wordmark
-  favicon: "/favicon/favicon.ico",
+  /* -------------------------------------------------------
+     BRAND
+     ------------------------------------------------------- */
 
-  footer: {
-    imagenFondo: "/render/casa-poster.jpg",
-    descripcion:
-      "Una experiencia digital para presentar el proyecto tal como merece ser visto.",
+  brand: {
+    name: "Gastro Experience",
+
+    shortName: "Gastro",
+
+    descriptor: "Bistró & Barra",
+
+    tagline:
+      "Cocina de producto, fuegos y coctelería de autor",
+
+    description:
+      "Una experiencia gastronómica de alta gama pensada para disfrutarse en salón y a través de canales directos sin intermediarios.",
+
+    logo:
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=120&q=80",
+
+    favicon: "/favicon.ico",
   },
 
-  colores: {
-    fondoOscuro: "#0A0A0A",
-    fondoOscuro2: "#121212",
-    fondo: "#F5F5F2",
-    claro: "#F5F5F2",
-    blanco: "#FFFFFF",
-    acento: "#C9B38D", // dorado/arena, sin naranja ni colores fuertes
-  },
+  /* -------------------------------------------------------
+     THEME
+     ------------------------------------------------------- */
 
-  nav: {
-    cta: "Contactar",
-    links: [
-      { label: "Inicio", href: "inicio" },
-      { label: "Showroom", href: "showroom" },
-      { label: "Galería", href: "galeria" },
-      { label: "Specs", href: "especificaciones" },
-      { label: "Proyecto", href: "proyecto" },
-    ],
-  },
+  theme: {
+    mode: "dark" as ThemeMode,
 
-  hero: {
-    eyebrow: "Residence 01",
-    tituloPrefix: "Living",
-    tituloAccent: "Architecture",
-    subtitulo: "Recorré el proyecto como si estuvieras ahí.",
-    heroSrc: "/render/gallery_4.jpg",
-  },
+    typography: {
+      display:
+        "var(--font-display, Arial, sans-serif)",
 
- cinematic: {
-    framesPath: "/render/frames/frame_",
-    totalFrames: 556,
-    posterSrc: "/render/frames/frame_0001.webp",
-    beats: [
-      {
-        id: "fachada",
-        eyebrow: "Fachada Principal",
-        titulo: "Diseño que se impone",
-        descripcion:
-          "Líneas puras, hormigón visto y ventanales de piso a techo que diluyen el límite entre el interior y la naturaleza.",
-        start: 0,
-        end: 0.20,
-      },
-      {
-        id: "living",
-        eyebrow: "Espacios Comunes",
-        titulo: "Luz en cada ambiente",
-        start: 0.22,
-        end: 0.42,
-      },
-      {
-        id: "dormitorio",
-        eyebrow: "Suite Principal",
-        titulo: "Materialidad cálida",
-        descripcion:
-          "Madera natural y detalles de categoría para una experiencia de descanso superior.",
-        start: 0.44,
-        end: 0.64,
-      },
-      {
-        id: "entorno",
-        eyebrow: "Ubicación",
-        titulo: "Integración Natural",
-        descripcion:
-          "Diseñada para convivir en perfecta armonía con su bosque circundante.",
-        start: 0.66,
-        end: 0.83,
-      },
-      {
-        id: "brief",
-        eyebrow: "Project Identity",
-        titulo: "Ficha Técnica",
-        start: 0.85, // Aparece justo cuando el video termina de moverse
-        end: 1.0,    // Se mantiene durante el resto del "scroll muerto"
-        posicion: "centro",
-      },
-    ],
-  },
-  gallery: [
-    { id: "g1", src: "/render/gallery_1.jpg", title: "Fachada Norte" },
-    { id: "g2", src: "/render/gallery_2.jpg", title: "Living Room" },
-    { id: "g3", src: "/render/gallery_3.jpg", title: "Cocina" },
-    { id: "g4", src: "/render/gallery_4.jpg", title: "Piscina Infinita" },
-  ],
-  projectBrief: [
-    { label: "Tipología", value: "Vivienda Unifamiliar" },
-    { label: "Intervención", value: "Obra Nueva" },
-    { label: "Ubicación", value: "Provincia de Buenos Aires" },
-    { label: "Superficie", value: "450 m²" },
-    { label: "Estado", value: "Proyecto Construido" },
-  ],
+      body:
+        "var(--font-sans, Arial, sans-serif)",
 
-  nextProject: {
-    eyebrow: "Descubrí",
-    title: "Casa Bosque",
-    image: "/next-project.jpg", 
-  },
-  technical: {
-    stats: [
-      { label: "Superficie Cubierta", value: "450", unit: "M²" },
-      { label: "Superficie Lote", value: "1200", unit: "M²" },
-      { label: "Habitaciones en Suite", value: "04", unit: "UN" },
-      { label: "Año de Proyecto", value: "2026", unit: "YR" },
-    ],
-    materials: [
-      {
-        name: "Hormigón Visto",
-        type: "Estructural",
-        desc: "Encofrado de tabla de pino que imprime la textura de la madera en la fachada.",
-        img: "/render/detalle1.jpg", // Reemplazá por foto de hormigón
-      },
-      {
-        name: "Acero Corten",
-        type: "Revestimiento",
-        desc: "Paneles oxidados naturalmente que cambian de tonalidad según el clima.",
-        img: "/render/detalle2.jpg", // Reemplazá por foto de acero
-      },
-      {
-        name: "Nogal Oscuro",
-        type: "Interiorismo",
-        desc: "Listones macizos en cielorrasos para aportar calidez acústica y visual.",
-        img: "/render/detalle3.jpg", // Reemplazá por foto de madera
-      },
-    ],
-    planos: {
-      vista: "/render/vista-lateral.png",
-      corte: "/render/corte-lateral.png",
-      planta: "/render/planta.png",
+      ui:
+        "var(--font-sans, Arial, sans-serif)",
+
+      mono:
+        "var(--font-mono, monospace)",
     },
   },
 
-  whatsapp: {
-    numero: "5492266XXXXXX",
-    mensajeDefault: "Hola, quiero coordinar una visita al proyecto.",
-    labelBoton: "Agendar Visita",
+  /* -------------------------------------------------------
+     FEATURES
+     ------------------------------------------------------- */
+
+  features: {
+    ordering: true,
+    delivery: true,
+    pickup: true,
+    tableOrders: true,
+    waiterCall: true,
+    reservation: true,
+    story: true,
   },
 
-  contacto: {
-    email: "tomz.ry64@gmail.com",
-    whatsappDisplay: "+54 9 2266 XX-XXXX",
+  /* -------------------------------------------------------
+     OPERATION
+     ------------------------------------------------------- */
+
+  operation: {
+    schedule:
+      "Miércoles a Domingo · 19:30 a 02:00 hs",
+
+    estimatedTime: {
+      delivery: {
+        min: 35,
+        max: 50,
+      },
+
+      pickup: {
+        min: 20,
+        max: 30,
+      },
+
+      table: {
+        min: 15,
+        max: 25,
+      },
+    },
   },
 
-  // ── PROYECTO (reemplaza History) ────────────────────────────
-  project: {
-    imagenFondo: "/render/casa-poster.jpg",
-    eyebrow: "El Estudio",
-    anio: "2026",
-    descripcion1:
-      "Residence 01 nace de una premisa simple: que la arquitectura y la luz natural definan cada ambiente, sin excesos ni ornamentos innecesarios.",
-    descripcion2:
-      "El seguimiento de obra fue documentado paso a paso, priorizando el respeto por el entorno natural y la integración topográfica.",
-    // AHORA SON OBJETOS CON DATOS PARA EL LIGHTBOX
-    galeriaObra: [
+  /* -------------------------------------------------------
+     NAVIGATION
+     ------------------------------------------------------- */
+
+  navigation: {
+    links: [
       {
-        src: "/render/detalle1.jpg",
-        titulo: "Fundaciones",
-        fecha: "OCT 2024",
-        nota: "Hormigonado de platea principal y muros de contención.",
+        label: "Inicio",
+        href: "inicio",
       },
+
       {
-        src: "/render/detalle2.jpg",
-        titulo: "Estructura Superior",
-        fecha: "DIC 2024",
-        nota: "Armado de encofrados para losa de voladizo.",
+        label: "Historia",
+        href: "historia",
       },
+
       {
-        src: "/render/detalle3.jpg",
-        titulo: "Revestimientos",
-        fecha: "FEB 2025",
-        nota: "Colocación de fachada en madera de nogal tratada.",
+        label: "Menú",
+        href: "menu",
       },
+
       {
-        src: "/render/detalle4.jpg",
-        titulo: "Aberturas",
-        fecha: "ABR 2025",
-        nota: "Instalación de ventanales de piso a techo con DVH.",
+        label: "Contacto",
+        href: "contacto",
       },
     ],
-    statLabel1: "Entrega estimada",
-    statValue2: "180",
-    statLabel2: "m² cubiertos",
+
+    cta: "Pedir Carta",
   },
 
-  // ── CONTACT (form) ───────────────────────────────────────────
+  /* -------------------------------------------------------
+     ORDERING
+     ------------------------------------------------------- */
+
+  ordering: {
+    enabled: true,
+
+    channels: [
+      "web",
+      "table",
+    ] as const,
+
+    fulfillment: [
+      "delivery",
+      "pickup",
+      "onsite",
+    ] as const,
+
+    cashDiscountPercent: 10,
+
+    paymentMethods: [
+      {
+        id: "cash",
+        label: "Efectivo",
+        requiresProof: false,
+      },
+
+      {
+        id: "card",
+        label: "Tarjeta",
+        requiresProof: false,
+      },
+
+      {
+        id: "transfer",
+        label: "Transferencia / QR",
+        requiresProof: true,
+      },
+    ],
+
+    whatsapp: {
+      number:
+        "549223000000",
+
+      defaultMessage:
+        "Hola, quería hacer una consulta sobre la carta.",
+
+      tableOrderMessage:
+        "Hola, adjunto el pedido realizado desde la mesa.",
+
+      labelCheckout:
+        "Enviar pedido por WhatsApp",
+    },
+  },
+
+  /* -------------------------------------------------------
+     CONTACT DATA
+     -------------------------------------------------------
+     Información real del establecimiento.
+     La UI vive en content.contact.
+     ------------------------------------------------------- */
+
   contact: {
-    eyebrow: "Agendá tu visita",
-    titulo: "Conocé el proyecto en persona",
-    etiquetaDireccion: "Zona",
-    formTitulo: "Coordinemos una visita guiada",
-    formSubtitulo:
-      "Dejanos tus datos y te contactamos para coordinar el mejor horario.",
-    labelMensaje: "Contanos qué buscás",
-    botonEnviar: "Enviar Consulta",
-    placeholderMensaje: "Quiero coordinar una visita al proyecto.",
-    whatsapp: "5492266XXXXXX",
+    address:
+      "Córdoba 2140 (esq. Belgrano)",
+
+    zone:
+      "Zona Centro",
+
+    city:
+      "Mar del Plata",
+
+    country:
+      "Argentina",
+
+    fullAddress:
+      "Córdoba 2140 (esq. Belgrano), Centro, Mar del Plata",
+
+    phone:
+      "+54 9 223 555-0192",
+
+    email:
+      "contacto@gastroexperience.com",
+
+    instagram:
+      "https://instagram.com",
+
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Cordoba+2140+Mar+del+Plata",
+
+    coordinates: {
+      lat:
+        -37.999513,
+
+      lng:
+        -57.548981,
+
+      zoom:
+        16,
+
+      latDisplay:
+        "37°59′58″ S",
+
+      lngDisplay:
+        "57°32′56″ W",
+    },
   },
 
-  // ── CTA TRANSITION ───────────────────────────────────────────
-  ctaTransition: {
-    tituloLinea1: "Vení a",
-    tituloLinea2: "conocerlo.",
-    descripcion:
-      "Coordinamos una visita guiada al proyecto, sin vueltas y a tu horario.",
-    botonEtiqueta: "Agendar por WhatsApp",
+  /* -------------------------------------------------------
+     SEO
+     ------------------------------------------------------- */
+
+  seo: {
+    title:
+      "Gastro Experience | Cocina de Producto y Barra de Autor",
+
+    description:
+      "Cocina de producto, fuegos lentos y coctelería contemporánea en Mar del Plata. Pedidos directos y servicio de salón.",
+
+    locale:
+      "es_AR",
   },
-metadata: {
-    url: "https://architect-showcase-two.vercel.app", // Reemplazá por tu dominio final
-    ogImage: "/render/casa-poster.jpg", // La foto que querés que se vea en el preview
+
+  /* =======================================================
+     CONTENT
+     ======================================================= */
+
+  content: {
+    /* -----------------------------------------------------
+       HERO
+       ----------------------------------------------------- */
+
+    hero: {
+      eyebrow:
+        "Mar del Plata · Casco Histórico",
+
+      titlePrefix:
+        "Sabores",
+
+      titleAccent:
+        "auténticos.",
+
+      subtitle:
+        "Una propuesta donde la cocina de producto, los fuegos lentos y la identidad de la costa se encuentran en un mismo lugar.",
+
+      cta:
+        "Ver menú",
+
+      ctaHref:
+        "menu",
+
+      image:
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80",
+    },
+
+    /* -----------------------------------------------------
+       STORY
+       ----------------------------------------------------- */
+
+    story: {
+      eyebrow:
+        "Nuestra historia",
+
+      watermark:
+        "ORIGEN",
+
+      titlePrefix:
+        "El respeto",
+
+      titleAccent:
+        "por el proceso.",
+
+      sectionTag:
+        "Bitácora de Materia Prima",
+
+      primaryDescription:
+        "Una propuesta donde la cocina de producto, los fuegos vivos y la identidad de la costa se encuentran en un mismo espacio.",
+
+      secondaryDescription:
+        "Desde el reposo de las masas madre hasta el sellado sobre brasas de quebracho, cada plato responde a un tiempo de elaboración que no se puede apurar.",
+
+      backgroundImage:
+        "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=80",
+
+      labels: {
+        traceability:
+          "Trazabilidad",
+
+        closeSheet:
+          "Cerrar Ficha",
+      },
+
+      archive: [
+        {
+          titulo:
+            "Maduración en Seco",
+
+          subtitulo:
+            "Dry Aged 45 Días",
+
+          nota:
+            "Cortes seleccionados de novillo descansando a temperatura y humedad controlada para concentrar aromas terrosos y textura mantecosa.",
+
+          origen:
+            "Frigorífico de campo, Balcarce",
+
+          src:
+            "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+        },
+
+        {
+          titulo:
+            "Fuego & Quebracho",
+
+          subtitulo:
+            "Cocción a la Brasa",
+
+          nota:
+            "Leña dura de quebracho y espinillo. El ahumado lento sella los jugos naturales y aporta notas tostadas inconfundibles.",
+
+          origen:
+            "Horno de leña propio",
+
+          src:
+            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+        },
+
+        {
+          titulo:
+            "Lúpulos Patagónicos",
+
+          subtitulo:
+            "Doble Dry Hopping",
+
+          nota:
+            "Selección de lúpulos Citra y Mosaic incorporados en frío durante la fermentación secundaria para extraer aceites esenciales y perfil cítrico.",
+
+          origen:
+            "Valle de Río Negro",
+
+          src:
+            "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=800&q=80",
+        },
+
+        {
+          titulo:
+            "Pan de Masa Madre",
+
+          subtitulo:
+            "Fermentación 24hs",
+
+          nota:
+            "Harinas agroecológicas, masa madre viva y manteca de pastura. Horneado diario matutino para lograr alvéolos aireados y corteza dorada.",
+
+          origen:
+            "Panadería artesanal",
+
+          src:
+            "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+        },
+      ] as StoryArchiveItem[],
+    },
+
+    /* -----------------------------------------------------
+       PRODUCT DETAIL
+       ----------------------------------------------------- */
+
+    productDetail: {
+      fallbackTag:
+        "Plato de Autor",
+
+      options: {
+        required:
+          "Elegí 1",
+
+        optional:
+          "Opcional",
+
+        requiredMark:
+          "*",
+
+        personalized:
+          "Personalización",
+      },
+
+      notes: {
+        label:
+          "Instrucciones o aclaraciones",
+
+        placeholder:
+          "Ej. salsa aparte, sin sal, punto de carne...",
+      },
+
+      actions: {
+        add:
+          "Sumar",
+
+        added:
+          "Agregado",
+
+        chooseRequired:
+          "Seleccioná opciones requeridas",
+
+        decreaseQuantity:
+          "Disminuir cantidad",
+
+        increaseQuantity:
+          "Aumentar cantidad",
+
+        close:
+          "Cerrar detalle",
+      },
+    },
+
+    /* -----------------------------------------------------
+       CART
+       ----------------------------------------------------- */
+
+    cart: {
+      eyebrow:
+        "Comanda",
+
+      title:
+        "Tu pedido",
+
+      emptyTitle:
+        "Comanda vacía",
+
+      emptyDescription:
+        "Elegí productos de la carta para comenzar.",
+
+      productSingular:
+        "producto",
+
+      productPlural:
+        "productos",
+
+      remove:
+        "Quitar",
+
+      subtotal:
+        "Subtotal",
+
+      continueDescription:
+        "Revisá datos, entrega y pago en la siguiente pantalla.",
+
+      checkoutButton:
+        "Ver comanda",
+
+      close:
+        "Cerrar",
+
+      closeOrder:
+        "Cerrar comanda",
+    },
+
+    /* -----------------------------------------------------
+       CHECKOUT
+       ----------------------------------------------------- */
+
+    checkout: {
+      disabled: {
+        title:
+          "Pedidos no disponibles",
+
+        description:
+          "El canal de pedidos está temporalmente desactivado.",
+      },
+
+      header: {
+        backLabel:
+          "Carta",
+
+        title:
+          "Tu comanda",
+
+        onlineLabel:
+          "Pedido online",
+
+        tablePrefix:
+          "Mesa",
+      },
+
+      hero: {
+        tableLabel:
+          "Mesa",
+
+        onlineLabel:
+          "Pedido online",
+
+        title:
+          "Tu pedido",
+
+        description:
+          "Revisá tu selección y completá los últimos datos antes de enviarla.",
+      },
+
+      selection: {
+        label:
+          "Selección",
+
+        units:
+          "unidades",
+
+        perUnit:
+          "c/u",
+
+        remove:
+          "Quitar",
+
+        decrease:
+          "Disminuir",
+
+        increase:
+          "Aumentar",
+      },
+
+      empty: {
+        title:
+          "Comanda vacía",
+
+        description:
+          "Elegí productos desde la carta para comenzar tu pedido.",
+
+        button:
+          "Volver a la carta",
+      },
+
+      form: {
+        fulfillmentLabel:
+          "Entrega",
+
+        delivery:
+          "Envío",
+
+        pickup:
+          "Retiro",
+
+        customerNameLabel:
+          "Nombre",
+
+        customerNamePlaceholder:
+          "Tu nombre",
+
+        addressLabel:
+          "Dirección",
+
+        addressPlaceholder:
+          "Dirección y timbre",
+
+        paymentLabel:
+          "Medio de pago",
+
+        notesLabel:
+          "Aclaraciones",
+
+        notesDeliveryPlaceholder:
+          "Ej. timbre 3B, dejar en recepción...",
+
+        notesTablePlaceholder:
+          "Ej. sin sal, sin cebolla...",
+      },
+
+      summary: {
+        subtotal:
+          "Subtotal",
+
+        cashPrefix:
+          "Efectivo",
+
+        total:
+          "Total",
+
+        completedLabel:
+          "Pedido completo",
+
+        estimatedLabel:
+          "Demora estimada",
+      },
+
+      actions: {
+        processing:
+          "Procesando...",
+
+        sendToKitchen:
+          "Enviar a cocina",
+
+        newOrder:
+          "Nueva orden",
+
+        openWhatsApp:
+          "Abrir WhatsApp",
+
+        continueArrow:
+          "Continuar",
+      },
+
+      confirmation: {
+        preparedLabel:
+          "Pedido preparado",
+
+        confirmedLabel:
+          "Pedido confirmado",
+
+        whatsAppDescription:
+          "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
+
+        tableDescriptionPrefix:
+          "La cocina ya recibió tu pedido",
+
+        kitchenTableSuffix:
+          "de la Mesa",
+
+        preparedToastTitle:
+          "Pedido preparado",
+
+        preparedToastDescription:
+          "Abrimos WhatsApp para que puedas enviarlo al restaurante.",
+
+        confirmedToastTitle:
+          "Pedido confirmado",
+
+        confirmedToastDescriptionPrefix:
+          "La cocina recibió la comanda de la Mesa",
+      },
+
+      validation: {
+        emptyTitle:
+          "La comanda está vacía",
+
+        emptyDescription:
+          "Elegí al menos un producto antes de continuar.",
+
+        nameTitle:
+          "Falta tu nombre",
+
+        nameDescription:
+          "Necesitamos identificar a quién corresponde el pedido.",
+
+        addressTitle:
+          "Falta la dirección",
+
+        addressDescription:
+          "Completá la dirección para poder solicitar el envío.",
+
+        submitErrorTitle:
+          "No pudimos enviar el pedido",
+
+        submitErrorDescription:
+          "Revisá tu conexión e intentá nuevamente.",
+      },
+
+      helper: {
+        table:
+          "El pedido será enviado directamente a cocina.",
+
+        online:
+          "La siguiente acción abrirá WhatsApp con la comanda preparada.",
+      },
+
+      aria: {
+        decrease:
+          "Disminuir cantidad",
+
+        increase:
+          "Aumentar cantidad",
+
+        remove:
+          "Quitar producto",
+
+        openWhatsApp:
+          "Abrir WhatsApp",
+
+        newOrder:
+          "Crear nueva orden",
+      },
+    },
+
+    /* -----------------------------------------------------
+       MENU UI
+       ----------------------------------------------------- */
+
+    menuUi: {
+      productPersonalizable:
+        "Personalizable",
+
+      viewDetail:
+        "Ver detalle",
+
+      prepLabel:
+        "Preparación",
+
+      fallbackKitchen:
+        "Cocina de autor",
+
+      choose:
+        "Elegir",
+
+      added:
+        "Listo",
+
+      add:
+        "Agregar",
+
+      ariaViewProduct:
+        "Ver detalle de",
+
+      categoryCountSingular:
+        "plato",
+
+      categoryCountPlural:
+        "platos",
+
+      allCategories:
+        "Todos",
+
+      listView:
+        "Vista lista",
+
+      gridView:
+        "Vista grilla",
+
+      ariaListView:
+        "Cambiar a vista lista",
+
+      ariaGridView:
+        "Cambiar a vista grilla",
+
+      ariaAllCategories:
+        "Mostrar todos los platos",
+    },
+
+    /* -----------------------------------------------------
+       TABLE UI
+       ----------------------------------------------------- */
+
+    tableUi: {
+      serviceLabel:
+        "Servicio en salón",
+
+      tablePrefix:
+        "Mesa",
+
+      waiterButton:
+        "Mozo / Cuenta",
+
+      allCategories:
+        "Todos",
+
+      listView:
+        "Vista lista",
+
+      gridView:
+        "Vista grilla",
+
+      ariaListView:
+        "Cambiar a vista lista",
+
+      ariaGridView:
+        "Cambiar a vista grilla",
+
+      ariaWaiter:
+        "Solicitar atención o pedir la cuenta",
+    },
+
+    /* -----------------------------------------------------
+       CART UI
+       ----------------------------------------------------- */
+
+    cartUi: {
+      ariaOpen:
+        "Abrir pedido",
+    },
+
+    /* -----------------------------------------------------
+       NAVBAR UI
+       ----------------------------------------------------- */
+
+    navbarUi: {
+      themeDark:
+        "DARK",
+
+      themeLight:
+        "LIGHT",
+
+      ariaChangeTheme:
+        "Cambiar tema",
+
+      ariaOpenOrder:
+        "Abrir pedido",
+
+      ariaOpenMenu:
+        "Abrir menú",
+
+      ariaCloseMenu:
+        "Cerrar menú",
+
+      mobileNavigationLabel:
+        "Navegación",
+    },
+
+    /* -----------------------------------------------------
+       CONTACT UI
+       ----------------------------------------------------- */
+
+    contactUi: {
+      waitTimeTableLabel:
+        "Salón",
+
+      waitTimeDeliveryLabel:
+        "Delivery",
+
+      minutesSuffix:
+        "min",
+    },
+
+    /* -----------------------------------------------------
+       MENU INTRO
+       ----------------------------------------------------- */
+
+    menu: {
+      eyebrow:
+        "Nuestra propuesta",
+
+      title:
+        "Menú",
+
+      subtitle:
+        "Explorá nuestra carta de autor, personalizá tus puntos de cocción y enviá tu comanda directamente.",
+    },
+
+    /* -----------------------------------------------------
+       CTA
+       ----------------------------------------------------- */
+
+    ctaTransition: {
+      eyebrow:
+        "Experiencia de Salón",
+
+      titlePrefix:
+        "Una mesa reservada",
+
+      titleAccent:
+        "para cada momento.",
+
+      description:
+        "Servicio de salón, catas guiadas y maridajes exclusivos en el centro de Mar del Plata.",
+
+      buttonText:
+        "Consultar Disponibilidad",
+    },
+
+    /* -----------------------------------------------------
+       CONTACT EXPERIENCE
+       -----------------------------------------------------
+       UI copy.
+       Los datos físicos están en contact.
+       ----------------------------------------------------- */
+
+    contact: {
+      eyebrow:
+        "Ubicación & Concierge",
+
+      statusBadge:
+        "Salón en Operación",
+
+      mainLabel:
+        "Salón Principal",
+
+      title:
+        "Coordenadas del Salón.",
+
+      formEyebrow:
+        "Contacto",
+
+      formTitulo:
+        "¿Querés organizar una cena o maridaje exclusivo?",
+
+      formSubtitulo:
+        "Atención personalizada para reservas grupales y eventos especiales.",
+
+      nameLabel:
+        "Nombre / empresa",
+
+      phoneLabel:
+        "Teléfono / WhatsApp",
+
+      emailLabel:
+        "Correo electrónico",
+
+      messageLabel:
+        "Mensaje",
+
+      submitSending:
+        "Abriendo WhatsApp...",
+
+      submitSent:
+        "Mensaje enviado ✓",
+
+      botonEnviar:
+        "Consultar con Recepción",
+
+      addressLabel:
+        "Dirección",
+
+      scheduleLabel:
+        "Horarios & Canales",
+
+      mapEyebrow:
+        "Ubicación",
+
+      directionsButton:
+        "Cómo llegar",
+
+      instagramLabel:
+        "Instagram",
+
+      whatsappLabel:
+        "WhatsApp",
+
+      copyButton:
+        "Copiar",
+
+      copiedButton:
+        "Copiado",
+
+      mapsButton:
+        "Abrir ubicación",
+
+      receptionPrompt:
+        "¿Querés organizar una cena o maridaje exclusivo?",
+
+      receptionButton:
+        "Consultar con Recepción",
+    },
+
+    /* -----------------------------------------------------
+       WAITER MODAL
+       ----------------------------------------------------- */
+
+    waiterModal: {
+      eyebrow:
+        "Conserje Digital · Salón",
+
+      callTitle:
+        "Llamar al Mozo",
+
+      callSubtitle:
+        "Asistencia para ordenar o consultas",
+
+      callMessage:
+        "Solicita asistencia de mozo en mesa",
+
+      billTitle:
+        "Pedir la Cuenta",
+
+      billSubtitle:
+        "Efectivo, Tarjeta o QR",
+
+      paymentPrompt:
+        "¿Cómo deseás abonar la cuenta?",
+
+      sentTitle:
+        "Aviso Enviado",
+
+      sentSubtitle:
+        "El mozo de tu sector ya fue notificado:",
+
+      backButton:
+        "Volver",
+
+      confirmButton:
+        "Confirmar",
+
+      errorMessage:
+        "Error al notificar al mozo. Por favor avisá directamente al personal de salón.",
+    },
+
+    /* -----------------------------------------------------
+       FOOTER
+       ----------------------------------------------------- */
+
+    footer: {
+      backgroundImage:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=80",
+
+      description:
+        "Gastro Experience · Cocina & Coctelería de Autor",
+
+      credits:
+        "Gastro Engine Core",
+
+      navigationLabel:
+        "Navegación",
+
+      contactLabel:
+        "Contacto",
+
+      establishmentLabel:
+        "Establecimiento",
+
+      hoursLabel:
+        "Horarios",
+
+      socialsLabel:
+        "Comunidad",
+
+      instagramLabel:
+        "Instagram",
+
+      whatsappLabel:
+        "WhatsApp",
+
+      locationLabel:
+        "Ubicación",
+
+      identityLabel:
+        "Identidad",
+
+      backToTop:
+        "Volver arriba",
+    },
   },
 } as const;
 
-
-export type SiteConfig = typeof siteConfig;
+export type SiteConfig =
+  typeof siteConfig;

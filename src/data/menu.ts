@@ -1,18 +1,23 @@
-export interface MenuOption {
+/* =========================================================
+   MENU CORE TYPES
+   ========================================================= */
+
+export type MenuOptionType =
+  | "single"
+  | "multiple";
+
+export interface MenuOptionItem {
   id: string;
   name: string;
-  priceDelta?: number;
+  priceDelta: number;
 }
 
-export interface MenuProduct {
+export interface MenuOptionGroup {
   id: string;
-  categoryId: string;
   name: string;
-  description?: string;
-  price: number;
-  image?: string;
-  tags?: string[];
-  options?: MenuOption[];
+  type: MenuOptionType;
+  required?: boolean;
+  items: MenuOptionItem[];
 }
 
 export interface MenuCategory {
@@ -21,53 +26,27 @@ export interface MenuCategory {
   description?: string;
 }
 
-export const menuCategories: MenuCategory[] = [
-  {
-    id: "featured",
-    name: "Destacados",
-  },
-  {
-    id: "burgers",
-    name: "Hamburguesas",
-  },
-  {
-    id: "drinks",
-    name: "Bebidas",
-  },
-  {
-    id: "desserts",
-    name: "Postres",
-  },
-];
+export interface MenuProduct {
+  id: string;
+  categoryId: string;
 
-export const menuProducts: MenuProduct[] = [
-  {
-    id: "burger-classic",
-    categoryId: "burgers",
-    name: "Smash Clásica",
-    description:
-      "Doble medallón, cheddar, cebolla y salsa de la casa.",
-    price: 12500,
-    image: "/menu/burger.jpg",
-    tags: ["Más pedida"],
-  },
-  {
-    id: "ipa",
-    categoryId: "drinks",
-    name: "IPA 500 ml",
-    description:
-      "Cerveza artesanal de perfil cítrico y amargor marcado.",
-    price: 4500,
-    image: "/menu/ipa.jpg",
-    tags: ["IPA"],
-  },
-  {
-    id: "dessert",
-    categoryId: "desserts",
-    name: "Cheesecake",
-    description:
-      "Cheesecake de vainilla con frutos rojos.",
-    price: 5500,
-    image: "/menu/cheesecake.jpg",
-  },
-];
+  name: string;
+  description: string;
+
+  price: number;
+
+  image: string;
+
+  tags?: string[];
+
+  optionGroups?: MenuOptionGroup[];
+
+  isFeatured?: boolean;
+
+  prepTime?: string;
+}
+
+export interface MenuData {
+  categories: MenuCategory[];
+  products: MenuProduct[];
+}

@@ -1,152 +1,505 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { siteConfig } from "@/config/site";
-import { Menu, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  Menu,
+  Moon,
+  Sun,
+  ShoppingBag,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
 
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const [isForceHidden, setIsForceHidden] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const { colores } = siteConfig;
+import { useGastro } from "@/context/gastro-context";
+import { useLenis } from "@/hooks/use-scroll";
+import { useThemeStore } from "@/store/use-theme-store";
+import { useCartStore } from "@/store/use-cart-store";
 
-  // Observer para detectar si el showroom está activo (force-hide)
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      // Seteamos la variable local basada en el atributo del body
-      setIsForceHidden(document.body.dataset.showroom === "active");
-    });
-    observer.observe(document.body, { attributes: true, attributeFilter: ["data-showroom"] });
-    return () => observer.disconnect();
-  }, []);
+export default function Navbar() {
+  const [open, setOpen] =
+    useState(false);
 
-  // Lógica de Scroll (corregida para force-hide)
+  const [scrolled, setScrolled] =
+    useState(false);
+
+  const [visible, setVisible] =
+    useState(true);
+
+  const lastScrollY =
+    useRef(0);
+
+  const {
+    theme,
+    toggleTheme,
+  } = useThemeStore();
+
+  const items = useCartStore(
+    (state) => state.items
+  );
+
+  const { scrollTo } =
+    useLenis();
+
+  const { config } =
+    useGastro();
+
+  const {
+    navigation,
+    brand,
+    content,
+  } = config;
+
+  const navbarUi =
+    content.navbarUi;
+
+  const ctaTarget =
+    content.hero.ctaHref ||
+    "menu";
+
+  const totalItems =
+    items.reduce(
+      (sum, item) =>
+        sum + item.quantity,
+      0
+    );
+
+  const themeLabel =
+    theme === "dark"
+      ? navbarUi.themeDark
+      : navbarUi.themeLight;
+
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 20);
+      const current =
+        window.scrollY;
 
-      if (isOpen) return; // No esconder si el menú mobile está abierto
+      const previous =
+        lastScrollY.current;
 
-      // 1. Lógica para Ocultar (Scrolling Down)
-      if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        setHidden(true);
-      } 
-      
-      // 2. Lógica para Mostrar (Scrolling Up) - ESTA ES LA CORRECCIÓN
-      // Solo permitimos mostrar el navbar (hidden: false) si NO estamos
-      // en la zona force-hide del Showroom.
-      else if (!isForceHidden) {
-        setHidden(false);
+      setScrolled(
+        current > 24
+      );
+
+      if (
+        current > previous &&
+        current > 160 &&
+        !open
+      ) {
+        setVisible(false);
+      } else {
+        setVisible(true);
       }
 
-      // Si currentScrollY < lastScrollY Y isForceHidden es TRUE,
-      // el estado "hidden" permanecerá TRUE porque no se ejecuta ninguna condición.
-
-      setLastScrollY(currentScrollY);
+      lastScrollY.current =
+        current;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, isOpen, isForceHidden]); // Agregamos isForceHidden como dependencia
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      }
+    );
+
+    return () =>
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+  }, [open]);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-  }, [isOpen]);
+    const previous =
+      document.body.style
+        .overflow;
 
-  const scrollTo = (id: string) => {
-    setIsOpen(false);
-    setTimeout(() => {
-      const element = document.getElementById(id.replace("#", ""));
-      if (element) {
-        const isMobile = window.innerWidth < 768;
-        const navbarHeight = isMobile ? (scrolled ? 80 : 100) : scrolled ? 100 : 120;
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: elementPosition - navbarHeight, behavior: "smooth" });
+    document.body.style.overflow =
+      open
+        ? "hidden"
+        : previous;
+
+    return () => {
+      document.body.style.overflow =
+        previous;
+    };
+  }, [open]);
+
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    target: string
+  ) => {
+    event.preventDefault();
+
+    setOpen(false);
+
+    const id = target.replace(
+      /^#/,
+      ""
+    );
+
+    window.setTimeout(() => {
+      if (
+        !id ||
+        id === "inicio"
+      ) {
+        scrollTo(0, {
+          duration: 1,
+        });
+
+        return;
       }
-    }, 200);
+
+      scrollTo(`#${id}`, {
+        offset: -20,
+        duration: 1,
+      });
+    }, 50);
   };
 
-  // Simplificamos la lógica de visibilidad final
-  const isNavbarHidden = hidden || isForceHidden;
+  const controlClass =
+    "group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-control)] text-[var(--color-text-muted)] shadow-sm transition-all duration-300 hover:border-[var(--color-accent-border)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-accent)] active:scale-95";
 
   return (
     <>
-      <header className={`fixed top-0 w-full z-50 flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isNavbarHidden ? "-translate-y-full" : "translate-y-0"}`}>
-        <div className={`transition-all duration-500 ${scrolled || isOpen ? "bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/5" : "bg-transparent"}`}>
-          <div className={`max-w-[1700px] mx-auto px-6 md:px-12 flex items-center justify-between w-full transition-all duration-500 ${scrolled || isOpen ? "h-20 md:h-24" : "h-28 md:h-32"}`}>
-            
-            <div className="cursor-pointer z-50 flex-shrink-0 flex items-center" onClick={() => scrollTo("inicio")}>
-<button 
-              onClick={() => scrollTo("inicio")} 
-              className="relative flex items-center gap-3 cursor-pointer group text-left"
+      <motion.header
+        initial={{
+          y: -32,
+          opacity: 0,
+          scale: 0.97,
+        }}
+        animate={{
+          y: visible
+            ? 0
+            : -120,
+          opacity: visible
+            ? 1
+            : 0,
+          scale: visible
+            ? 1
+            : 0.97,
+        }}
+        transition={{
+          duration: 0.4,
+          ease: [
+            0.16,
+            1,
+            0.3,
+            1,
+          ],
+        }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-[70] px-3 pt-3 sm:px-5 sm:pt-4"
+      >
+        <div className="mx-auto flex max-w-7xl justify-center">
+          <div
+            className={[
+              "pointer-events-auto flex items-center gap-1.5 rounded-full border p-1.5",
+              "transition-all duration-500",
+              scrolled
+                ? "border-[var(--color-accent-border)] bg-[var(--color-bg)]/90 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-2xl"
+                : "border-[var(--color-border)] bg-[var(--color-surface)]/90 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl",
+            ].join(" ")}
+          >
+            {/* BRAND */}
+            <a
+              href="#inicio"
+              onClick={(event) =>
+                handleNavClick(
+                  event,
+                  "inicio"
+                )
+              }
+              aria-label={
+                brand.name
+              }
+              className="group relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--color-accent-border)] bg-[var(--color-surface-elevated)]"
             >
-              <Image 
-                src="/logo.png" 
-                alt="Estudio Kessler" 
-                width={160} 
-                height={50} 
-className="w-full max-w-[900px] h-auto object-contain opacity-90 drop-shadow-2xl mix-blend-screen"                priority
+              <Image
+                src={brand.logo}
+                alt={brand.name}
+                fill
+                sizes="40px"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-            </button>            </div>
 
-            <div className="hidden md:flex items-center gap-10">
-              {siteConfig.nav.links.map((link) => (
-                <button 
-                  key={link.label} 
-                  onClick={() => scrollTo(link.href)} 
-                  className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors text-white/60 hover:text-white"
-                >
-                  {link.label}
-                </button>
-              ))}
-              <button 
-                onClick={() => scrollTo("contacto")} 
-                style={{ color: colores.fondoOscuro, backgroundColor: colores.acento }} 
-                className="px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all hover:bg-white"
+              <span className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
+            </a>
+
+            {/* DESKTOP NAV */}
+            <nav className="hidden items-center px-1 md:flex">
+              {navigation.links.map(
+                (link) => (
+                  <a
+                    key={link.href}
+                    href={`#${link.href}`}
+                    onClick={(
+                      event
+                    ) =>
+                      handleNavClick(
+                        event,
+                        link.href
+                      )
+                    }
+                    className="group relative rounded-full px-3.5 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.17em] text-[var(--color-text-muted)] transition-colors duration-300 hover:text-[var(--color-text)]"
+                  >
+                    {link.label}
+
+                    <span className="absolute bottom-1.5 left-1/2 h-px w-0 -translate-x-1/2 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-4" />
+                  </a>
+                )
+              )}
+            </nav>
+
+            {/* DESKTOP ACTIONS */}
+            <div className="hidden items-center gap-1.5 pl-1 md:flex">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={
+                  navbarUi.ariaChangeTheme
+                }
+                title={
+                  themeLabel
+                }
+                className={
+                  controlClass
+                }
               >
-                {siteConfig.nav.cta}
+                {theme ===
+                "dark" ? (
+                  <Moon
+                    size={14}
+                    strokeWidth={
+                      1.8
+                    }
+                    className="transition-transform duration-300 group-hover:rotate-12"
+                  />
+                ) : (
+                  <Sun
+                    size={14}
+                    strokeWidth={
+                      1.8
+                    }
+                    className="transition-transform duration-300 group-hover:rotate-45"
+                  />
+                )}
               </button>
+
+              <a
+                href={`#${ctaTarget}`}
+                onClick={(
+                  event
+                ) =>
+                  handleNavClick(
+                    event,
+                    ctaTarget
+                  )
+                }
+                className="group inline-flex h-10 items-center gap-2 rounded-full bg-[var(--color-accent)] px-4.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--color-accent-contrast)] shadow-[0_8px_24px_var(--color-accent-soft)] transition-all duration-300 hover:brightness-110 active:scale-[0.97]"
+              >
+                {navigation.cta}
+
+                <ArrowUpRight
+                  size={13}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
             </div>
 
-            <button 
-              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"} 
-              className="md:hidden text-white z-[60] p-2 -mr-2 bg-white/5 rounded-full backdrop-blur-md border border-white/10" 
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
+            {/* MOBILE CONTROLS */}
+            <div className="ml-0 flex items-center gap-1.5 md:hidden">
+              <button
+                type="button"
+                onClick={
+                  toggleTheme
+                }
+                aria-label={
+                  navbarUi.ariaChangeTheme
+                }
+                className={
+                  controlClass
+                }
+              >
+                {theme ===
+                "dark" ? (
+                  <Moon
+                    size={14}
+                    strokeWidth={
+                      1.8
+                    }
+                  />
+                ) : (
+                  <Sun
+                    size={14}
+                    strokeWidth={
+                      1.8
+                    }
+                  />
+                )}
+              </button>
+
+              <a
+                href="/pedido"
+                aria-label={
+                  navbarUi.ariaOpenOrder
+                }
+                className={`relative ${controlClass}`}
+              >
+                <ShoppingBag
+                  size={14}
+                  strokeWidth={
+                    1.8
+                  }
+                />
+
+                {totalItems >
+                  0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-[var(--color-accent)] px-1 font-mono text-[8px] font-bold text-[var(--color-accent-contrast)]">
+                    {totalItems}
+                  </span>
+                )}
+              </a>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setOpen(
+                    (value) =>
+                      !value
+                  )
+                }
+                aria-label={
+                  open
+                    ? navbarUi.ariaCloseMenu
+                    : navbarUi.ariaOpenMenu
+                }
+                aria-expanded={
+                  open
+                }
+                className={
+                  controlClass
+                }
+              >
+                {open ? (
+                  <X
+                    size={15}
+                    strokeWidth={
+                      1.8
+                    }
+                  />
+                ) : (
+                  <Menu
+                    size={15}
+                    strokeWidth={
+                      1.8
+                    }
+                  />
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            initial={{ clipPath: "inset(0 0 0 100%)" }}
-            animate={{ clipPath: "inset(0 0 0 0%)" }}
-            exit={{ clipPath: "inset(0 0 0 100%)" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-[#0A0A0A] flex flex-col px-8 md:hidden overflow-y-auto"
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            className="fixed inset-0 z-[65] flex flex-col bg-[var(--color-bg)] px-6 pb-8 pt-24 md:hidden"
           >
-            <div className="flex flex-col gap-6 mt-36">
-              {siteConfig.nav.links.map((link, i) => (
-                <motion.button
-                  key={link.label}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + 0.1 * i, duration: 0.5 }}
-                  onClick={() => scrollTo(link.href)}
-                  className="text-4xl font-black uppercase text-white text-left tracking-tighter flex items-center justify-between py-2 border-b border-white/5"
-                >
-                  {link.label}
-                  <span style={{ color: colores.acento }}>.</span>
-                </motion.button>
-              ))}
+            <div className="mx-auto w-full max-w-md">
+              <div className="mb-8">
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--color-accent)]">
+                  {
+                    navbarUi.mobileNavigationLabel
+                  }
+                </span>
+              </div>
+
+              <div className="flex-1">
+                {navigation.links.map(
+                  (
+                    link,
+                    index
+                  ) => (
+                    <motion.a
+                      key={
+                        link.href
+                      }
+                      href={`#${link.href}`}
+                      onClick={(
+                        event
+                      ) =>
+                        handleNavClick(
+                          event,
+                          link.href
+                        )
+                      }
+                      initial={{
+                        opacity: 0,
+                        y: 10,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      transition={{
+                        delay:
+                          index *
+                          0.04,
+                      }}
+                      className="flex items-center justify-between border-b border-[var(--color-border)] py-5 text-2xl font-light uppercase tracking-tight text-[var(--color-text-muted)] transition-colors active:text-[var(--color-accent)]"
+                    >
+                      <span>
+                        {
+                          link.label
+                        }
+                      </span>
+
+                      <span className="font-mono text-[9px] text-[var(--color-accent)]">
+                        {String(
+                          index + 1
+                        ).padStart(
+                          2,
+                          "0"
+                        )}
+                      </span>
+                    </motion.a>
+                  )
+                )}
+              </div>
+
+              <a
+                href={`#${ctaTarget}`}
+                onClick={(
+                  event
+                ) =>
+                  handleNavClick(
+                    event,
+                    ctaTarget
+                  )
+                }
+                className="mt-8 flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--color-accent)] font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--color-accent-contrast)] shadow-[0_12px_36px_var(--color-accent-soft)]"
+              >
+                {navigation.cta}
+
+                <ArrowUpRight
+                  size={15}
+                />
+              </a>
             </div>
           </motion.div>
         )}

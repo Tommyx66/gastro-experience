@@ -1,133 +1,857 @@
 "use client";
-import Image from "next/image";
-import { siteConfig } from "@/config/site";
-import { ArrowUpRight } from "lucide-react";
 
-export function Footer() {
-  const { colores, contacto, contact, nav, footer, nombre, logo } = siteConfig;
+import {
+  ArrowUp,
+  ArrowUpRight,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id.replace("#", ""));
-    const lenis = (window as any).lenis;
-    if (lenis && element) {
-      lenis.scrollTo(element, { offset: -80, duration: 1.5 });
-    } else {
-      element?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+import type {
+  SiteConfig,
+} from "@/config/site";
+
+import {
+  useRestaurantContext,
+} from "@/hooks/use-restaurant-context";
+
+/* =========================================================
+   INSTAGRAM
+   ========================================================= */
+
+function InstagramIcon({
+  size = 17,
+}: {
+  size?: number;
+}) {
+  return (
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+
+      <circle
+        cx="17.3"
+        cy="6.8"
+        r="1"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+function BackToTop({
+  label,
+  inverse = false,
+}: {
+  label: string;
+  inverse?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }}
+      className="group inline-flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
+      style={{
+        color: inverse
+          ? "#FFFFFF"
+          : "var(--color-text)",
+
+        fontFamily:
+          "var(--font-mono-family, monospace)",
+
+        textShadow: inverse
+          ? "0 1px 4px rgba(0,0,0,0.65)"
+          : "none",
+      }}
+    >
+      {label}
+
+      <span
+        className="flex h-8 w-8 items-center justify-center rounded-full border transition-transform duration-300 group-hover:-translate-y-0.5"
+        style={{
+          background:
+            inverse
+              ? "rgba(0,0,0,0.24)"
+              : "transparent",
+
+          borderColor:
+            inverse
+              ? "rgba(255,255,255,0.68)"
+              : "var(--color-border-strong)",
+
+          boxShadow:
+            inverse
+              ? "0 4px 18px rgba(0,0,0,0.18)"
+              : "none",
+
+          backdropFilter:
+            inverse
+              ? "blur(6px)"
+              : "none",
+        }}
+      >
+        <ArrowUp size={13} />
+      </span>
+    </button>
+  );
+}
+
+/* =========================================================
+   EDITORIAL FOOTER
+   ========================================================= */
+
+function EditorialFooter({
+  config,
+}: {
+  config: SiteConfig;
+}) {
+  const footer =
+    config.content.footer;
+
+  const contact =
+    config.contact;
 
   return (
     <footer
-      id="contacto-footer"
-      className="relative text-white overflow-hidden min-h-[420px] flex flex-col justify-end"
-      style={{ backgroundColor: colores.fondoOscuro }}
+      style={{
+        background:
+          "var(--color-bg)",
+        color:
+          "var(--color-text)",
+      }}
     >
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <Image
-          src={footer.imagenFondo}
-          alt="Textura Footer"
-          fill
-          sizes="100vw"
-          className="object-cover object-bottom opacity-20 mix-blend-luminosity"
+      <div className="mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-20 lg:px-14">
+        <div
+          className="mb-14 h-px w-full"
+          style={{
+            background:
+              "var(--color-accent)",
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
-      </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-20 md:pt-28 pb-8 md:pb-12 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-b border-white/15 pb-12 md:pb-16">
-          <div className="lg:col-span-5 flex flex-col items-start">
-            <button
-              onClick={() => scrollTo("inicio")}
-              className="relative w-44 md:w-52 h-12 md:h-14 mb-6 md:mb-8 hover:scale-105 transition-transform duration-500 origin-left"
-              aria-label="Ir al inicio"
+        <div className="grid gap-16 lg:grid-cols-[1.2fr_0.8fr] lg:gap-24">
+          <div>
+            <div
+              className="mb-7 text-[10px] font-semibold uppercase tracking-[0.2em]"
+              style={{
+                color:
+                  "var(--color-accent)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
             >
-              
-                <h2 className="text-white font-bold text-xl tracking-[0.2em] uppercase">
-                  {siteConfig.nombre}
-                </h2>
-             
-            </button>
-            <p className="text-white/70 font-medium leading-relaxed max-w-sm text-xs md:text-sm mb-6">
-              {footer.descripcion}
-            </p>
-            <div className="space-y-2">
-              <p
-                className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase"
-                style={{ color: colores.acento }}
-              >
-                {contacto.email}
-              </p>
+              {
+                config.brand.descriptor
+              }
             </div>
+
+            <div
+              className="max-w-4xl text-[clamp(3rem,7.8vw,7.4rem)] leading-[0.78] tracking-[-0.055em]"
+              style={{
+                color:
+                  "var(--color-text)",
+                fontFamily:
+                  "var(--font-display, serif)",
+                fontWeight:
+                  400,
+              }}
+            >
+              {
+                config.brand.name
+              }
+            </div>
+
+            <p
+              className="mt-9 max-w-lg text-sm leading-7"
+              style={{
+                color:
+                  "var(--color-text-muted)",
+                fontFamily:
+                  "var(--font-body, sans-serif)",
+              }}
+            >
+              {
+                footer.description
+              }
+            </p>
           </div>
 
-          <nav className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8 lg:pl-16">
-            <div className="flex flex-col">
-              <h3 className="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-[0.3em] mb-4 md:mb-6">
-                Navegación
-              </h3>
-              <ul className="space-y-3 md:space-y-4">
-                {nav.links.map((item) => (
-                  <li key={item.label}>
-                    <button
-                      onClick={() => scrollTo(item.href)}
-                      className="group flex items-center text-white/80 hover:text-white transition-colors text-[10px] md:text-xs font-bold uppercase tracking-widest"
+          <div className="grid gap-12 sm:grid-cols-2">
+            <div>
+              <div
+                className="mb-5 text-[10px] font-semibold uppercase tracking-[0.18em]"
+                style={{
+                  color:
+                    "var(--color-text-subtle)",
+                  fontFamily:
+                    "var(--font-mono-family, monospace)",
+                }}
+              >
+                {
+                  footer.navigationLabel
+                }
+              </div>
+
+              <nav className="space-y-3">
+                {config.navigation.links.map(
+                  (link) => (
+                    <a
+                      key={
+                        link.href
+                      }
+                      href={`#${link.href}`}
+                      className="group flex items-center gap-2 text-sm transition-opacity hover:opacity-60"
+                      style={{
+                        color:
+                          "var(--color-text)",
+                        fontFamily:
+                          "var(--font-body, sans-serif)",
+                      }}
                     >
-                      {item.label}
+                      {
+                        link.label
+                      }
+
                       <ArrowUpRight
-                        className="w-3 h-3 ml-2 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300"
-                        style={{ color: colores.acento }}
+                        size={13}
+                        className="opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+                        style={{
+                          color:
+                            "var(--color-accent)",
+                        }}
                       />
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                    </a>
+                  ),
+                )}
+              </nav>
             </div>
-            <div className="flex flex-col">
-              <h3 className="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-[0.3em] mb-4 md:mb-6">
-                Contacto
-              </h3>
-              <ul className="space-y-3 md:space-y-4">
-                <li>
-                  <a
-                    href={`mailto:${contacto.email}`}
-                    className="text-white/80 hover:text-white transition-colors text-[10px] md:text-xs font-bold uppercase tracking-widest"
-                  >
-                    Vía Email
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`https://wa.me/${contact.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/80 hover:text-white transition-colors text-[10px] md:text-xs font-bold uppercase tracking-widest"
-                  >
-                    WhatsApp
-                  </a>
-                </li>
-              </ul>
+
+            <div>
+              <div
+                className="mb-5 text-[10px] font-semibold uppercase tracking-[0.18em]"
+                style={{
+                  color:
+                    "var(--color-text-subtle)",
+                  fontFamily:
+                    "var(--font-mono-family, monospace)",
+                }}
+              >
+                {
+                  footer.contactLabel
+                }
+              </div>
+
+              <div className="space-y-4">
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="flex items-start gap-3 text-sm transition-opacity hover:opacity-60"
+                  style={{
+                    color:
+                      "var(--color-text)",
+                    fontFamily:
+                      "var(--font-body, sans-serif)",
+                  }}
+                >
+                  <Phone
+                    size={14}
+                    className="mt-0.5 shrink-0"
+                  />
+
+                  {
+                    contact.phone
+                  }
+                </a>
+
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="flex items-start gap-3 text-sm transition-opacity hover:opacity-60"
+                  style={{
+                    color:
+                      "var(--color-text)",
+                    fontFamily:
+                      "var(--font-body, sans-serif)",
+                  }}
+                >
+                  <Mail
+                    size={14}
+                    className="mt-0.5 shrink-0"
+                  />
+
+                  <span className="break-all">
+                    {
+                      contact.email
+                    }
+                  </span>
+                </a>
+
+                <div
+                  className="flex items-start gap-3 text-sm"
+                  style={{
+                    color:
+                      "var(--color-text)",
+                    fontFamily:
+                      "var(--font-body, sans-serif)",
+                  }}
+                >
+                  <MapPin
+                    size={14}
+                    className="mt-0.5 shrink-0"
+                  />
+
+                  {
+                    contact.fullAddress
+                  }
+                </div>
+              </div>
             </div>
-          </nav>
+          </div>
         </div>
 
-        <div className="pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[9px] md:text-[10px] text-white/50 font-bold uppercase tracking-widest text-center md:text-left">
-            © {new Date().getFullYear()} {nombre}. Todos los derechos
-            reservados.
-          </p>
-          <p className="text-[9px] md:text-[10px] text-white/50 font-bold uppercase tracking-widest flex items-center gap-1">
-            Desarrollo por
+        <div
+          className="mt-16 flex flex-col gap-6 border-t pt-7 md:flex-row md:items-center md:justify-between"
+          style={{
+            borderColor:
+              "var(--color-border)",
+          }}
+        >
+          <div className="flex flex-wrap gap-x-7 gap-y-3">
             <a
-              href="https://tomas-zarriello-portfolio-orpin.vercel.app"
+              href={
+                contact.instagram
+              }
               target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-white/80 transition-colors ml-1"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-opacity hover:opacity-60"
+              style={{
+                color:
+                  "var(--color-text)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
             >
-              Tomás Zarriello
+              <InstagramIcon />
+
+              {
+                footer.instagramLabel
+              }
             </a>
-          </p>
+
+            <a
+              href={`https://wa.me/${config.ordering.whatsapp.number}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[10px] font-semibold uppercase tracking-[0.15em] transition-opacity hover:opacity-60"
+              style={{
+                color:
+                  "var(--color-text)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
+            >
+              {
+                footer.whatsappLabel
+              }
+            </a>
+          </div>
+
+          <BackToTop
+            label={
+              footer.backToTop
+            }
+          />
+        </div>
+      </div>
+
+      <div
+        className="border-t px-6 py-5 md:px-10 lg:px-14"
+        style={{
+          background:
+            "var(--color-bg-elevated)",
+          borderColor:
+            "var(--color-border)",
+        }}
+      >
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-2 text-[9px] uppercase tracking-[0.14em] sm:flex-row sm:items-center sm:justify-between">
+          <span
+            style={{
+              color:
+                "var(--color-text-subtle)",
+              fontFamily:
+                "var(--font-mono-family, monospace)",
+            }}
+          >
+            {
+              footer.credits
+            }
+          </span>
+
+          <span
+            style={{
+              color:
+                "var(--color-text-subtle)",
+              fontFamily:
+                "var(--font-mono-family, monospace)",
+            }}
+          >
+            {
+              footer.identityLabel
+            }
+          </span>
         </div>
       </div>
     </footer>
+  );
+}
+
+/* =========================================================
+   MINIMAL / CAFE FOOTER
+   ========================================================= */
+
+function MinimalFooter({
+  config,
+}: {
+  config: SiteConfig;
+}) {
+  const footer =
+    config.content.footer;
+
+  const contact =
+    config.contact;
+
+  return (
+    <footer
+      style={{
+        background:
+          "var(--color-bg)",
+        color:
+          "var(--color-text)",
+      }}
+    >
+      <div className="relative h-[430px] overflow-hidden md:h-[540px]">
+        <img
+          src={
+            footer.backgroundImage
+          }
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.12) 32%, rgba(0,0,0,0.8) 100%)",
+          }}
+        />
+
+        <div className="relative mx-auto flex h-full max-w-[1400px] flex-col justify-end px-6 pb-10 md:px-10 md:pb-12 lg:px-14">
+          <div
+            className="max-w-5xl text-[clamp(3.5rem,9.6vw,8.7rem)] leading-[0.8] tracking-[-0.06em]"
+            style={{
+              color:
+                "#FFFFFF",
+              fontFamily:
+                "var(--font-display, serif)",
+              fontWeight:
+                400,
+
+              textShadow:
+                "0 2px 22px rgba(0,0,0,0.28)",
+            }}
+          >
+            {
+              config.brand.name
+            }
+          </div>
+
+          <p
+            className="mt-7 max-w-md text-sm leading-7"
+            style={{
+              color:
+                "#FFFFFF",
+              opacity:
+                0.86,
+              fontFamily:
+                "var(--font-body, sans-serif)",
+              textShadow:
+                "0 1px 8px rgba(0,0,0,0.5)",
+            }}
+          >
+            {
+              footer.description
+            }
+          </p>
+
+          <div className="mt-8">
+            <BackToTop
+              label={
+                footer.backToTop
+              }
+              inverse
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="border-t"
+        style={{
+          background:
+            "var(--color-surface)",
+          borderColor:
+            "var(--color-border)",
+        }}
+      >
+        <div className="mx-auto grid max-w-[1400px] md:grid-cols-2 lg:grid-cols-4">
+          <FooterInfo
+            label={
+              footer.establishmentLabel
+            }
+            value={
+              config.brand.descriptor
+            }
+          />
+
+          <FooterInfo
+            label={
+              footer.locationLabel
+            }
+            value={
+              contact.fullAddress
+            }
+          />
+
+          <FooterInfo
+            label={
+              footer.hoursLabel
+            }
+            value={
+              config.operation.schedule
+            }
+          />
+
+          <div
+            className="border-t p-7 md:border-l md:border-t-0"
+            style={{
+              borderColor:
+                "var(--color-border)",
+            }}
+          >
+            <div
+              className="mb-5 text-[10px] font-semibold uppercase tracking-[0.17em]"
+              style={{
+                color:
+                  "var(--color-text-subtle)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
+            >
+              {
+                footer.socialsLabel
+              }
+            </div>
+
+            <div className="space-y-3">
+              <a
+                href={
+                  contact.instagram
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 text-sm transition-opacity hover:opacity-60"
+                style={{
+                  color:
+                    "var(--color-text)",
+                  fontFamily:
+                    "var(--font-body, sans-serif)",
+                }}
+              >
+                <InstagramIcon />
+
+                {
+                  footer.instagramLabel
+                }
+              </a>
+
+              <a
+                href={`https://wa.me/${config.ordering.whatsapp.number}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm transition-opacity hover:opacity-60"
+                style={{
+                  color:
+                    "var(--color-text)",
+                  fontFamily:
+                    "var(--font-body, sans-serif)",
+                }}
+              >
+                {
+                  footer.whatsappLabel
+                }
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="border-t px-6 py-5 md:px-10 lg:px-14"
+          style={{
+            borderColor:
+              "var(--color-border)",
+          }}
+        >
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-2 text-[9px] uppercase tracking-[0.14em] sm:flex-row sm:items-center sm:justify-between">
+            <span
+              style={{
+                color:
+                  "var(--color-text-subtle)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
+            >
+              {
+                footer.credits
+              }
+            </span>
+
+            <span
+              style={{
+                color:
+                  "var(--color-text-subtle)",
+                fontFamily:
+                  "var(--font-mono-family, monospace)",
+              }}
+            >
+              {
+                config.brand.tagline
+              }
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =========================================================
+   COMPACT
+   ========================================================= */
+
+function CompactFooter({
+  config,
+}: {
+  config: SiteConfig;
+}) {
+  const footer =
+    config.content.footer;
+
+  const contact =
+    config.contact;
+
+  return (
+    <footer
+      className="border-t"
+      style={{
+        background:
+          "var(--color-bg)",
+        borderColor:
+          "var(--color-border)",
+        color:
+          "var(--color-text)",
+      }}
+    >
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-7 px-6 py-9 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
+        <div>
+          <div
+            className="text-xl"
+            style={{
+              fontFamily:
+                "var(--font-display, serif)",
+            }}
+          >
+            {
+              config.brand.name
+            }
+          </div>
+
+          <div
+            className="mt-2 text-[9px] uppercase tracking-[0.16em]"
+            style={{
+              color:
+                "var(--color-text-subtle)",
+              fontFamily:
+                "var(--font-mono-family, monospace)",
+            }}
+          >
+            {
+              footer.description
+            }
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+          <a
+            href={`tel:${contact.phone}`}
+            className="text-[10px] uppercase tracking-[0.14em] transition-opacity hover:opacity-60"
+            style={{
+              color:
+                "var(--color-text)",
+              fontFamily:
+                "var(--font-mono-family, monospace)",
+            }}
+          >
+            {
+              contact.phone
+            }
+          </a>
+
+          <a
+            href={`mailto:${contact.email}`}
+            className="text-[10px] uppercase tracking-[0.14em] transition-opacity hover:opacity-60"
+            style={{
+              color:
+                "var(--color-text)",
+              fontFamily:
+                "var(--font-mono-family, monospace)",
+            }}
+          >
+            {
+              contact.email
+            }
+          </a>
+
+          <BackToTop
+            label={
+              footer.backToTop
+            }
+          />
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =========================================================
+   SUPPORT
+   ========================================================= */
+
+function FooterInfo({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div
+      className="border-t p-7 md:border-r md:border-t-0"
+      style={{
+        borderColor:
+          "var(--color-border)",
+      }}
+    >
+      <div
+        className="mb-5 text-[10px] font-semibold uppercase tracking-[0.17em]"
+        style={{
+          color:
+            "var(--color-text-subtle)",
+          fontFamily:
+            "var(--font-mono-family, monospace)",
+        }}
+      >
+        {label}
+      </div>
+
+      <p
+        className="text-sm leading-6"
+        style={{
+          color:
+            "var(--color-text)",
+          fontFamily:
+            "var(--font-body, sans-serif)",
+        }}
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+export default function Footer() {
+  const {
+    preset,
+    config,
+  } =
+    useRestaurantContext();
+
+  const variant =
+    preset.visual?.footer ??
+    "compact";
+
+  if (
+    variant === "editorial"
+  ) {
+    return (
+      <EditorialFooter
+        config={
+          config
+        }
+      />
+    );
+  }
+
+  if (
+    variant === "minimal"
+  ) {
+    return (
+      <MinimalFooter
+        config={
+          config
+        }
+      />
+    );
+  }
+
+  return (
+    <CompactFooter
+      config={
+        config
+      }
+    />
   );
 }
