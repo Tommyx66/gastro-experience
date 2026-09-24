@@ -44,6 +44,8 @@ type NormalizedGroup = {
   name: string;
   required: boolean;
   multiple: boolean;
+  minSelections: number;
+  maxSelections: number | null;
   options: NormalizedOption[];
 };
 
@@ -93,6 +95,18 @@ function normalizeOptionGroups(product: MenuProduct | null): NormalizedGroup[] {
         name: group.name || "Opciones",
         required: Boolean(group.required),
         multiple: group.type === "multiple",
+        minSelections:
+          typeof group.minSelections === "number" && group.minSelections > 0
+            ? Math.floor(group.minSelections)
+            : group.required
+            ? 1
+            : 0,
+        maxSelections:
+          typeof group.maxSelections === "number" && group.maxSelections > 0
+            ? Math.floor(group.maxSelections)
+            : group.type === "multiple"
+            ? null
+            : 1,
         options: options.map((option, optionIndex) => ({
           id: option.id || `option-${groupIndex}-${optionIndex}`,
           name: option.name || "Opción",
@@ -262,8 +276,11 @@ export default function ProductDetailModal({
   const allRequiredSelected = useMemo(
     () =>
       groups.every((group) => {
-        if (!group.required) return true;
-        return (selectedOptions[group.id] ?? []).length > 0;
+        const selectedCount = (selectedOptions[group.id] ?? []).length;
+        const minSelections = group.required
+          ? Math.max(1, group.minSelections)
+          : group.minSelections;
+        return selectedCount >= minSelections;
       }),
     [groups, selectedOptions]
   );
@@ -297,6 +314,9 @@ export default function ProductDetailModal({
     multiple: boolean
   ) => {
     setSelectedOptions((current) => {
+      const group = groups.find((candidate) => candidate.id === groupId);
+      if (!group) return current;
+
       const existing = current[groupId] ?? [];
 
       if (!multiple) {
@@ -310,6 +330,8 @@ export default function ProductDetailModal({
         ...current,
         [groupId]: existing.includes(optionId)
           ? existing.filter((id) => id !== optionId)
+          : group.maxSelections !== null && existing.length >= group.maxSelections
+          ? [...existing.slice(1), optionId]
           : [...existing, optionId],
       };
     });
@@ -324,9 +346,13 @@ export default function ProductDetailModal({
   const handleAdd = () => {
     if (!product) return;
 
-    const missingGroup = groups.find(
-      (group) => group.required && (selectedOptions[group.id] ?? []).length === 0
-    );
+    const missingGroup = groups.find((group) => {
+      const selectedCount = (selectedOptions[group.id] ?? []).length;
+      const minSelections = group.required
+        ? Math.max(1, group.minSelections)
+        : group.minSelections;
+      return selectedCount < minSelections;
+    });
 
     if (missingGroup) {
       showFeedback({
@@ -603,7 +629,9 @@ export default function ProductDetailModal({
 
                             <p className="mt-0.5 font-mono text-[8px] uppercase tracking-[0.13em] text-[var(--color-text-subtle)]">
                               {group.multiple
-                                ? "Podés elegir varias"
+                                ? group.maxSelections
+                                  ? `Elegí hasta ${group.maxSelections}`
+                                  : "Podés elegir varias"
                                 : group.required
                                 ? "Elegí una opción"
                                 : "Opcional"}

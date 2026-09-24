@@ -1,9 +1,9 @@
 import type { GastroPreset } from "./types";
 
 const icecreamCategories = [
-  { id: "potes", name: "Potes por Kilo", description: "Formatos térmicos sellados para llevar con combinación libre de sabores." },
-  { id: "cucuruchos", name: "Cucuruchos & Vasos", description: "Waffles artesanales horneados en el local con bochas al momento." },
-  { id: "especialidades", name: "Pasticceria Fredda", description: "Affogatos con espresso doble, semifríos y tortas heladas." },
+  { id: "potes", name: "Potes Térmicos", description: "Gelato envasado al momento en potes de 1/4 kg, 1/2 kg y 1 kg con cierre hermético." },
+  { id: "cucuruchos", name: "Cucuruchos Waffle", description: "Waffles artesanales recién horneados y bochas servidas con espátula." },
+  { id: "especialidades", name: "Pasticceria Fredda", description: "Affogatos, semifríos y postres helados de inspiración italiana." },
 ];
 
 const gelatoFlavors = [
@@ -17,25 +17,131 @@ const gelatoFlavors = [
 
 const icecreamProducts = [
   {
-    id: "pote-1kg-gelato",
+    id: "pote-cuarto-gelato",
     categoryId: "potes",
-    name: "Pote Térmico 1 Kilogramo",
-    description: "Hasta 4 sabores a elección. Incluye 4 cucuruchos artesanales de obsequio.",
-    price: 18500,
-    image: "https://images.unsplash.com/photo-1576506295286-5cda18df43e7?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Familiar", "Hasta 4 sabores"],
-    prepTime: "5 min",
-    isFeatured: true,
+    name: "Pote Térmico 1/4 Kilogramo",
+    description: "Hasta 2 sabores a elección en pote térmico cerrado.",
+    price: 7600,
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Hasta 2 sabores"],
+    prepTime: "3 min",
+    optionGroups: [
+      {
+        id: "sabores-cuarto",
+        name: "Sabores (hasta 2)",
+        type: "multiple",
+        required: true,
+        minSelections: 1,
+        maxSelections: 2,
+        items: gelatoFlavors,
+      },
+      {
+        id: "salsa-cuarto",
+        name: "Salsa",
+        type: "single",
+        items: [
+          { id: "sin-salsa-cuarto", name: "Sin salsa", priceDelta: 0 },
+          { id: "frutos-rojos-cuarto", name: "Salsa de frutos rojos", priceDelta: 700 },
+          { id: "caramelo-cuarto", name: "Salsa de caramelo salado", priceDelta: 700 },
+        ],
+      },
+      {
+        id: "toppings-cuarto",
+        name: "Toppings crocantes",
+        type: "multiple",
+        maxSelections: 2,
+        items: [
+          { id: "almendras-cuarto", name: "Almendras garrapiñadas", priceDelta: 900 },
+          { id: "crocante-cacao-cuarto", name: "Crocante de cacao", priceDelta: 900 },
+          { id: "bano-choco-cuarto", name: "Baño de chocolate crocante", priceDelta: 1100 },
+        ],
+      },
+    ],
   },
   {
     id: "pote-medio-gelato",
     categoryId: "potes",
     name: "Pote Térmico 1/2 Kilogramo",
-    description: "Hasta 3 sabores a elección con cierre hermético para congelador.",
-    price: 10400,
-    image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=1600&q=85",
+    description: "Hasta 3 sabores a elección con sello térmico para delivery.",
+    price: 10900,
+    image: "https://images.unsplash.com/photo-1464306076886-da185f6a9d05?auto=format&fit=crop&w=1600&q=85",
     tags: ["Hasta 3 sabores"],
     prepTime: "4 min",
+    optionGroups: [
+      {
+        id: "sabores-medio",
+        name: "Sabores (hasta 3)",
+        type: "multiple",
+        required: true,
+        minSelections: 1,
+        maxSelections: 3,
+        items: gelatoFlavors,
+      },
+      {
+        id: "salsa-medio",
+        name: "Salsa",
+        type: "single",
+        items: [
+          { id: "sin-salsa-medio", name: "Sin salsa", priceDelta: 0 },
+          { id: "frutos-rojos-medio", name: "Salsa de frutos rojos", priceDelta: 800 },
+          { id: "caramelo-medio", name: "Salsa de caramelo salado", priceDelta: 800 },
+        ],
+      },
+      {
+        id: "toppings-medio",
+        name: "Toppings crocantes",
+        type: "multiple",
+        maxSelections: 3,
+        items: [
+          { id: "almendras-medio", name: "Almendras garrapiñadas", priceDelta: 1000 },
+          { id: "crocante-cacao-medio", name: "Crocante de cacao", priceDelta: 1000 },
+          { id: "bano-choco-medio", name: "Baño de chocolate crocante", priceDelta: 1200 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "pote-1kg-gelato",
+    categoryId: "potes",
+    name: "Pote Térmico 1 Kilogramo",
+    description: "Hasta 4 sabores a elección. Incluye 4 cucuruchos waffle de obsequio.",
+    price: 18500,
+    image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Familiar", "Hasta 4 sabores"],
+    prepTime: "5 min",
+    isFeatured: true,
+    optionGroups: [
+      {
+        id: "sabores-kilo",
+        name: "Sabores (hasta 4)",
+        type: "multiple",
+        required: true,
+        minSelections: 1,
+        maxSelections: 4,
+        items: gelatoFlavors,
+      },
+      {
+        id: "salsa-kilo",
+        name: "Salsa",
+        type: "single",
+        items: [
+          { id: "sin-salsa-kilo", name: "Sin salsa", priceDelta: 0 },
+          { id: "frutos-rojos-kilo", name: "Salsa de frutos rojos", priceDelta: 1000 },
+          { id: "caramelo-kilo", name: "Salsa de caramelo salado", priceDelta: 1000 },
+        ],
+      },
+      {
+        id: "toppings-kilo",
+        name: "Toppings crocantes",
+        type: "multiple",
+        maxSelections: 4,
+        items: [
+          { id: "almendras-kilo", name: "Almendras garrapiñadas", priceDelta: 1200 },
+          { id: "crocante-cacao-kilo", name: "Crocante de cacao", priceDelta: 1200 },
+          { id: "bano-choco-kilo", name: "Baño de chocolate crocante", priceDelta: 1400 },
+        ],
+      },
+    ],
   },
   {
     id: "cucurucho-doble-gelato",
@@ -43,7 +149,7 @@ const icecreamProducts = [
     name: "Cucurucho Doble Artesanal",
     description: "Dos bochas generosas sobre masa de waffle dulce horneada a la vista.",
     price: 6800,
-    image: "https://images.unsplash.com/photo-1464306076886-da185f6a9d05?auto=format&fit=crop&w=1600&q=85",
+    image: "https://images.unsplash.com/photo-1516559828984-fb3b99548b21?auto=format&fit=crop&w=1600&q=85",
     tags: ["Waffle casero"],
     prepTime: "3 min",
     isFeatured: true,
@@ -54,7 +160,7 @@ const icecreamProducts = [
     name: "Affogato al Caffè",
     description: "Bocha cremosa de fior di latte servida en copa de vidrio y bañada con doble shot de espresso caliente.",
     price: 6200,
-    image: "https://images.unsplash.com/photo-1523294587484-bae6cc870010?auto=format&fit=crop&w=1600&q=85",
+    image: "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=1600&q=85",
     tags: ["Italiano clásico"],
     prepTime: "3 min",
   },
@@ -66,8 +172,8 @@ export const icecreamPreset: GastroPreset = {
 
   theme: {
     mode: "light",
-    accent: "#B85C38",
-    accentStrong: "#8F3D1F",
+    accent: "#7EAF8D",
+    accentStrong: "#B85C38",
     accentContrast: "#FFFFFF",
 
     colors: {
