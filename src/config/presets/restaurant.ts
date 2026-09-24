@@ -1,149 +1,526 @@
-import {
-  themeProfiles,
-} from "@/config/site";
+import type { GastroPreset } from "./types";
 
-import {
-  menuCategories,
-  menuProducts,
-} from "@/data/menus/restaurant";
+const restaurantCategories = [
+  { id: "entradas", name: "Tapeo & Entradas", description: "Bocados de fuego, quesos fundidos al hierro y curados." },
+  { id: "fuegos", name: "Fuegos & Carnes", description: "Cortes madurados en seco y asados a leña de quebracho." },
+  { id: "pastas", name: "Pastas Artesanales", description: "Elaboración diaria a mano con huevos de campo." },
+  { id: "barra", name: "Cavas & Coctelería", description: "Vinos de baja intervención y tragos de autor." },
+  { id: "postres", name: "Final Dulce", description: "Recetas clásicas reversionadas al hierro y humo." },
+];
 
-import type {
-  GastroPreset,
-} from "./types";
+const restaurantProducts = [
+  {
+    id: "ojo-bife",
+    categoryId: "fuegos",
+    name: "Ojo de Bife con Hueso (600g)",
+    description: "Maduración seca de 35 días, sal marina y manteca de hierbas a la brasa.",
+    price: 24500,
+    image: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Insignia", "35 días dry-aged"],
+    prepTime: "25 min",
+    isFeatured: true,
+  },
+  {
+    id: "provoleta-fuegos",
+    categoryId: "entradas",
+    name: "Provoleta de Finca al Hierro",
+    description: "Queso provolone fundido con tomates cherry confitados, orégano fresco y miel picante.",
+    price: 11200,
+    image: "https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Hierro fundido"],
+    prepTime: "12 min",
+  },
+  {
+    id: "agnolotti-cordero",
+    categoryId: "pastas",
+    name: "Agnolotti de Cordero Braseado",
+    description: "Pasta rellena de cordero desmechado 8 horas con reducción de Malbec y salvia.",
+    price: 19800,
+    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Elaboración propia"],
+    prepTime: "18 min",
+    isFeatured: true,
+  },
+  {
+    id: "negroni-ahumado",
+    categoryId: "barra",
+    name: "Negroni Ahumado en Quebracho",
+    description: "Gin macerado en bayas, vermouth rosso de montaña y Campari infusionado con humo de leña.",
+    price: 8600,
+    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Coctel de autor"],
+    prepTime: "5 min",
+  },
+  {
+    id: "volcan-dulce-leche",
+    categoryId: "postres",
+    name: "Volcán Tibio de Dulce de Leche",
+    description: "Centro líquido con helado de crema ahumada y praliné de nueces tostadas.",
+    price: 7800,
+    image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1600&q=85",
+    tags: ["Postre estrella"],
+    prepTime: "12 min",
+  },
+];
 
-export const restaurantPreset:
-  GastroPreset = {
-  /* =========================================================
-     IDENTITY
-     ========================================================= */
-
-  id:
-    "restaurant",
-
-  label:
-    "Restaurante & Fuegos",
-
-  /* =========================================================
-     THEME
-     ========================================================= */
+export const restaurantPreset: GastroPreset = {
+  id: "restaurant",
+  label: "Restaurante & Fuegos",
 
   theme: {
-    mode:
-      "dark",
+    mode: "dark",
+    accent: "#D4AF37",
+    accentStrong: "#F0D77A",
+    accentContrast: "#050505",
 
     colors: {
-      light:
-        themeProfiles.light,
+      light: {
+        bg: "#F8F6F2",
+        bgElevated: "#FFFFFF",
+        surface: "#FFFFFF",
+        surfaceElevated: "#EBE5DC",
+        surfaceInverse: "#12100E",
+        text: "#171412",
+        textMuted: "#5C544D",
+        textSubtle: "#7E756C",
+        accent: "#AA8822",
+        accentStrong: "#806614",
+        accentContrast: "#FFFFFF",
+        accentSoft: "rgba(170, 136, 34, 0.12)",
+        accentFaint: "rgba(170, 136, 34, 0.05)",
+        accentBorder: "rgba(170, 136, 34, 0.35)",
+        border: "rgba(23, 20, 18, 0.10)",
+        borderStrong: "rgba(23, 20, 18, 0.20)",
+        overlay: "rgba(248, 246, 242, 0.90)",
+        control: "rgba(23, 20, 18, 0.04)",
+        controlHover: "rgba(23, 20, 18, 0.08)",
+        success: "#059669",
+        warning: "#B45309",
+        danger: "#DC2626",
+      },
+      dark: {
+        bg: "#050505",
+        bgElevated: "#0A0908",
+        surface: "#0E0D0C",
+        surfaceElevated: "#171412",
+        surfaceInverse: "#F8F5EF",
+        text: "#F8F5EF",
+        textMuted: "#C8C1B8",
+        textSubtle: "#888178",
+        accent: "#D4AF37",
+        accentStrong: "#F0D77A",
+        accentContrast: "#050505",
+        accentSoft: "rgba(212, 175, 55, 0.14)",
+        accentFaint: "rgba(212, 175, 55, 0.07)",
+        accentBorder: "rgba(212, 175, 55, 0.38)",
+        border: "rgba(255, 255, 255, 0.11)",
+        borderStrong: "rgba(255, 255, 255, 0.18)",
+        overlay: "rgba(5, 5, 5, 0.85)",
+        control: "rgba(255, 255, 255, 0.045)",
+        controlHover: "rgba(255, 255, 255, 0.09)",
+        success: "#34D399",
+        warning: "#F59E0B",
+        danger: "#F87171",
+      },
+    },
 
-      dark:
-        themeProfiles.dark,
+    typography: {
+      display: "var(--font-display, Georgia, serif)",
+      body: "var(--font-sans, Arial, sans-serif)",
+      ui: "var(--font-sans, Arial, sans-serif)",
+      mono: "var(--font-mono, monospace)",
     },
   },
 
-  /* =========================================================
-     VISUAL
-     ========================================================= */
-
   visual: {
-    navbar:
-      "pill",
-
-    hero:
-      "cinematic",
-
-    menu:
-      "immersive",
-
-    productCard:
-      "photo",
-
-    contact:
-      "map",
-
-    cta:
-      "immersive",
-
-    footer:
-      "editorial",
+    navbar: "minimal",
+    hero: "cinematic",
+    heroStyle: {
+      variant: "cinematic",
+      imageTreatment: "cinematic",
+      overlay: "cinematic",
+      composition: "standard",
+      ctaShape: "circle",
+      grain: false,
+      parallax: true,
+      intensity: 1,
+    },
+    menu: "immersive",
+    productCard: "photo",
+    contact: "map",
+    cta: "immersive",
+    footer: "editorial",
+    story: {
+      variant: "fire",
+      layout: "marquee",
+      imageTreatment: "film",
+      cardShape: "poster",
+      density: "balanced",
+      watermark: true,
+      grain: true,
+      numbering: true,
+      motion: { speed: 0.8, direction: "left", hoverLift: 6, parallax: true, pauseOnHover: true },
+    },
   },
-
-  /* =========================================================
-     OPERATION
-     ========================================================= */
 
   operation: {
-    primary:
-      "table",
-
-    supported: [
-      "table",
-      "counter",
-      "pickup",
-      "delivery",
-    ],
+    primary: "table",
+    supported: ["table", "pickup"],
   },
-
-  /* =========================================================
-     CAPABILITIES
-     ========================================================= */
 
   capabilities: {
-    ordering:
-      true,
-
-    delivery:
-      true,
-
-    pickup:
-      true,
-
-    tableOrders:
-      true,
-
-    waiterCall:
-      true,
-
-    reservation:
-      true,
-
-    story:
-      true,
-
-    coffeeCustomizer:
-      false,
-
-    beerTaps:
-      false,
-
-    iceCreamSizes:
-      false,
-
-    toppings:
-      false,
-
-    brunch:
-      false,
-
-    takeaway:
-      true,
+    ordering: true,
+    delivery: false,
+    pickup: true,
+    tableOrders: true,
+    waiterCall: true,
+    reservation: true,
+    story: true,
+    coffeeCustomizer: false,
+    beerTaps: false,
+    iceCreamSizes: false,
+    toppings: false,
+    brunch: false,
+    takeaway: true,
   },
 
-  /* =========================================================
-     SITE OVERRIDES
-     ========================================================= */
+  siteOverrides: {
+    brand: {
+      name: "FUEGO & TIERRA",
+      shortName: "Fuego",
+      descriptor: "Cocina de Brasas & Cava Privada",
+      tagline: "Leña de quebracho, cortes madurados y servicio de salón",
+      description: "Restaurante de cocina a las brasas, cortes madurados en seco y pastas caseras.",
+      logo: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=120&q=80",
+      favicon: "/favicon.ico",
+    },
 
-  siteOverrides:
-    {},
+    features: {
+      ordering: true,
+      delivery: false,
+      pickup: true,
+      tableOrders: true,
+      waiterCall: true,
+      reservation: true,
+      story: true,
+    },
 
-  /* =========================================================
-     MENU
-     ========================================================= */
+    operation: {
+      schedule: "Martes a Domingo · 20:00 a 01:30 hs",
+      estimatedTime: {
+        delivery: { min: 0, max: 0 },
+        pickup: { min: 20, max: 35 },
+        table: { min: 15, max: 30 },
+      },
+    },
+
+    navigation: {
+      links: [
+        { label: "Inicio", href: "inicio" },
+        { label: "El Fuego", href: "historia" },
+        { label: "Carta", href: "menu" },
+        { label: "Reservas", href: "contacto" },
+      ],
+      cta: "Reservar Mesa",
+    },
+
+    ordering: {
+      enabled: true,
+      channels: ["web"] as const,
+      fulfillment: ["pickup", "onsite"] as const,
+      cashDiscountPercent: 10,
+      paymentMethods: [
+        { id: "cash", label: "Efectivo", requiresProof: false },
+        { id: "card", label: "Tarjeta de Crédito / Débito", requiresProof: false },
+        { id: "transfer", label: "Transferencia / QR", requiresProof: true },
+      ],
+      whatsapp: {
+        number: "549223000000",
+        defaultMessage: "Hola, quisiera consultar por una reserva en Fuego & Tierra.",
+        tableOrderMessage: "Hola, envío el pedido de la mesa.",
+        labelCheckout: "Enviar comanda por WhatsApp",
+      },
+    },
+
+    contact: {
+      address: "Pellegrini 2450 (entre Falucho y Gascón)",
+      zone: "Plaza Mitre",
+      city: "Mar del Plata",
+      country: "Argentina",
+      fullAddress: "Pellegrini 2450, Mar del Plata, Argentina",
+      phone: "+54 9 223 555-0112",
+      email: "reservas@fuegoytierra.com",
+      instagram: "https://instagram.com",
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Pellegrini+2450+Mar+del+Plata",
+      coordinates: {
+        lat: -38.008912,
+        lng: -57.551422,
+        zoom: 16,
+        latDisplay: "38°00′32″ S",
+        lngDisplay: "57°33′05″ W",
+      },
+    },
+
+    seo: {
+      title: "Fuego & Tierra | Restaurante de Fuegos & Cava",
+      description: "Carnes maduradas 35 días a la leña de quebracho, pastas caseras y cava seleccionada en Mar del Plata.",
+      locale: "es_AR",
+    },
+
+    content: {
+      hero: {
+        eyebrow: "Casco Histórico · Cocina a Fuego Vivo",
+        titlePrefix: "Fuego vivo",
+        titleAccent: "y producto.",
+        subtitle: "Cortes con 35 días de maduración en seco, leña seleccionada y coctelería contemporánea.",
+        cta: "Explorar Carta",
+        ctaHref: "menu",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=85",
+      },
+
+      story: {
+        eyebrow: "Mística del Asador",
+        watermark: "BRASA",
+        titlePrefix: "El fuego",
+        titleAccent: "no se apura.",
+        sectionTag: "Bitácora de Cocina",
+        primaryDescription: "Seleccionamos razas británicas criadas a pastura natural y maduramos cada pieza en cámara con humedad controlada.",
+        secondaryDescription: "El calor directo de la leña concentra los jugos y crea un caramelizado profundo.",
+        backgroundImage: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1800&q=85",
+        labels: {
+          processLine: "Leña · Maduración · Salón",
+          openArchive: "Explorar cocina",
+          traceability: "Origen & Maduración",
+          closeSheet: "Cerrar Ficha",
+        },
+        archive: [
+          {
+            titulo: "Tomahawk a la Leña",
+            subtitulo: "Quebracho Blanco",
+            nota: "Sellado violento en parrilla baja y reposo en madera ahumada.",
+            origen: "Cabaña La Tranquera",
+            src: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=1200&q=85",
+          },
+          {
+            titulo: "Cámara Dry-Aged",
+            subtitulo: "35 Días de Reposo",
+            nota: "Bloques de sal del Himalaya para mantener el microclima exacto de maduración.",
+            origen: "Cámara Propia",
+            src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=85",
+          },
+          {
+            titulo: "Cava Subterránea",
+            subtitulo: "Vinos de Altura",
+            nota: "Etiquetas seleccionadas de pequeñas parcelas de Gualtallary y San Pablo.",
+            origen: "Valle de Uco",
+            src: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=85",
+          },
+          {
+            titulo: "El Salón Nocturno",
+            subtitulo: "Ambiente & Brasas",
+            nota: "Iluminación en penumbra, madera maciza y el murmullo de la cocina abierta.",
+            origen: "Salón Principal",
+            src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85",
+          },
+        ],
+      },
+
+      productDetail: {
+        fallbackTag: "Brasa",
+        options: { required: "Punto de cocción", optional: "Guarnición adicional", requiredMark: "*", personalized: "Preferencia del corte" },
+        notes: { label: "Instrucciones para el asador", placeholder: "Ej. punto jugoso, poca sal, salsa aparte..." },
+        actions: {
+          add: "Marchar a la Brasa",
+          added: "Marchando",
+          chooseRequired: "Elegir punto de carne",
+          decreaseQuantity: "Menos",
+          increaseQuantity: "Más",
+          close: "Volver a la carta",
+        },
+      },
+
+      cart: {
+        eyebrow: "Servicio de Salón",
+        title: "Tu comanda",
+        emptyTitle: "Mesa sin comandas",
+        emptyDescription: "Seleccioná entradas, fuegos o pastas para iniciar el servicio.",
+        productSingular: "plato",
+        productPlural: "platos",
+        remove: "Quitar",
+        subtotal: "Subtotal de mesa",
+        continueDescription: "Revisá los pasos del menú antes de confirmar con el mozo.",
+        checkoutButton: "Marchar Pedido",
+        close: "Cerrar",
+        closeOrder: "Cerrar mesa",
+      },
+
+      checkout: {
+        disabled: { title: "Cocina fuera de turno", description: "El fuego se enciende únicamente para el servicio de cena." },
+        header: { backLabel: "Carta", title: "Comanda de Mesa", onlineLabel: "Servicio Online", tablePrefix: "Mesa" },
+        hero: { tableLabel: "Mesa", onlineLabel: "Comanda", title: "Tu Selección", description: "Revisá los platos y tiempos de cocina antes de marchar." },
+        selection: { label: "Platos seleccionados", units: "platos", perUnit: "c/u", remove: "Quitar", decrease: "Menos", increase: "Más" },
+        empty: { title: "Sin platos seleccionados", description: "Abrí la carta para elegir cortes o entradas.", button: "Ver Carta" },
+        form: {
+          fulfillmentLabel: "Servicio",
+          delivery: "Envío",
+          pickup: "Retiro en Salón",
+          customerNameLabel: "Nombre para la reserva / comanda",
+          customerNamePlaceholder: "Nombre y apellido",
+          addressLabel: "Dirección",
+          addressPlaceholder: "Calle y número",
+          paymentLabel: "Forma de Pago",
+          notesLabel: "Aclaraciones para cocina",
+          notesDeliveryPlaceholder: "Indicaciones para el despacho...",
+          notesTablePlaceholder: "Ej. servir entradas juntas, ritmo pausado...",
+        },
+        summary: { subtotal: "Consumo", cashPrefix: "Efectivo", total: "Total", completedLabel: "Listo para marchar", estimatedLabel: "Salida del fuego en" },
+        actions: { processing: "Marchando a cocina...", sendToKitchen: "Marchar a Cocina", newOrder: "Pedir otro plato", openWhatsApp: "Confirmar por WhatsApp", continueArrow: "Continuar" },
+        confirmation: {
+          preparedLabel: "Comanda Lista",
+          confirmedLabel: "En Fuego",
+          whatsAppDescription: "Enviá el mensaje para que el jefe de cocina comience el servicio.",
+          tableDescriptionPrefix: "La comanda ya está en el sector de fuegos",
+          kitchenTableSuffix: "",
+          preparedToastTitle: "Comanda lista",
+          preparedToastDescription: "Se abrirá WhatsApp para coordinar tu servicio.",
+          confirmedToastTitle: "Platos marchando",
+          confirmedToastDescriptionPrefix: "El asador comenzó la preparación",
+        },
+        validation: {
+          emptyTitle: "Comanda vacía",
+          emptyDescription: "Agregá al menos un plato a la mesa.",
+          nameTitle: "Nombre requerido",
+          nameDescription: "Identificá la comanda para el salón.",
+          addressTitle: "Falta dirección",
+          addressDescription: "Ingresá el destino del pedido.",
+          submitErrorTitle: "Error al enviar comanda",
+          submitErrorDescription: "Revisá la conexión con el salón.",
+        },
+        helper: { table: "La comanda ingresa directamente a la pantalla del jefe de fuegos.", online: "Se abrirá WhatsApp con el pedido detallado." },
+        aria: { decrease: "Disminuir", increase: "Aumentar", remove: "Quitar", openWhatsApp: "Abrir WhatsApp", newOrder: "Nuevo pedido" },
+      },
+
+      menuUi: {
+        productPersonalizable: "Punto de cocción",
+        viewDetail: "Detalle del plato",
+        prepLabel: "Tiempo brasa",
+        fallbackKitchen: "Cocina de fuegos",
+        choose: "Elegir cocción",
+        added: "Marchando",
+        add: "Pedir",
+        ariaViewProduct: "Ver plato",
+        categoryCountSingular: "corte / plato",
+        categoryCountPlural: "cortes / platos",
+        allCategories: "Toda la carta",
+        listView: "Carta",
+        gridView: "Fotos",
+        ariaListView: "Ver como carta clásica",
+        ariaGridView: "Ver como fotos",
+        ariaAllCategories: "Ver todas las categorías",
+      },
+
+      tableUi: {
+        serviceLabel: "Servicio de Mesa",
+        tablePrefix: "Mesa",
+        waiterButton: "Llamar al Mozo",
+        allCategories: "Carta completa",
+        listView: "Carta",
+        gridView: "Fotos",
+        ariaListView: "Ver carta",
+        ariaGridView: "Ver fotos",
+        ariaWaiter: "Solicitar asistencia del mozo",
+      },
+
+      cartUi: { ariaOpen: "Abrir comanda" },
+      navbarUi: {
+        themeDark: "NOCHE",
+        themeLight: "DÍA",
+        ariaChangeTheme: "Cambiar ambiente",
+        ariaOpenOrder: "Ver comanda",
+        ariaOpenMenu: "Abrir menú",
+        ariaCloseMenu: "Cerrar menú",
+        mobileNavigationLabel: "Secciones",
+      },
+      contactUi: { waitTimeTableLabel: "Fuegos", waitTimeDeliveryLabel: "Retiro", minutesSuffix: "min" },
+
+      menu: {
+        eyebrow: "Leña de Quebracho & Maduración",
+        title: "Carta de Fuegos",
+        subtitle: "Cortes con 35 días dry-aged, pastas elaboradas al momento y etiquetas de cava.",
+      },
+
+      ctaTransition: {
+        eyebrow: "Experiencia en Mesa",
+        titlePrefix: "Reservá tu lugar",
+        titleAccent: "junto al fuego.",
+        description: "Mesas individuales y espacios para encuentros privados alrededor de la cocina a la vista.",
+        buttonText: "Reservar Mesa",
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1920&q=85",
+      },
+
+      contact: {
+        eyebrow: "Reservas de Salón",
+        statusBadge: "Fuego Encendido",
+        mainLabel: "Salón Plaza Mitre",
+        title: "Vení a cenar.",
+        formEyebrow: "Mesa Especial",
+        formTitulo: "¿Querés reservar para una ocasión especial?",
+        formSubtitulo: "Cenas maridadas con nuestra cava, cumpleaños y encuentros corporativos.",
+        nameLabel: "Nombre completo",
+        phoneLabel: "Teléfono / WhatsApp",
+        emailLabel: "Correo electrónico",
+        messageLabel: "Fecha, horario y comensales",
+        submitSending: "Abriendo WhatsApp...",
+        submitSent: "Mensaje enviado ✓",
+        botonEnviar: "Consultar Reserva",
+        addressLabel: "Restaurante",
+        scheduleLabel: "Horarios de Turno",
+        mapEyebrow: "Ubicación",
+        directionsButton: "Cómo llegar",
+        instagramLabel: "Instagram",
+        whatsappLabel: "WhatsApp",
+        copyButton: "Copiar",
+        copiedButton: "Copiado",
+        mapsButton: "Abrir Maps",
+        receptionPrompt: "¿Querés organizar un evento cerrado en la cava?",
+        receptionButton: "Hablar con Sommelier",
+      },
+
+      waiterModal: {
+        eyebrow: "Mesa en Servicio",
+        callTitle: "Llamar al Mozo",
+        callSubtitle: "Sugerencias de maridaje, puntos de carne o vajilla",
+        callMessage: "Asistencia solicitada en mesa",
+        billTitle: "Solicitar la Cuenta",
+        billSubtitle: "Efectivo, Débito o Tarjetas corporativas",
+        paymentPrompt: "¿Cómo preferís abonar?",
+        sentTitle: "Aviso enviado al salón",
+        sentSubtitle: "El mozo se acerca a tu mesa:",
+        backButton: "Volver",
+        confirmButton: "Confirmar aviso",
+        errorMessage: "Error al comunicar con el salón.",
+      },
+
+      footer: {
+        backgroundImage: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=85",
+        description: "Fuego & Tierra · Cocina de Brasas y Cava Privada",
+        credits: "Gastro Engine Core",
+        navigationLabel: "Navegación",
+        contactLabel: "Contacto",
+        establishmentLabel: "El Salón",
+        hoursLabel: "Turnos",
+        socialsLabel: "Comunidad",
+        instagramLabel: "Instagram",
+        whatsappLabel: "WhatsApp",
+        locationLabel: "Dirección",
+        identityLabel: "Fuegos",
+        backToTop: "Volver arriba",
+      },
+    },
+  },
 
   menu: {
-    categories:
-      menuCategories,
-
-    products:
-      menuProducts,
+    categories: restaurantCategories,
+    products: restaurantProducts,
   },
 };

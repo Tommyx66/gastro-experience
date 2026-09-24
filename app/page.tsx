@@ -27,7 +27,6 @@ import ProductCard from "@/components/ui/ProductCard";
 import ProductDetailModal from "@/components/ui/ProductDetailModal";
 import CallWaiterModal from "@/components/ui/CallWaiterModal";
 import CartDrawer from "@/components/ui/CartDrawer";
-import DemoSwitcher from "@/components/ui/DemoSwitcher";
 
 import { BackgroundImageTexture } from "@/components/ui/bg-image-texture";
 import TextAnimate from "@/components/ui/text-animate";
@@ -39,7 +38,7 @@ import { GastroProvider, useGastro } from "@/context/gastro-context";
 
 /* =========================================================
    MENU EXPLORER
-   ========================================================= */
+========================================================= */
 
 function MenuExplorer({
   activeCategory,
@@ -123,7 +122,7 @@ function MenuExplorer({
 
 /* =========================================================
    CATEGORY RAIL
-   ========================================================= */
+========================================================= */
 
 function CategoryRail({
   activeTab,
@@ -160,7 +159,6 @@ function CategoryRail({
 
   return (
     <>
-      {/* MOBILE */}
       <div className="min-w-0 flex-1 sm:hidden">
         <div className="relative">
           <select
@@ -188,7 +186,6 @@ function CategoryRail({
         </div>
       </div>
 
-      {/* DESKTOP */}
       <div className="hidden min-w-0 flex-1 items-center gap-1.5 sm:flex">
         <button
           type="button"
@@ -216,12 +213,8 @@ function CategoryRail({
         <div
           ref={scrollRef}
           data-lenis-prevent="true"
-          onWheel={(event) =>
-            event.stopPropagation()
-          }
-          onTouchMove={(event) =>
-            event.stopPropagation()
-          }
+          onWheel={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
           className="min-w-0 flex-1 overflow-x-auto overflow-y-hidden overscroll-contain scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           <div className="flex w-max items-center gap-1.5 py-0.5 pr-1">
@@ -263,7 +256,7 @@ function CategoryRail({
 
 /* =========================================================
    VIEW MODE TOGGLE
-   ========================================================= */
+========================================================= */
 
 function ViewModeToggle({
   viewMode,
@@ -309,8 +302,8 @@ function ViewModeToggle({
 }
 
 /* =========================================================
-   CART FLOATING BUTTON (ABSOLUTO DERECHA)
-   ========================================================= */
+   CART FLOATING BUTTON (DERECHA)
+========================================================= */
 
 function CartFloatingButton() {
   const { config } = useGastro();
@@ -341,7 +334,7 @@ function CartFloatingButton() {
 
 /* =========================================================
    TABLE MODE
-   ========================================================= */
+========================================================= */
 
 function TableMode() {
   const { tableNumber } = useRestaurantContext();
@@ -430,7 +423,7 @@ function TableMode() {
 
 /* =========================================================
    PUBLIC MODE
-   ========================================================= */
+========================================================= */
 
 function PublicMode() {
   const { config } = useGastro();
@@ -492,7 +485,7 @@ function PublicMode() {
 
       <Footer />
 
-      {/* BOTONES FLOTANTES AISLADOS: IZQUIERDA Y DERECHA */}
+      {/* WHATSAPP ABAJO A LA IZQUIERDA Y COMANDA ABAJO A LA DERECHA */}
       <WhatsAppButton />
       <CartFloatingButton />
 
@@ -508,7 +501,7 @@ function PublicMode() {
 
 /* =========================================================
    RESTAURANT APP
-   ========================================================= */
+========================================================= */
 
 function RestaurantApp() {
   const { mode, tableNumber } = useRestaurantContext();
@@ -521,15 +514,14 @@ function RestaurantApp() {
 }
 
 /* =========================================================
-   HOME
-   ========================================================= */
+   HOME (SIN BOTÓN DE DEMOSWITCHER)
+========================================================= */
 
 export default function Home() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[var(--color-bg)]" />}>
       <GastroProvider>
         <RestaurantApp />
-        <DemoSwitcher />
       </GastroProvider>
     </Suspense>
   );

@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -18,15 +19,443 @@ import Image from "next/image";
 import {
   ArrowLeft,
   ArrowUpRight,
+  Beer,
+  Coffee,
   Flame,
+  IceCreamBowl,
   MapPin,
   Sparkles,
+  Utensils,
+  Wheat,
 } from "lucide-react";
 
 import { useGastro } from "@/context/gastro-context";
-import type { StoryArchiveItem } from "@/config/site";
+
+import type {
+  GastroStoryCardShape,
+  GastroStoryDensity,
+  GastroStoryImageTreatment,
+  GastroStoryLayout,
+  GastroStoryStyleConfig,
+  GastroStoryVariant,
+} from "@/presets/types";
+
+import type {
+  StoryArchiveItem,
+} from "@/config/site";
 
 const DRAG_THRESHOLD = 8;
+
+/* =========================================================
+   TYPES
+========================================================= */
+
+type StoryLabels = {
+  traceability: string;
+  closeSheet: string;
+  processLine: string;
+  openArchive: string;
+};
+
+type StoryRuntimeConfig = {
+  variant:
+    GastroStoryVariant;
+
+  layout:
+    GastroStoryLayout;
+
+  imageTreatment:
+    GastroStoryImageTreatment;
+
+  cardShape:
+    GastroStoryCardShape;
+
+  density:
+    GastroStoryDensity;
+
+  watermark:
+    boolean;
+
+  grain:
+    boolean;
+
+  numbering:
+    boolean;
+
+  motion: {
+    speed: number;
+
+    direction:
+      | "left"
+      | "right";
+
+    hoverLift: number;
+
+    parallax: boolean;
+
+    pauseOnHover: boolean;
+  };
+};
+
+/* =========================================================
+   STYLE PRESETS
+========================================================= */
+
+const STORY_VARIANT_DEFAULTS: Record<
+  GastroStoryVariant,
+  StoryRuntimeConfig
+> = {
+  fire: {
+    variant: "fire",
+    layout: "marquee",
+    imageTreatment: "film",
+    cardShape: "poster",
+    density: "balanced",
+    watermark: true,
+    grain: true,
+    numbering: true,
+    motion: {
+      speed: 0.8,
+      direction: "left",
+      hoverLift: 6,
+      parallax: true,
+      pauseOnHover: true,
+    },
+  },
+
+  ritual: {
+    variant: "ritual",
+    layout: "editorial",
+    imageTreatment: "natural",
+    cardShape: "soft",
+    density: "airy",
+    watermark: false,
+    grain: true,
+    numbering: false,
+    motion: {
+      speed: 0.34,
+      direction: "left",
+      hoverLift: 4,
+      parallax: true,
+      pauseOnHover: true,
+    },
+  },
+
+  taproom: {
+    variant: "taproom",
+    layout: "marquee",
+    imageTreatment: "highContrast",
+    cardShape: "poster",
+    density: "dense",
+    watermark: true,
+    grain: true,
+    numbering: true,
+    motion: {
+      speed: 1.15,
+      direction: "right",
+      hoverLift: 8,
+      parallax: false,
+      pauseOnHover: true,
+    },
+  },
+
+  atelier: {
+    variant: "atelier",
+    layout: "lookbook",
+    imageTreatment: "soft",
+    cardShape: "framed",
+    density: "airy",
+    watermark: true,
+    grain: true,
+    numbering: false,
+    motion: {
+      speed: 0.32,
+      direction: "left",
+      hoverLift: 3,
+      parallax: true,
+      pauseOnHover: true,
+    },
+  },
+
+  gelateria: {
+    variant: "gelateria",
+    layout: "stacked",
+    imageTreatment: "natural",
+    cardShape: "soft",
+    density: "airy",
+    watermark: false,
+    grain: false,
+    numbering: false,
+    motion: {
+      speed: 0.42,
+      direction: "left",
+      hoverLift: 10,
+      parallax: true,
+      pauseOnHover: true,
+    },
+  },
+
+  cantina: {
+    variant: "cantina",
+    layout: "lookbook",
+    imageTreatment: "sepia",
+    cardShape: "ticket",
+    density: "balanced",
+    watermark: true,
+    grain: true,
+    numbering: true,
+    motion: {
+      speed: 0.42,
+      direction: "left",
+      hoverLift: 2,
+      parallax: false,
+      pauseOnHover: true,
+    },
+  },
+
+  hospitality: {
+    variant: "hospitality",
+    layout: "editorial",
+    imageTreatment: "natural",
+    cardShape: "poster",
+    density: "airy",
+    watermark: false,
+    grain: false,
+    numbering: true,
+    motion: {
+      speed: 0.5,
+      direction: "left",
+      hoverLift: 5,
+      parallax: true,
+      pauseOnHover: true,
+    },
+  },
+};
+
+/* =========================================================
+   ICONS
+========================================================= */
+
+const STORY_ICONS = {
+  fire: Flame,
+  ritual: Coffee,
+  taproom: Beer,
+  atelier: Wheat,
+  gelateria: IceCreamBowl,
+  cantina: Utensils,
+  hospitality: Sparkles,
+} as const;
+
+/* =========================================================
+   IMAGE TREATMENT
+========================================================= */
+
+const IMAGE_TREATMENTS: Record<
+  GastroStoryImageTreatment,
+  string
+> = {
+  film: `
+    brightness-[0.63]
+    contrast-[1.06]
+    saturate-[0.86]
+    grayscale-[0.08]
+  `,
+
+  natural: `
+    brightness-[0.94]
+    contrast-[0.98]
+    saturate-[1.02]
+  `,
+
+  grain: `
+    brightness-[0.68]
+    contrast-[1.08]
+    saturate-[0.82]
+    grayscale-[0.08]
+  `,
+
+  sepia: `
+    brightness-[0.68]
+    contrast-[1.08]
+    saturate-[0.72]
+    sepia-[0.28]
+  `,
+
+  soft: `
+    brightness-[0.88]
+    contrast-[0.95]
+    saturate-[0.9]
+  `,
+
+  highContrast: `
+    brightness-[0.54]
+    contrast-[1.22]
+    saturate-[0.76]
+  `,
+};
+
+/* =========================================================
+   CARD SHAPES
+========================================================= */
+
+const CARD_SHAPES: Record<
+  GastroStoryCardShape,
+  string
+> = {
+  rect: `
+    rounded-none
+  `,
+
+  soft: `
+    rounded-[1.35rem]
+    border-[var(--color-border)]
+  `,
+
+  framed: `
+    rounded-none
+    border-2
+    border-[var(--color-text)]/20
+    p-1
+    bg-[var(--color-surface)]
+  `,
+
+  poster: `
+    rounded-none
+  `,
+
+  ticket: `
+    rounded-sm
+    border-dashed
+    border-[var(--color-text)]/22
+  `,
+};
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function mergeStoryStyle(
+  config:
+    | GastroStoryStyleConfig
+    | undefined,
+): StoryRuntimeConfig {
+  const variant =
+    config?.variant ??
+    "fire";
+
+  const defaults =
+    STORY_VARIANT_DEFAULTS[
+      variant
+    ];
+
+  return {
+    ...defaults,
+    ...config,
+
+    motion: {
+      ...defaults.motion,
+      ...config?.motion,
+    },
+  };
+}
+
+function getDensityClasses(
+  density:
+    GastroStoryDensity,
+) {
+  switch (density) {
+    case "airy":
+      return {
+        section:
+          "py-16 sm:py-20 md:py-28",
+        gap:
+          "gap-5 sm:gap-6 lg:gap-7",
+        card:
+          "h-[400px] w-[260px] sm:h-[470px] sm:w-[320px] md:h-[540px] md:w-[355px]",
+      };
+
+    case "dense":
+      return {
+        section:
+          "py-12 sm:py-16 md:py-20",
+        gap:
+          "gap-3 sm:gap-4 lg:gap-5",
+        card:
+          "h-[410px] w-[270px] sm:h-[470px] sm:w-[315px] md:h-[520px] md:w-[345px]",
+      };
+
+    case "balanced":
+    default:
+      return {
+        section:
+          "py-14 sm:py-18 md:py-24",
+        gap:
+          "gap-4 sm:gap-5 lg:gap-6",
+        card:
+          "h-[440px] w-[280px] sm:h-[500px] sm:w-[330px] md:h-[560px] md:w-[370px]",
+      };
+  }
+}
+
+function getLayoutClasses(
+  layout:
+    GastroStoryLayout,
+) {
+  switch (layout) {
+    case "editorial":
+      return {
+        columns:
+          "lg:grid-cols-[240px_minmax(0,1fr)]",
+        gap:
+          "lg:gap-20",
+        header:
+          "mb-7 sm:mb-8",
+        cardRadius:
+          "rounded-[1.2rem]",
+      };
+
+    case "stacked":
+      return {
+        columns:
+          "lg:grid-cols-[200px_minmax(0,1fr)]",
+        gap:
+          "lg:gap-10",
+        header:
+          "mb-4 sm:mb-5",
+        cardRadius:
+          "rounded-[1.5rem]",
+      };
+
+    case "lookbook":
+      return {
+        columns:
+          "lg:grid-cols-[260px_minmax(0,1fr)]",
+        gap:
+          "lg:gap-16",
+        header:
+          "mb-6 sm:mb-7",
+        cardRadius:
+          "rounded-none",
+      };
+
+    case "marquee":
+    default:
+      return {
+        columns:
+          "lg:grid-cols-[280px_minmax(0,1fr)]",
+        gap:
+          "lg:gap-14",
+        header:
+          "mb-5",
+        cardRadius:
+          "rounded-none",
+      };
+  }
+}
+
+/* =========================================================
+   COMPONENT
+========================================================= */
 
 export default function ChefStoryMarquee() {
   const containerRef =
@@ -64,8 +493,10 @@ export default function ChefStoryMarquee() {
     null,
   );
 
-  const { config } =
-    useGastro();
+  const {
+    config,
+    preset,
+  } = useGastro();
 
   const story =
     config.content.story;
@@ -73,31 +504,109 @@ export default function ChefStoryMarquee() {
   const bitacora =
     story.archive ?? [];
 
-  const extendedArchive = [
-    ...bitacora,
-    ...bitacora,
-  ];
+  const storyStyle =
+    useMemo(
+      () =>
+        mergeStoryStyle(
+          preset.visual?.story,
+        ),
+      [preset.visual?.story],
+    );
 
-  const { scrollYProgress } =
-    useScroll({
-      target: containerRef,
-      offset: [
-        "start end",
-        "end start",
+  const densityClasses =
+    useMemo(
+      () =>
+        getDensityClasses(
+          storyStyle.density,
+        ),
+      [storyStyle.density],
+    );
+
+  const layoutClasses =
+    useMemo(
+      () =>
+        getLayoutClasses(
+          storyStyle.layout,
+        ),
+      [storyStyle.layout],
+    );
+
+  const StoryIcon =
+    STORY_ICONS[
+      storyStyle.variant
+    ];
+
+  const imageTreatment =
+    IMAGE_TREATMENTS[
+      storyStyle.imageTreatment
+    ];
+
+  const storyLabels =
+    useMemo<StoryLabels>(
+      () => ({
+        traceability:
+          story.labels.traceability ??
+          "Trazabilidad",
+
+        closeSheet:
+          story.labels.closeSheet ??
+          "Cerrar Ficha",
+
+        processLine:
+          (
+            story.labels as Partial<
+              StoryLabels
+            >
+          ).processLine ??
+          "Proceso",
+
+        openArchive:
+          (
+            story.labels as Partial<
+              StoryLabels
+            >
+          ).openArchive ??
+          "Explorar archivo",
+      }),
+      [story.labels],
+    );
+
+  const extendedArchive =
+    useMemo(
+      () => [
+        ...bitacora,
+        ...bitacora,
       ],
-    });
+      [bitacora],
+    );
 
-  const imageY = useTransform(
+  const {
     scrollYProgress,
-    [0, 1],
-    ["-9%", "9%"],
-  );
+  } = useScroll({
+    target: containerRef,
+    offset: [
+      "start end",
+      "end start",
+    ],
+  });
 
-  const watermarkY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["7%", "-5%"],
-  );
+  const imageY =
+    useTransform(
+      scrollYProgress,
+      [0, 1],
+      ["-8%", "8%"],
+    );
+
+  const watermarkY =
+    useTransform(
+      scrollYProgress,
+      [0, 1],
+      ["6%", "-5%"],
+    );
+
+  /* =======================================================
+     AUTO SCROLL / DRAG
+  ======================================================== */
 
   useEffect(() => {
     const carousel =
@@ -105,7 +614,8 @@ export default function ChefStoryMarquee() {
 
     if (
       !carousel ||
-      bitacora.length === 0
+      bitacora.length === 0 ||
+      storyStyle.motion.speed <= 0
     ) {
       return;
     }
@@ -147,25 +657,45 @@ export default function ChefStoryMarquee() {
         }, duration);
     };
 
+    const normalizePosition = (
+      position: number,
+      halfWidth: number,
+    ) => {
+      if (halfWidth <= 0) {
+        return position;
+      }
+
+      const normalized =
+        position % halfWidth;
+
+      return normalized < 0
+        ? normalized + halfWidth
+        : normalized;
+    };
+
     const tick = () => {
       if (
         !interactingRef.current &&
         !dragRef.current.dragging
       ) {
+        const direction =
+          storyStyle.motion.direction ===
+          "right"
+            ? 1
+            : -1;
+
         autoScrollPositionRef.current +=
-          0.8;
+          storyStyle.motion.speed *
+          direction;
 
         const halfWidth =
           carousel.scrollWidth / 2;
 
-        if (
-          halfWidth > 0 &&
-          autoScrollPositionRef.current >=
-            halfWidth
-        ) {
-          autoScrollPositionRef.current -=
-            halfWidth;
-        }
+        autoScrollPositionRef.current =
+          normalizePosition(
+            autoScrollPositionRef.current,
+            halfWidth,
+          );
 
         carousel.scrollLeft =
           autoScrollPositionRef.current;
@@ -180,6 +710,14 @@ export default function ChefStoryMarquee() {
 
     const handleWheel = () => {
       pauseTemporarily(1000);
+    };
+
+    const handleMouseEnter = () => {
+      if (
+        storyStyle.motion.pauseOnHover
+      ) {
+        pauseTemporarily(1200);
+      }
     };
 
     const handlePointerDown = (
@@ -309,6 +847,11 @@ export default function ChefStoryMarquee() {
     );
 
     carousel.addEventListener(
+      "mouseenter",
+      handleMouseEnter,
+    );
+
+    carousel.addEventListener(
       "pointerdown",
       handlePointerDown,
     );
@@ -361,6 +904,11 @@ export default function ChefStoryMarquee() {
       );
 
       carousel.removeEventListener(
+        "mouseenter",
+        handleMouseEnter,
+      );
+
+      carousel.removeEventListener(
         "pointerdown",
         handlePointerDown,
       );
@@ -385,7 +933,16 @@ export default function ChefStoryMarquee() {
         stopDrag,
       );
     };
-  }, [bitacora.length]);
+  }, [
+    bitacora.length,
+    storyStyle.motion.direction,
+    storyStyle.motion.pauseOnHover,
+    storyStyle.motion.speed,
+  ]);
+
+  /* =======================================================
+     BODY LOCK
+  ======================================================== */
 
   useEffect(() => {
     if (!zoomedItem) {
@@ -403,6 +960,10 @@ export default function ChefStoryMarquee() {
         previousOverflow;
     };
   }, [zoomedItem]);
+
+  /* =======================================================
+     ESCAPE
+  ======================================================== */
 
   useEffect(() => {
     const handleEscape = (
@@ -426,6 +987,10 @@ export default function ChefStoryMarquee() {
     };
   }, []);
 
+  /* =======================================================
+     EMPTY STATE
+  ======================================================== */
+
   if (!bitacora.length) {
     return null;
   }
@@ -434,51 +999,54 @@ export default function ChefStoryMarquee() {
     <>
       <section
         id="historia"
-        className="
-          relative
-          w-full
-          overflow-hidden
-          border-t
-          border-[var(--color-border)]
-          bg-[var(--color-surface)]
-          text-[var(--color-text)]
-          transition-colors duration-500
-        "
+        className={[
+          "relative",
+          "w-full",
+          "overflow-hidden",
+          "border-t",
+          "border-[var(--color-border)]",
+          "bg-[var(--color-surface)]",
+          "text-[var(--color-text)]",
+          "transition-colors",
+          "duration-500",
+          densityClasses.section,
+        ].join(" ")}
       >
-        {/* =======================================================
-            BREATHING ROOM
-        ======================================================== */}
+        {/* ===================================================
+            OPENING SPACE
+        ==================================================== */}
 
         <div
           className="
-            h-20
+            h-16
             w-full
             bg-[var(--color-bg)]
-            sm:h-28
-            md:h-36
-            lg:h-44
+            sm:h-24
+            md:h-32
           "
         />
 
-        {/* =======================================================
+        {/* ===================================================
             OPENING IMAGE
-        ======================================================== */}
+        ==================================================== */}
 
         <div
           ref={containerRef}
           className="
             relative
-            h-[58vh]
+            h-[54vh]
             min-h-[420px]
             w-full
             overflow-hidden
-            sm:h-[66vh]
-            md:h-[74vh]
+            sm:h-[62vh]
+            md:h-[70vh]
           "
         >
           <motion.div
             style={{
-              y: imageY,
+              y: storyStyle.motion.parallax
+                ? imageY
+                : 0,
             }}
             className="
               absolute
@@ -486,19 +1054,24 @@ export default function ChefStoryMarquee() {
             "
           >
             <Image
-              src={story.backgroundImage}
+              src={
+                story.backgroundImage
+              }
               alt=""
               fill
               sizes="100vw"
-              className="
-                object-cover
-                brightness-[0.5]
-                contrast-[1.08]
-                grayscale
-                opacity-[0.72]
-              "
+              className={[
+                "object-cover",
+                "transition-transform",
+                "duration-700",
+                imageTreatment,
+              ].join(" ")}
             />
           </motion.div>
+
+          {/* =================================================
+              OVERLAY
+          ================================================== */}
 
           <div
             className="
@@ -506,8 +1079,8 @@ export default function ChefStoryMarquee() {
               inset-0
               bg-gradient-to-t
               from-[var(--color-surface)]
-              via-[var(--color-surface)]/48
-              to-[var(--color-surface)]/6
+              via-[var(--color-surface)]/45
+              to-transparent
             "
           />
 
@@ -516,11 +1089,66 @@ export default function ChefStoryMarquee() {
               absolute
               inset-0
               bg-gradient-to-r
-              from-[var(--color-surface)]/58
+              from-[var(--color-surface)]/55
               via-transparent
               to-transparent
             "
           />
+
+          {storyStyle.variant ===
+            "taproom" && (
+            <div
+              className="
+                absolute
+                inset-0
+                bg-[radial-gradient(circle_at_72%_30%,transparent_0%,transparent_16%,rgba(0,0,0,0.28)_100%)]
+              "
+            />
+          )}
+
+          {storyStyle.variant ===
+            "atelier" && (
+            <div
+              className="
+                absolute
+                inset-0
+                bg-gradient-to-b
+                from-transparent
+                via-[var(--color-surface)]/12
+                to-[var(--color-surface)]/84
+              "
+            />
+          )}
+
+          {storyStyle.variant ===
+            "gelateria" && (
+            <div
+              className="
+                absolute
+                inset-0
+                bg-gradient-to-b
+                from-white/12
+                via-transparent
+                to-[var(--color-surface)]/82
+              "
+            />
+          )}
+
+          {storyStyle.variant ===
+            "cantina" && (
+            <div
+              className="
+                absolute
+                inset-0
+                bg-[#2a1f15]/20
+                mix-blend-multiply
+              "
+            />
+          )}
+
+          {/* =================================================
+              RAIL
+          ================================================== */}
 
           <div
             className="
@@ -533,41 +1161,72 @@ export default function ChefStoryMarquee() {
             "
           />
 
-          <motion.div
-            style={{
-              y: watermarkY,
-            }}
-            className="
-              absolute
-              bottom-[4%]
-              left-0
-              whitespace-nowrap
-              pl-4
-              sm:pl-8
-              md:pl-12
-              lg:pl-16
-            "
-          >
-            <span
-              className="
-                select-none
-                text-[clamp(5rem,18vw,18rem)]
-                font-black
-                uppercase
-                leading-none
-                tracking-[-0.08em]
-                text-transparent
-              "
-              style={{
-                WebkitTextStroke:
-                  "1px color-mix(in srgb, var(--color-accent) 30%, transparent)",
-              }}
-            >
-              {story.watermark}
-            </span>
-          </motion.div>
+          {/* =================================================
+              GRAIN
+          ================================================== */}
 
-          {/* OPENING COPY */}
+          {storyStyle.grain && (
+            <div
+              className="
+                pointer-events-none
+                absolute
+                inset-0
+                opacity-[0.12]
+                mix-blend-overlay
+                [background-image:url('/noise.png')]
+                [background-size:180px_180px]
+              "
+            />
+          )}
+
+          {/* =================================================
+              WATERMARK
+          ================================================== */}
+
+          {storyStyle.watermark && (
+            <motion.div
+              style={{
+                y: storyStyle.motion
+                  .parallax
+                  ? watermarkY
+                  : 0,
+              }}
+              className="
+                absolute
+                bottom-[4%]
+                left-0
+                whitespace-nowrap
+                pl-4
+                sm:pl-8
+                md:pl-12
+                lg:pl-16
+              "
+            >
+              <span
+                className="
+                  select-none
+                  text-[clamp(5rem,18vw,18rem)]
+                  font-black
+                  uppercase
+                  leading-none
+                  tracking-[-0.08em]
+                  text-transparent
+                "
+                style={{
+                  WebkitTextStroke:
+                    "1px color-mix(in srgb, var(--color-accent) 30%, transparent)",
+                }}
+              >
+                {
+                  story.watermark
+                }
+              </span>
+            </motion.div>
+          )}
+
+          {/* =================================================
+              COPY
+          ================================================== */}
 
           <div
             className="
@@ -616,7 +1275,7 @@ export default function ChefStoryMarquee() {
                   gap-3
                 "
               >
-                <Flame
+                <StoryIcon
                   size={12}
                   strokeWidth={1.6}
                   className="
@@ -669,28 +1328,50 @@ export default function ChefStoryMarquee() {
                       1,
                     ],
                   }}
-                  className="
+                  className={`
                     max-w-[1050px]
                     text-[clamp(2.8rem,8vw,8.5rem)]
                     font-black
                     uppercase
                     leading-[0.83]
                     tracking-[-0.06em]
-                  "
+                    ${
+                      storyStyle.variant ===
+                      "gelateria"
+                        ? "text-[var(--color-text)]"
+                        : ""
+                    }
+                  `}
                 >
-                  {story.titlePrefix}
+                  {
+                    story.titlePrefix
+                  }
 
                   <span
-                    className="
+                    className={`
                       block
                       font-serif
                       font-light
                       italic
                       tracking-[-0.035em]
                       text-[var(--color-accent)]
-                    "
+                      ${
+                        storyStyle.variant ===
+                        "taproom"
+                          ? "font-sans not-italic tracking-[-0.055em]"
+                          : ""
+                      }
+                      ${
+                        storyStyle.variant ===
+                        "atelier"
+                          ? "tracking-[-0.05em]"
+                          : ""
+                      }
+                    `}
                   >
-                    {story.titleAccent}
+                    {
+                      story.titleAccent
+                    }
                   </span>
                 </motion.h2>
 
@@ -711,12 +1392,18 @@ export default function ChefStoryMarquee() {
                     duration: 0.7,
                     delay: 0.12,
                   }}
-                  className="
+                  className={`
                     max-w-sm
                     border-l
                     border-[var(--color-accent)]
                     pl-4
-                  "
+                    ${
+                      storyStyle.variant ===
+                      "gelateria"
+                        ? "rounded-r-lg bg-white/12 py-3 pr-4 backdrop-blur-sm"
+                        : ""
+                    }
+                  `}
                 >
                   <p
                     className="
@@ -727,7 +1414,9 @@ export default function ChefStoryMarquee() {
                       sm:text-sm
                     "
                   >
-                    {story.primaryDescription}
+                    {
+                      story.primaryDescription
+                    }
                   </p>
                 </motion.div>
               </div>
@@ -735,34 +1424,32 @@ export default function ChefStoryMarquee() {
           </div>
         </div>
 
-        {/* =======================================================
-            CONTENT / ARCHIVE
-        ======================================================== */}
+        {/* ===================================================
+            ARCHIVE
+        ==================================================== */}
 
         <div
           className="
             relative
             z-10
-            py-14
-            sm:py-18
-            md:py-24
           "
         >
           <div
-            className="
-              mx-auto
-              grid
-              max-w-[1600px]
-              gap-10
-              px-4
-              sm:px-8
-              md:px-12
-              lg:grid-cols-[280px_minmax(0,1fr)]
-              lg:gap-14
-              lg:px-16
-            "
+            className={[
+              "mx-auto",
+              "grid",
+              "max-w-[1600px]",
+              "px-4",
+              "sm:px-8",
+              "md:px-12",
+              "lg:px-16",
+              layoutClasses.columns,
+              layoutClasses.gap,
+            ].join(" ")}
           >
-            {/* LEFT COLUMN */}
+            {/* =================================================
+                LEFT
+            ================================================== */}
 
             <div
               className="
@@ -811,7 +1498,9 @@ export default function ChefStoryMarquee() {
                       text-[var(--color-text-subtle)]
                     "
                   >
-                    {story.sectionTag}
+                    {
+                      story.sectionTag
+                    }
                   </span>
                 </div>
 
@@ -825,7 +1514,9 @@ export default function ChefStoryMarquee() {
                     sm:text-base
                   "
                 >
-                  {story.secondaryDescription}
+                  {
+                    story.secondaryDescription
+                  }
                 </p>
               </div>
 
@@ -847,7 +1538,9 @@ export default function ChefStoryMarquee() {
                       text-[var(--color-text-subtle)]
                     "
                   >
-                    {story.labels.processLine}
+                    {
+                      storyLabels.processLine
+                    }
                   </span>
 
                   <div
@@ -875,26 +1568,40 @@ export default function ChefStoryMarquee() {
                         text-[var(--color-accent)]
                       "
                     >
-                      Archive
+                      {storyStyle.variant ===
+                      "taproom"
+                        ? "Brewhouse"
+                        : storyStyle.variant ===
+                            "atelier"
+                          ? "Obrador"
+                          : storyStyle.variant ===
+                              "gelateria"
+                            ? "Laboratorio"
+                            : storyStyle.variant ===
+                                "cantina"
+                              ? "Cantina"
+                              : "Archive"}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT / MARQUEE */}
+            {/* =================================================
+                RIGHT
+            ================================================== */}
 
             <div className="min-w-0">
               <div
-                className="
-                  mb-5
-                  flex
-                  items-end
-                  justify-between
-                  border-b
-                  border-[var(--color-border)]
-                  pb-4
-                "
+                className={[
+                  "flex",
+                  "items-end",
+                  "justify-between",
+                  "border-b",
+                  "border-[var(--color-border)]",
+                  "pb-4",
+                  layoutClasses.header,
+                ].join(" ")}
               >
                 <span
                   className="
@@ -905,7 +1612,9 @@ export default function ChefStoryMarquee() {
                     text-[var(--color-text-subtle)]
                   "
                 >
-                  {story.labels.openArchive}
+                  {
+                    storyLabels.openArchive
+                  }
                 </span>
 
                 <span
@@ -919,7 +1628,10 @@ export default function ChefStoryMarquee() {
                 >
                   {String(
                     bitacora.length,
-                  ).padStart(2, "0")}{" "}
+                  ).padStart(
+                    2,
+                    "0",
+                  )}{" "}
                   entries
                 </span>
               </div>
@@ -940,7 +1652,8 @@ export default function ChefStoryMarquee() {
                   active:cursor-grabbing
                 "
                 style={{
-                  scrollbarWidth: "none",
+                  scrollbarWidth:
+                    "none",
                   msOverflowStyle:
                     "none",
                   maskImage:
@@ -950,15 +1663,14 @@ export default function ChefStoryMarquee() {
                 }}
               >
                 <div
-                  className="
-                    flex
-                    w-max
-                    shrink-0
-                    gap-4
-                    pr-8
-                    sm:gap-5
-                    sm:pr-10
-                  "
+                  className={[
+                    "flex",
+                    "w-max",
+                    "shrink-0",
+                    densityClasses.gap,
+                    "pr-8",
+                    "sm:pr-10",
+                  ].join(" ")}
                 >
                   {extendedArchive.map(
                     (
@@ -970,6 +1682,20 @@ export default function ChefStoryMarquee() {
                           bitacora.length) +
                         1;
 
+                      const isLookbook =
+                        storyStyle.layout ===
+                        "lookbook";
+
+                      const lookbookWidth =
+                        isLookbook &&
+                        index % 3 === 1
+                          ? "md:w-[410px]"
+                          : "";
+
+                      const shouldRound =
+                        storyStyle.cardShape ===
+                        "soft";
+
                       return (
                         <motion.button
                           key={`${item.titulo}-${index}`}
@@ -980,32 +1706,38 @@ export default function ChefStoryMarquee() {
                             )
                           }
                           whileHover={{
-                            y: -6,
+                            y:
+                              storyStyle.motion
+                                .hoverLift,
                           }}
                           whileTap={{
                             scale: 0.99,
                           }}
-                          className="
-                            group
-                            relative
-                            h-[440px]
-                            w-[280px]
-                            shrink-0
-                            cursor-pointer
-                            overflow-hidden
-                            border
-                            border-[var(--color-text)]/12
-                            bg-[var(--color-bg)]
-                            text-left
-                            transition-all
-                            duration-500
-                            hover:border-[var(--color-accent-border)]
-                            sm:h-[500px]
-                            sm:w-[330px]
-                            md:h-[560px]
-                            md:w-[370px]
-                          "
-                          aria-label={`${story.labels.openArchive}: ${item.titulo}`}
+                          className={[
+                            "group",
+                            "relative",
+                            "shrink-0",
+                            "cursor-pointer",
+                            "overflow-hidden",
+                            "border",
+                            "border-[var(--color-text)]/12",
+                            "bg-[var(--color-bg)]",
+                            "text-left",
+                            "transition-all",
+                            "duration-500",
+                            "hover:border-[var(--color-accent-border)]",
+                            CARD_SHAPES[
+                              storyStyle.cardShape
+                            ],
+                            densityClasses.card,
+                            lookbookWidth,
+                            shouldRound
+                              ? layoutClasses.cardRadius
+                              : "",
+                          ].join(
+                            " ",
+                          )}
+                          aria-label={`${storyLabels.openArchive}: ${item.titulo}`}
                         >
                           <Image
                             src={item.src}
@@ -1014,40 +1746,71 @@ export default function ChefStoryMarquee() {
                             sizes="
                               (max-width: 640px) 280px,
                               (max-width: 768px) 330px,
-                              370px
+                              410px
                             "
-                            className="
-                              object-cover
-                              brightness-[0.63]
-                              contrast-[1.06]
-                              grayscale-[0.12]
-                              transition-transform
-                              duration-[900ms]
-                              ease-[cubic-bezier(0.16,1,0.3,1)]
-                              group-hover:scale-[1.055]
-                              group-hover:brightness-[0.78]
-                            "
+                            className={[
+                              "object-cover",
+                              "transition-transform",
+                              "duration-[900ms]",
+                              "ease-[cubic-bezier(0.16,1,0.3,1)]",
+                              imageTreatment,
+                              "group-hover:scale-[1.055]",
+                            ].join(
+                              " ",
+                            )}
                           />
 
                           <div
-                            className="
+                            className={`
                               absolute
                               inset-0
                               bg-gradient-to-t
-                              from-black
-                              via-black/30
-                              to-black/5
-                            "
+                              ${
+                                storyStyle.variant ===
+                                "gelateria"
+                                  ? "from-[#231b16]/72 via-[#231b16]/20 to-transparent"
+                                  : "from-black via-black/25 to-transparent"
+                              }
+                            `}
                           />
 
-                          <div
-                            className="
-                              absolute
-                              inset-0
-                              bg-[linear-gradient(135deg,transparent_40%,rgba(255,255,255,0.08)_100%)]
-                              opacity-60
-                            "
-                          />
+                          {storyStyle.grain && (
+                            <div
+                              className="
+                                pointer-events-none
+                                absolute
+                                inset-0
+                                opacity-[0.11]
+                                mix-blend-overlay
+                                [background-image:url('/noise.png')]
+                                [background-size:180px_180px]
+                              "
+                            />
+                          )}
+
+                          {storyStyle.variant ===
+                            "taproom" && (
+                            <div
+                              className="
+                                absolute
+                                inset-0
+                                bg-[linear-gradient(135deg,transparent_38%,rgba(255,255,255,0.09)_100%)]
+                              "
+                            />
+                          )}
+
+                          {storyStyle.variant ===
+                            "atelier" && (
+                            <div
+                              className="
+                                absolute
+                                inset-1
+                                border
+                                border-white/22
+                                pointer-events-none
+                              "
+                            />
+                          )}
 
                           <div
                             className="
@@ -1062,31 +1825,35 @@ export default function ChefStoryMarquee() {
                             "
                           >
                             <div className="flex items-center gap-3">
-                              <span
-                                className="
-                                  font-mono
-                                  text-[8px]
-                                  font-bold
-                                  uppercase
-                                  tracking-[0.22em]
-                                  text-[var(--color-accent)]
-                                "
-                              >
-                                {String(
-                                  itemNumber,
-                                ).padStart(
-                                  2,
-                                  "0",
-                                )}
-                              </span>
+                              {storyStyle.numbering && (
+                                <>
+                                  <span
+                                    className="
+                                      font-mono
+                                      text-[8px]
+                                      font-bold
+                                      uppercase
+                                      tracking-[0.22em]
+                                      text-[var(--color-accent)]
+                                    "
+                                  >
+                                    {String(
+                                      itemNumber,
+                                    ).padStart(
+                                      2,
+                                      "0",
+                                    )}
+                                  </span>
 
-                              <span
-                                className="
-                                  h-px
-                                  w-7
-                                  bg-[var(--color-accent)]
-                                "
-                              />
+                                  <span
+                                    className="
+                                      h-px
+                                      w-7
+                                      bg-[var(--color-accent)]
+                                    "
+                                  />
+                                </>
+                              )}
 
                               <span
                                 className="
@@ -1098,7 +1865,9 @@ export default function ChefStoryMarquee() {
                                   text-white/72
                                 "
                               >
-                                {item.subtitulo}
+                                {
+                                  item.subtitulo
+                                }
                               </span>
                             </div>
 
@@ -1142,7 +1911,7 @@ export default function ChefStoryMarquee() {
                             "
                           >
                             <span
-                              className="
+                              className={`
                                 mb-2
                                 block
                                 max-w-[92%]
@@ -1152,9 +1921,23 @@ export default function ChefStoryMarquee() {
                                 leading-[0.92]
                                 tracking-[-0.035em]
                                 text-white
-                              "
+                                ${
+                                  storyStyle.variant ===
+                                  "atelier"
+                                    ? "font-serif normal-case italic tracking-[-0.02em]"
+                                    : ""
+                                }
+                                ${
+                                  storyStyle.variant ===
+                                  "gelateria"
+                                    ? "normal-case tracking-[-0.025em]"
+                                    : ""
+                                }
+                              `}
                             >
-                              {item.titulo}
+                              {
+                                item.titulo
+                              }
                             </span>
 
                             <span
@@ -1177,7 +1960,9 @@ export default function ChefStoryMarquee() {
                                 "
                               />
 
-                              {item.origen}
+                              {
+                                item.origen
+                              }
                             </span>
                           </div>
                         </motion.button>
@@ -1204,7 +1989,16 @@ export default function ChefStoryMarquee() {
                     text-[var(--color-text-subtle)]
                   "
                 >
-                  Drag to explore
+                  {storyStyle.variant ===
+                  "taproom"
+                    ? "Drag the taproom"
+                    : storyStyle.variant ===
+                        "atelier"
+                      ? "Explore the atelier"
+                      : storyStyle.variant ===
+                          "gelateria"
+                        ? "Explore flavors"
+                        : "Drag to explore"}
                 </span>
 
                 <div
@@ -1231,7 +2025,9 @@ export default function ChefStoryMarquee() {
                       text-[var(--color-text-subtle)]
                     "
                   >
-                    {story.labels.openArchive}
+                    {
+                      storyLabels.openArchive
+                    }
                   </span>
                 </div>
               </div>
@@ -1240,9 +2036,9 @@ export default function ChefStoryMarquee() {
         </div>
       </section>
 
-      {/* =========================================================
+      {/* =======================================================
           DETAIL SHEET
-      ========================================================== */}
+      ======================================================== */}
 
       <AnimatePresence>
         {zoomedItem && (
@@ -1297,7 +2093,7 @@ export default function ChefStoryMarquee() {
                 ],
               }}
               data-lenis-prevent="true"
-              className="
+              className={`
                 relative
                 flex
                 max-h-full
@@ -1309,13 +2105,21 @@ export default function ChefStoryMarquee() {
                 shadow-[0_40px_120px_rgba(0,0,0,0.55)]
                 sm:max-w-6xl
                 md:flex-row
-              "
+                ${
+                  storyStyle.cardShape ===
+                  "soft"
+                    ? "rounded-[1.5rem]"
+                    : ""
+                }
+              `}
               role="dialog"
               aria-modal="true"
               aria-label={
                 zoomedItem.titulo
               }
-              onClick={(event) =>
+              onClick={(
+                event,
+              ) =>
                 event.stopPropagation()
               }
             >
@@ -1329,17 +2133,24 @@ export default function ChefStoryMarquee() {
                 "
               >
                 <Image
-                  src={zoomedItem.src}
+                  src={
+                    zoomedItem.src
+                  }
                   alt={
                     zoomedItem.titulo
                   }
                   fill
                   sizes="(max-width: 768px) 100vw, 58vw"
-                  className="
-                    object-cover
-                    brightness-[0.78]
-                    contrast-[1.04]
-                  "
+                  className={[
+                    "object-cover",
+                    "brightness-[0.82]",
+                    "contrast-[1.04]",
+                    IMAGE_TREATMENTS[
+                      storyStyle.imageTreatment
+                    ],
+                  ].join(
+                    " ",
+                  )}
                 />
 
                 <div
@@ -1368,7 +2179,9 @@ export default function ChefStoryMarquee() {
                     sm:top-7
                   "
                 >
-                  {zoomedItem.subtitulo}
+                  {
+                    zoomedItem.subtitulo
+                  }
                 </div>
               </div>
 
@@ -1397,7 +2210,7 @@ export default function ChefStoryMarquee() {
                       gap-3
                     "
                   >
-                    <Sparkles
+                    <StoryIcon
                       size={12}
                       strokeWidth={1.6}
                       className="
@@ -1415,7 +2228,9 @@ export default function ChefStoryMarquee() {
                         text-[var(--color-accent)]
                       "
                     >
-                      {zoomedItem.subtitulo}
+                      {
+                        zoomedItem.subtitulo
+                      }
                     </span>
                   </div>
 
@@ -1429,20 +2244,36 @@ export default function ChefStoryMarquee() {
                       text-[var(--color-text-subtle)]
                     "
                   >
-                    {story.labels.traceability}
+                    {
+                      storyLabels.traceability
+                    }
                   </div>
 
                   <h3
-                    className="
+                    className={`
                       max-w-md
                       text-[clamp(2rem,5vw,4rem)]
                       font-black
                       uppercase
                       leading-[0.86]
                       tracking-[-0.05em]
-                    "
+                      ${
+                        storyStyle.variant ===
+                        "atelier"
+                          ? "font-serif normal-case italic tracking-[-0.03em]"
+                          : ""
+                      }
+                      ${
+                        storyStyle.variant ===
+                        "gelateria"
+                          ? "normal-case tracking-[-0.03em]"
+                          : ""
+                      }
+                    `}
                   >
-                    {zoomedItem.titulo}
+                    {
+                      zoomedItem.titulo
+                    }
                   </h3>
 
                   <div
@@ -1463,7 +2294,9 @@ export default function ChefStoryMarquee() {
                         sm:text-base
                       "
                     >
-                      {zoomedItem.nota}
+                      {
+                        zoomedItem.nota
+                      }
                     </p>
                   </div>
 
@@ -1485,7 +2318,9 @@ export default function ChefStoryMarquee() {
                         text-[var(--color-text-subtle)]
                       "
                     >
-                      {story.labels.traceability}
+                      {
+                        storyLabels.traceability
+                      }
                     </span>
 
                     <span
@@ -1500,7 +2335,9 @@ export default function ChefStoryMarquee() {
                         text-[var(--color-text)]
                       "
                     >
-                      {zoomedItem.origen}
+                      {
+                        zoomedItem.origen
+                      }
                     </span>
                   </div>
                 </div>
@@ -1532,7 +2369,9 @@ export default function ChefStoryMarquee() {
                   <button
                     type="button"
                     onClick={() =>
-                      setZoomedItem(null)
+                      setZoomedItem(
+                        null,
+                      )
                     }
                     className="
                       inline-flex
@@ -1556,7 +2395,9 @@ export default function ChefStoryMarquee() {
                       hover:text-[var(--color-accent)]
                     "
                   >
-                    {story.labels.closeSheet}
+                    {
+                      storyLabels.closeSheet
+                    }
 
                     <ArrowUpRight
                       size={13}

@@ -1164,7 +1164,7 @@ export const cafePreset:
     "Elegir un café",
 
   image:
-    "https://images.unsplash.com/photo-1751956066306-c5684cbcf385?auto=format&fit=crop&w=1920&q=85",
+    "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1920&q=85",
 },
 
       /* -----------------------------------------------------

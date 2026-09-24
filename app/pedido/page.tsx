@@ -3537,7 +3537,6 @@ export default function OrderPage() {
   return (
     <GastroProvider>
       <GastroCheckout />
-      <DemoSwitcher />
     </GastroProvider>
   );
 }
