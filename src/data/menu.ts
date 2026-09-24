@@ -17,6 +17,8 @@ export interface MenuOptionGroup {
   name: string;
   type: MenuOptionType;
   required?: boolean;
+  minSelections?: number;
+  maxSelections?: number;
   items: MenuOptionItem[];
 }
 
