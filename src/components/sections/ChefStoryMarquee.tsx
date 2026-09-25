@@ -38,7 +38,7 @@ import type {
   GastroStoryLayout,
   GastroStoryStyleConfig,
   GastroStoryVariant,
-} from "@/presets/types";
+} from "@/config/presets/types";
 
 import type {
   StoryArchiveItem,
@@ -533,8 +533,8 @@ export default function ChefStoryMarquee() {
 
   const StoryIcon =
     STORY_ICONS[
-      storyStyle.variant
-    ];
+  storyStyle.variant as keyof typeof STORY_ICONS
+]
 
   const imageTreatment =
     IMAGE_TREATMENTS[

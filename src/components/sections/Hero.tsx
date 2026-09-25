@@ -34,7 +34,7 @@ import type {
   GastroHeroOverlay,
   GastroHeroStyleConfig,
   GastroHeroVariant,
-} from "@/presets/types";
+} from "@/config/presets/types";
 
 /* =========================================================
    TYPES

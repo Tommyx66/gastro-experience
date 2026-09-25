@@ -52,9 +52,9 @@ export default function SmoothScroll({
     });
 
     (
-      window as Window & {
-        lenis?: Lenis;
-      }
+      window as unknown as Window & {
+  lenis?: Lenis;
+}
     ).lenis = lenis;
 
     let frameId = 0;
@@ -81,11 +81,7 @@ export default function SmoothScroll({
 
       lenis.destroy();
 
-      delete (
-        window as Window & {
-          lenis?: Lenis;
-        }
-      ).lenis;
+      Reflect.deleteProperty(window, "lenis");
     };
   }, []);
 

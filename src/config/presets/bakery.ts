@@ -1,525 +1,509 @@
 import type { GastroPreset } from "./types";
 
-const bakeryCategories = [
-  { id: "hogazas", name: "Hogazas de Masa Madre", description: "Fermentación natural de 36 horas en frío y cocción en piso de piedra." },
-  { id: "viennoiserie", name: "Hojaldres & Medialunas", description: "Laminados con pura manteca de pastura y alvéolos abiertos." },
-  { id: "pasteleria", name: "Pastelería de Obrador", description: "Tartas de estación, cookies con sal marina y pastelería fresca." },
-  { id: "salado", name: "Salado de Mostrador", description: "Focaccias con oliva virgen extra y sándwiches al paso." },
-];
+import {
+  bakeryCategories,
+  bakeryProducts,
+} from "@/data/menus/bakery";
 
-const bakeryProducts = [
-  {
-    id: "hogaza-campo-bakery",
-    categoryId: "hogazas",
-    name: "Hogaza de Campo Clásica (850g)",
-    description: "Blend de harina agroecológica y centeno. Miga húmeda y corteza profundamente caramelizada.",
-    price: 6800,
-    image: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Masa madre 36hs"],
-    prepTime: "4 min",
-    isFeatured: true,
-  },
-  {
-    id: "croissant-manteca-bakery",
-    categoryId: "viennoiserie",
-    name: "Croissant Clásico Francés",
-    description: "Hojaldrado de 27 capas con manteca de pastura nacional. Dorado, crujiente y aireado.",
-    price: 3600,
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Hojaldre puro"],
-    prepTime: "2 min",
-    isFeatured: true,
-  },
-  {
-    id: "pain-au-chocolat-bakery",
-    categoryId: "viennoiserie",
-    name: "Pain au Chocolat Doble",
-    description: "Hojaldre fermentado relleno con dos barras de chocolate belga semiamargo 60%.",
-    price: 4200,
-    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Chocolate belga"],
-    prepTime: "2 min",
-  },
-  {
-    id: "focaccia-romero-bakery",
-    categoryId: "salado",
-    name: "Focaccia al Romero & Sal Marina",
-    description: "Masa de alta hidratación bañada en aceite de oliva virgen extra, romero fresco y sal en escamas.",
-    price: 5800,
-    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Aceite de oliva"],
-    prepTime: "3 min",
-  },
-  {
-    id: "cookie-sea-salt",
-    categoryId: "pasteleria",
-    name: "Cookie Chocolate 70% & Sal Marina",
-    description: "Galleta artesanal con centro húmedo, trozos de chocolate amargo y escamas de sal marina.",
-    price: 3200,
-    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Horno diario"],
-    prepTime: "2 min",
-  },
-];
-
-export const bakeryPreset: GastroPreset = {
-  id: "bakery",
-  label: "Panadería de Masa Madre & Obrador",
-
-  theme: {
-    mode: "light",
-    accent: "#9C5B28",
-    accentStrong: "#743F17",
-    accentContrast: "#FFFFFF",
-
-    colors: {
-      light: {
-        bg: "#F4EDE3",
-        bgElevated: "#FAF5ED",
-        surface: "#FDFBF7",
-        surfaceElevated: "#E8DDD0",
-        surfaceInverse: "#261D16",
-        text: "#2B2118",
-        textMuted: "#6B5949",
-        textSubtle: "#8E7C6C",
-        accent: "#9C5B28",
-        accentStrong: "#743F17",
-        accentContrast: "#FFFFFF",
-        accentSoft: "rgba(156, 91, 40, 0.13)",
-        accentFaint: "rgba(156, 91, 40, 0.06)",
-        accentBorder: "rgba(156, 91, 40, 0.32)",
-        border: "rgba(43, 33, 24, 0.12)",
-        borderStrong: "rgba(43, 33, 24, 0.22)",
-        overlay: "rgba(244, 237, 227, 0.92)",
-        control: "rgba(43, 33, 24, 0.05)",
-        controlHover: "rgba(43, 33, 24, 0.09)",
-        success: "#059669",
-        warning: "#B45309",
-        danger: "#DC2626",
-      },
-      dark: {
-        bg: "#16110D",
-        bgElevated: "#1E1813",
-        surface: "#241D17",
-        surfaceElevated: "#2E241D",
-        surfaceInverse: "#F5EFE6",
-        text: "#F5EFE6",
-        textMuted: "#C4B4A4",
-        textSubtle: "#918173",
-        accent: "#C6824D",
-        accentStrong: "#E2A473",
-        accentContrast: "#16110D",
-        accentSoft: "rgba(198, 130, 77, 0.16)",
-        accentFaint: "rgba(198, 130, 77, 0.07)",
-        accentBorder: "rgba(198, 130, 77, 0.34)",
-        border: "rgba(245, 239, 230, 0.10)",
-        borderStrong: "rgba(245, 239, 230, 0.18)",
-        overlay: "rgba(22, 17, 13, 0.90)",
-        control: "rgba(245, 239, 230, 0.05)",
-        controlHover: "rgba(245, 239, 230, 0.09)",
-        success: "#34D399",
-        warning: "#F59E0B",
-        danger: "#F87171",
-      },
+export const bakeryPreset = {
+  "id": "bakery",
+  "label": "Panadería de Masa Madre & Obrador",
+  "theme": {
+    "mode": "light",
+    "accent": "#A36E43",
+    "accentStrong": "#754928",
+    "accentContrast": "#FFFDF8",
+    "colors": {
+      "light": {
+        "bg": "#F3EEE5",
+        "bgElevated": "#FAF7F0",
+        "surface": "#FFFDF9",
+        "surfaceElevated": "#EAE0D2",
+        "surfaceInverse": "#2A211A",
+        "text": "#2A211A",
+        "textMuted": "#67584D",
+        "textSubtle": "#87776A",
+        "accent": "#A36E43",
+        "accentStrong": "#754928",
+        "accentContrast": "#FFFDF8",
+        "accentSoft": "rgba(163,110,67,0.12)",
+        "accentFaint": "rgba(163,110,67,0.06)",
+        "accentBorder": "rgba(163,110,67,0.32)",
+        "border": "rgba(42,33,26,0.11)",
+        "borderStrong": "rgba(42,33,26,0.21)",
+        "overlay": "rgba(243,238,229,0.90)",
+        "control": "rgba(42,33,26,0.045)",
+        "controlHover": "rgba(42,33,26,0.085)",
+        "success": "#059669",
+        "warning": "#B45309",
+        "danger": "#DC2626"
+      }
     },
-
-    typography: {
-      display: "Georgia, 'Times New Roman', serif",
-      body: "Inter, Arial, sans-serif",
-      ui: "Inter, Arial, sans-serif",
-      mono: "monospace",
-    },
+    "typography": {
+      "display": "Cormorant Garamond, Georgia, serif",
+      "body": "Inter, Arial, Helvetica, sans-serif",
+      "ui": "Inter, Arial, Helvetica, sans-serif",
+      "mono": "monospace"
+    }
   },
-
-  visual: {
-    navbar: "minimal",
-    hero: "editorial",
-    heroStyle: {
-      variant: "editorial",
-      imageTreatment: "soft",
-      overlay: "paper",
-      composition: "editorial",
-      ctaShape: "outline",
-      grain: true,
-      parallax: true,
-      intensity: 0.78,
+  "visual": {
+    "navbar": "minimal",
+    "hero": "editorial",
+    "heroStyle": {
+      "variant": "editorial",
+      "imageTreatment": "soft",
+      "overlay": "paper",
+      "composition": "editorial",
+      "ctaShape": "outline",
+      "grain": true,
+      "parallax": true,
+      "intensity": 0.8
     },
-    menu: "catalog",
-    productCard: "clean",
-    contact: "split",
-    cta: "editorial",
-    footer: "minimal",
-    story: {
-      variant: "atelier",
-      layout: "lookbook",
-      imageTreatment: "soft",
-      cardShape: "framed",
-      density: "airy",
-      watermark: true,
-      grain: true,
-      numbering: false,
-      motion: { speed: 0.32, direction: "left", hoverLift: 3, parallax: true, pauseOnHover: true },
-    },
+    "menu": "catalog",
+    "productCard": "clean",
+    "contact": "split",
+    "cta": "editorial",
+    "footer": "minimal",
+    "story": {
+      "variant": "atelier",
+      "layout": "lookbook",
+      "imageTreatment": "soft",
+      "cardShape": "framed",
+      "density": "airy",
+      "watermark": true,
+      "grain": true,
+      "numbering": false,
+      "motion": {
+        "speed": 0.3,
+        "direction": "left",
+        "hoverLift": 3,
+        "parallax": true,
+        "pauseOnHover": true
+      }
+    }
   },
-
-  operation: {
-    primary: "counter",
-    supported: ["counter", "pickup"],
+  "operation": {
+    "primary": "counter",
+    "supported": [
+      "counter",
+      "pickup"
+    ]
   },
-
-  capabilities: {
-    ordering: true,
-    delivery: false,
-    pickup: true,
-    tableOrders: false,
-    waiterCall: false,
-    reservation: false,
-    story: true,
-    coffeeCustomizer: true,
-    beerTaps: false,
-    iceCreamSizes: false,
-    toppings: false,
-    brunch: true,
-    takeaway: true,
+  "capabilities": {
+    "ordering": true,
+    "story": true,
+    "delivery": false,
+    "pickup": true,
+    "tableOrders": false,
+    "waiterCall": false,
+    "reservation": false,
+    "coffeeCustomizer": true,
+    "beerTaps": false,
+    "iceCreamSizes": false,
+    "toppings": false,
+    "brunch": true,
+    "takeaway": true
   },
-
-  siteOverrides: {
-    brand: {
-      name: "MIGA MADRE OBRADOR",
-      shortName: "Miga",
-      descriptor: "Panadería de Masa Madre & Viennoiserie",
-      tagline: "Harinas limpias, fermentación lenta y piedra de horno",
-      description: "Obrador artesanal con horneadas continuas de hogazas, laminados de manteca pura y focaccias.",
-      logo: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=120&q=80",
-      favicon: "/favicon.ico",
+  "siteOverrides": {
+    "brand": {
+      "name": "MIGA MADRE",
+      "shortName": "Miga",
+      "descriptor": "Panadería de Autor",
+      "tagline": "Harina, fermentación y fuego de obrador",
+      "description": "Panadería artesanal con masa madre, laminados franceses y producción diaria.",
+      "logo": "/favicon.ico",
+      "favicon": "/favicon.ico"
     },
-
-    features: {
-      ordering: true,
-      delivery: false,
-      pickup: true,
-      tableOrders: false,
-      waiterCall: false,
-      reservation: false,
-      story: true,
+    "features": {
+      "ordering": true,
+      "delivery": false,
+      "pickup": true,
+      "tableOrders": false,
+      "waiterCall": false,
+      "reservation": false,
+      "story": true
     },
-
-    operation: {
-      schedule: "Lunes a Sábado · 07:00 a 20:00 hs",
-      estimatedTime: {
-        delivery: { min: 0, max: 0 },
-        pickup: { min: 8, max: 18 },
-        table: { min: 0, max: 0 },
-      },
+    "operation": {
+      "schedule": "Lunes a Sábado · 07:00 a 20:00 hs",
+      "estimatedTime": {
+        "delivery": {
+          "min": 25,
+          "max": 45
+        },
+        "pickup": {
+          "min": 10,
+          "max": 25
+        },
+        "table": {
+          "min": 10,
+          "max": 30
+        }
+      }
     },
-
-    navigation: {
-      links: [
-        { label: "Inicio", href: "inicio" },
-        { label: "Obrador", href: "historia" },
-        { label: "Mostrador", href: "menu" },
-        { label: "Encargos", href: "contacto" },
+    "navigation": {
+      "links": [
+        {
+          "label": "Inicio",
+          "href": "inicio"
+        },
+        {
+          "label": "Obrador",
+          "href": "historia"
+        },
+        {
+          "label": "Mostrador",
+          "href": "menu"
+        },
+        {
+          "label": "Encargos",
+          "href": "contacto"
+        }
       ],
-      cta: "Ver Mostrador",
+      "cta": "Encargar"
     },
-
-    ordering: {
-      enabled: true,
-      channels: ["web"] as const,
-      fulfillment: ["pickup"] as const,
-      cashDiscountPercent: 10,
-      paymentMethods: [
-        { id: "cash", label: "Efectivo en Mostrador", requiresProof: false },
-        { id: "card", label: "Débito / Crédito", requiresProof: false },
-        { id: "transfer", label: "Transferencia / QR", requiresProof: true },
+    "ordering": {
+      "enabled": true,
+      "channels": [
+        "web"
       ],
-      whatsapp: {
-        number: "549223000000",
-        defaultMessage: "Hola Miga Madre, quería encargar panadería para retirar hoy.",
-        tableOrderMessage: "Hola, adjunto mi pedido de mostrador.",
-        labelCheckout: "Enviar encargo por WhatsApp",
-      },
-    },
-
-    contact: {
-      address: "Castelli 1280 (entre Guemes y Alvear)",
-      zone: "Zona Güemes",
-      city: "Mar del Plata",
-      country: "Argentina",
-      fullAddress: "Castelli 1280, Mar del Plata, Argentina",
-      phone: "+54 9 223 555-0177",
-      email: "obrador@migamadre.com",
-      instagram: "https://instagram.com",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Castelli+1280+Mar+del+Plata",
-      coordinates: {
-        lat: -38.013144,
-        lng: -57.542891,
-        zoom: 16,
-        latDisplay: "38°00′47″ S",
-        lngDisplay: "57°32′34″ W",
-      },
-    },
-
-    seo: {
-      title: "Miga Madre | Panadería de Masa Madre & Viennoiserie",
-      description: "Panadería artesanal con fermentación de 36hs, hogazas agroecológicas y medialunas hojaldradas en Mar del Plata.",
-      locale: "es_AR",
-    },
-
-    content: {
-      hero: {
-        eyebrow: "Obrador Artesanal · Fermentación 36hs",
-        titlePrefix: "Corteza viva",
-        titleAccent: "y masa madre.",
-        subtitle: "Harinas agroecológicas, manteca de pastura y horneadas continuas desde las 7 de la mañana.",
-        cta: "Ver Producción del Día",
-        ctaHref: "menu",
-        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1920&q=85",
-      },
-
-      story: {
-        eyebrow: "El Obrador",
-        watermark: "MIGA",
-        titlePrefix: "Tiempo,",
-        titleAccent: "harina y sal.",
-        sectionTag: "Diario del Panadero",
-        primaryDescription: "Nuestra masa madre nació hace cuatro años. La alimentamos todos los días con harinas orgánicas para que desarrolle aromas lácticos suaves.",
-        secondaryDescription: "Cada hogaza se moldea a mano y reposa en cestas de mimbre durante 36 horas antes de entrar al horno de piso.",
-        backgroundImage: "https://images.unsplash.com/photo-1511018556340-d16986a1c194?auto=format&fit=crop&w=1800&q=85",
-        labels: {
-          processLine: "Harina · Fermento · Horno",
-          openArchive: "Explorar obrador",
-          traceability: "Fermentación",
-          closeSheet: "Cerrar Ficha",
+      "fulfillment": [
+        "pickup",
+        "onsite"
+      ],
+      "cashDiscountPercent": 10,
+      "paymentMethods": [
+        {
+          "id": "cash",
+          "label": "Efectivo",
+          "requiresProof": false
         },
-        archive: [
+        {
+          "id": "card",
+          "label": "Tarjeta",
+          "requiresProof": false
+        },
+        {
+          "id": "transfer",
+          "label": "Transferencia / QR",
+          "requiresProof": true
+        }
+      ],
+      "whatsapp": {
+        "number": "549223000000",
+        "defaultMessage": "Hola, quiero hacer un pedido en MIGA MADRE.",
+        "tableOrderMessage": "Hola, envío el pedido desde mesa en MIGA MADRE.",
+        "labelCheckout": "Enviar pedido por WhatsApp"
+      }
+    },
+    "contact": {
+      "address": "La Rioja 1822 (entre Luro y San Martín)",
+      "zone": "Barrio La Perla",
+      "city": "Mar del Plata",
+      "country": "Argentina",
+      "fullAddress": "Mar del Plata, Buenos Aires, Argentina",
+      "phone": "+54 9 223 555-0100",
+      "email": "hola@migademo.com",
+      "instagram": "https://instagram.com",
+      "mapsUrl": "https://www.google.com/maps",
+      "coordinates": {
+        "lat": -38.0,
+        "lng": -57.55,
+        "zoom": 15,
+        "latDisplay": "38°00′00″ S",
+        "lngDisplay": "57°33′00″ W"
+      }
+    },
+    "seo": {
+      "title": "MIGA MADRE | Panadería de Masa Madre & Obrador",
+      "description": "Masa madre, laminado francés y horno de piso en producción diaria.",
+      "locale": "es_AR"
+    },
+    "content": {
+      "hero": {
+        "eyebrow": "Obrador · Producción Diaria",
+        "titlePrefix": "Masa",
+        "titleAccent": "madre.",
+        "subtitle": "Hogazas de 850 g, viennoiserie francesa y focaccia al corte saliendo del horno durante todo el día.",
+        "cta": "Encargar",
+        "ctaHref": "menu",
+        "image": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=1600&q=85&auto=format&fit=crop"
+      },
+      "story": {
+        "eyebrow": "Obrador · Fermentación Lenta",
+        "watermark": "MIGA",
+        "titlePrefix": "El tiempo",
+        "titleAccent": "también se amasa.",
+        "sectionTag": "Cuaderno del Obrador",
+        "primaryDescription": "Harina, hidratación, temperatura y fuego construyen una textura que no se puede acelerar.",
+        "secondaryDescription": "Harina, hidratación, temperatura y fuego construyen una textura que no se puede acelerar. La propuesta cambia con la materia, el servicio y el momento del día.",
+        "backgroundImage": "https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=1600&q=85&auto=format&fit=crop",
+        "labels": {
+          "processLine": "Cuaderno del Obrador",
+          "openArchive": "Explorar cuaderno del obrador",
+          "traceability": "Trazabilidad",
+          "closeSheet": "Cerrar Ficha"
+        },
+        "archive": [
           {
-            titulo: "Masa Madre Activa",
-            subtitulo: "Cultivo Vivo 2021",
-            nota: "Burbujas activas y aroma dulce a manzana fermentada.",
-            origen: "Obrador Principal",
-            src: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=1200&q=85",
+            "titulo": "Miga · Proceso",
+            "subtitulo": "Masa",
+            "nota": "Harina, hidratación, temperatura y fuego construyen una textura que no se puede acelerar.",
+            "origen": "MIGA MADRE",
+            "src": "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=1600&q=85&auto=format&fit=crop"
           },
           {
-            titulo: "Laminado de Manteca",
-            subtitulo: "Capas de Aire",
-            nota: "Plegado a temperatura constante para no fundir la manteca.",
-            origen: "Mesa de Frío",
-            src: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Horno de Piso",
-            subtitulo: "Vapor Refractario",
-            nota: "El golpe de vapor inicial permite que el pan expanda antes de formar su corteza.",
-            origen: "Piso de Piedra",
-            src: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Canastas de Mimbre",
-            subtitulo: "Bannetons de Reposo",
-            nota: "La masa respira durante la noche en telas de lino natural.",
-            origen: "Cámara de Leudado",
-            src: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1200&q=85",
-          },
-        ],
+            "titulo": "Materia · Selección",
+            "subtitulo": "Cuaderno del Obrador",
+            "nota": "Una pieza de la identidad que define la experiencia y le da continuidad a la marca.",
+            "origen": "MIGA MADRE",
+            "src": "https://images.unsplash.com/photo-1519869325930-281384150729?w=1600&q=85&auto=format&fit=crop"
+          }
+        ]
       },
-
-      productDetail: {
-        fallbackTag: "Horno",
-        options: { required: "Elegí presentación", optional: "Adicionales", requiredMark: "*", personalized: "Detalle de pieza" },
-        notes: { label: "Instrucciones de corte / retiro", placeholder: "Ej. rebanado fino, retirar a las 11hs..." },
-        actions: {
-          add: "Sumar a Cesta",
-          added: "En la Cesta",
-          chooseRequired: "Seleccionar opción",
-          decreaseQuantity: "Menos",
-          increaseQuantity: "Más",
-          close: "Volver al mostrador",
+      "productDetail": {
+        "fallbackTag": "Especialidad",
+        "options": {
+          "required": "Elegí 1",
+          "optional": "Opcional",
+          "requiredMark": "*",
+          "personalized": "Personalización"
         },
-      },
-
-      cart: {
-        eyebrow: "Bolsa de Pan",
-        title: "Tu encargo",
-        emptyTitle: "La cesta está vacía",
-        emptyDescription: "Elegí tus hogazas o piezas dulces recién salidas del horno.",
-        productSingular: "pieza",
-        productPlural: "piezas",
-        remove: "Quitar",
-        subtotal: "Subtotal mostrador",
-        continueDescription: "Coordiná tu horario de retiro en el próximo paso.",
-        checkoutButton: "Confirmar Encargo",
-        close: "Cerrar",
-        closeOrder: "Cerrar encargo",
-      },
-
-      checkout: {
-        disabled: { title: "Mostrador cerrado", description: "Los hornos están descansando en este horario." },
-        header: { backLabel: "Mostrador", title: "Tu Encargo", onlineLabel: "Retiro en Obrador", tablePrefix: "Mostrador" },
-        hero: { tableLabel: "Mostrador", onlineLabel: "Retiro", title: "Tu Cesta", description: "Revisá las piezas horneadas antes de coordinar el retiro." },
-        selection: { label: "Detalle de producción", units: "piezas", perUnit: "c/u", remove: "Quitar", decrease: "Menos", increase: "Más" },
-        empty: { title: "Cesta vacía", description: "Pasá por el mostrador para elegir tus panes del día.", button: "Ver Mostrador" },
-        form: {
-          fulfillmentLabel: "Modalidad",
-          delivery: "Envío",
-          pickup: "Retiro en Obrador",
-          customerNameLabel: "Nombre para la bolsa",
-          customerNamePlaceholder: "Tu nombre",
-          addressLabel: "Dirección",
-          addressPlaceholder: "Calle y número",
-          paymentLabel: "Forma de Pago",
-          notesLabel: "Aclaraciones sobre el horneado / horario",
-          notesDeliveryPlaceholder: "Ej. timbre o indicaciones...",
-          notesTablePlaceholder: "Ej. pan entero sin rebanar...",
+        "notes": {
+          "label": "Instrucciones o aclaraciones",
+          "placeholder": "Ej. sin un ingrediente, presentación especial..."
         },
-        summary: { subtotal: "Subtotal", cashPrefix: "Efectivo en mostrador", total: "Total", completedLabel: "Listo para hornear", estimatedLabel: "Horneada lista en" },
-        actions: { processing: "Preparando encargo...", sendToKitchen: "Marchar a Obrador", newOrder: "Nuevo encargo", openWhatsApp: "Confirmar por WhatsApp", continueArrow: "Continuar" },
-        confirmation: {
-          preparedLabel: "Encargo Listo",
-          confirmedLabel: "Producción Confirmada",
-          whatsAppDescription: "Enviá el mensaje para que el panadero reserve tus piezas.",
-          tableDescriptionPrefix: "El obrador ya apartó tu pedido",
-          kitchenTableSuffix: "",
-          preparedToastTitle: "Encargo preparado",
-          preparedToastDescription: "Se abrirá WhatsApp con el detalle de panes.",
-          confirmedToastTitle: "Encargo recibido",
-          confirmedToastDescriptionPrefix: "Las piezas están reservadas a tu nombre",
+        "actions": {
+          "add": "Sumar",
+          "added": "Agregado",
+          "chooseRequired": "Seleccioná opciones requeridas",
+          "decreaseQuantity": "Disminuir cantidad",
+          "increaseQuantity": "Aumentar cantidad",
+          "close": "Cerrar detalle"
+        }
+      },
+      "cart": {
+        "eyebrow": "Pedido",
+        "title": "Tu pedido",
+        "emptyTitle": "Pedido vacío",
+        "emptyDescription": "Elegí productos de la carta para comenzar.",
+        "productSingular": "producto",
+        "productPlural": "productos",
+        "remove": "Quitar",
+        "subtotal": "Subtotal",
+        "continueDescription": "Revisá datos, entrega y pago en la siguiente pantalla.",
+        "checkoutButton": "Ver pedido",
+        "close": "Cerrar",
+        "closeOrder": "Cerrar pedido"
+      },
+      "checkout": {
+        "disabled": {
+          "title": "Pedidos no disponibles",
+          "description": "El canal de pedidos está temporalmente desactivado."
         },
-        validation: {
-          emptyTitle: "Cesta vacía",
-          emptyDescription: "Agregá al menos una pieza de panadería.",
-          nameTitle: "Falta tu nombre",
-          nameDescription: "Lo necesitamos para rotular la bolsa.",
-          addressTitle: "Falta dirección",
-          addressDescription: "Ingresá dónde enviamos el pedido.",
-          submitErrorTitle: "Error al registrar encargo",
-          submitErrorDescription: "Comprobá tu conexión con el obrador.",
+        "header": {
+          "backLabel": "Carta",
+          "title": "Tu pedido",
+          "onlineLabel": "Pedido online",
+          "tablePrefix": "Mesa"
         },
-        helper: { table: "Tu pedido ingresa directo a la mesa de despacho del obrador.", online: "Se abrirá WhatsApp con el pedido listo para apartar en mostrador." },
-        aria: { decrease: "Disminuir", increase: "Aumentar", remove: "Quitar", openWhatsApp: "Abrir WhatsApp", newOrder: "Nuevo encargo" },
+        "hero": {
+          "tableLabel": "Mesa",
+          "onlineLabel": "Pedido online",
+          "title": "Tu pedido",
+          "description": "Revisá la selección y completá los últimos datos."
+        },
+        "selection": {
+          "label": "Selección",
+          "units": "unidades",
+          "perUnit": "c/u",
+          "remove": "Quitar",
+          "decrease": "Disminuir",
+          "increase": "Aumentar"
+        },
+        "empty": {
+          "title": "Pedido vacío",
+          "description": "Elegí productos desde la carta para comenzar.",
+          "button": "Volver a la carta"
+        },
+        "form": {
+          "fulfillmentLabel": "Entrega",
+          "delivery": "Envío",
+          "pickup": "Retiro",
+          "customerNameLabel": "Nombre",
+          "customerNamePlaceholder": "Tu nombre",
+          "addressLabel": "Dirección",
+          "addressPlaceholder": "Dirección y timbre",
+          "paymentLabel": "Medio de pago",
+          "notesLabel": "Aclaraciones",
+          "notesDeliveryPlaceholder": "Ej. timbre, piso, recepción...",
+          "notesTablePlaceholder": "Ej. sin sal, sin cebolla..."
+        },
+        "summary": {
+          "subtotal": "Subtotal",
+          "cashPrefix": "Efectivo",
+          "total": "Total",
+          "completedLabel": "Pedido completo",
+          "estimatedLabel": "Demora estimada"
+        },
+        "actions": {
+          "processing": "Procesando...",
+          "sendToKitchen": "Enviar pedido",
+          "newOrder": "Nueva orden",
+          "openWhatsApp": "Abrir WhatsApp",
+          "continueArrow": "Continuar"
+        },
+        "confirmation": {
+          "preparedLabel": "Pedido preparado",
+          "confirmedLabel": "Pedido confirmado",
+          "whatsAppDescription": "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
+          "tableDescriptionPrefix": "La cocina recibió tu pedido",
+          "kitchenTableSuffix": "de la Mesa",
+          "preparedToastTitle": "Pedido preparado",
+          "preparedToastDescription": "Abrimos WhatsApp para continuar.",
+          "confirmedToastTitle": "Pedido confirmado",
+          "confirmedToastDescriptionPrefix": "La cocina recibió la comanda."
+        },
+        "validation": {
+          "emptyTitle": "La comanda está vacía",
+          "emptyDescription": "Elegí al menos un producto antes de continuar.",
+          "nameTitle": "Falta tu nombre",
+          "nameDescription": "Necesitamos identificar tu pedido.",
+          "addressTitle": "Falta la dirección",
+          "addressDescription": "Completá la dirección para el envío.",
+          "submitErrorTitle": "No pudimos enviar el pedido",
+          "submitErrorDescription": "Revisá tu conexión e intentá nuevamente."
+        },
+        "helper": {
+          "table": "El pedido se enviará directamente al servicio.",
+          "online": "La siguiente acción abrirá WhatsApp con la comanda preparada."
+        },
+        "aria": {
+          "decrease": "Disminuir cantidad",
+          "increase": "Aumentar cantidad",
+          "remove": "Quitar producto",
+          "openWhatsApp": "Abrir WhatsApp",
+          "newOrder": "Crear nueva orden"
+        }
       },
-
-      menuUi: {
-        productPersonalizable: "Formatos",
-        viewDetail: "Ficha del pan",
-        prepLabel: "Horneado",
-        fallbackKitchen: "Obrador artesanal",
-        choose: "Elegir pieza",
-        added: "Apartado",
-        add: "Sumar",
-        ariaViewProduct: "Ver detalle de",
-        categoryCountSingular: "variedad",
-        categoryCountPlural: "variedades",
-        allCategories: "Todas",
-        listView: "Mostrador",
-        gridView: "Vitrina",
-        ariaListView: "Ver como lista de mostrador",
-        ariaGridView: "Ver como vitrina",
-        ariaAllCategories: "Ver toda la producción",
+      "menuUi": {
+        "productPersonalizable": "Personalizable",
+        "viewDetail": "Ver detalle",
+        "prepLabel": "Preparación",
+        "fallbackKitchen": "Cocina de autor",
+        "choose": "Elegir",
+        "added": "Listo",
+        "add": "Agregar",
+        "ariaViewProduct": "Ver detalle de",
+        "categoryCountSingular": "producto",
+        "categoryCountPlural": "productos",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaAllCategories": "Mostrar todos los productos"
       },
-
-      tableUi: {
-        serviceLabel: "Servicio de Obrador",
-        tablePrefix: "Take Away",
-        waiterButton: "Consultar Panadero",
-        allCategories: "Mostrador completo",
-        listView: "Lista",
-        gridView: "Vitrina",
-        ariaListView: "Ver lista",
-        ariaGridView: "Ver vitrina",
-        ariaWaiter: "Solicitar asistencia de mostrador",
+      "tableUi": {
+        "serviceLabel": "Servicio en salón",
+        "tablePrefix": "Mesa",
+        "waiterButton": "Mozo / Cuenta",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaWaiter": "Solicitar atención o pedir la cuenta"
       },
-
-      cartUi: { ariaOpen: "Abrir bolsa" },
-      navbarUi: {
-        themeDark: "NOCHE",
-        themeLight: "HORNO",
-        ariaChangeTheme: "Cambiar ambiente",
-        ariaOpenOrder: "Ver bolsa",
-        ariaOpenMenu: "Abrir mostrador",
-        ariaCloseMenu: "Cerrar mostrador",
-        mobileNavigationLabel: "Secciones",
+      "cartUi": {
+        "ariaOpen": "Abrir pedido"
       },
-      contactUi: { waitTimeTableLabel: "Mostrador", waitTimeDeliveryLabel: "Encargos", minutesSuffix: "min" },
-
-      menu: {
-        eyebrow: "Harinas Limpias & Piedra",
-        title: "Producción del Día",
-        subtitle: "Hogazas con 36 horas de fermentación, hojaldres con manteca de pastura y focaccias al romero.",
+      "navbarUi": {
+        "themeDark": "DARK",
+        "themeLight": "LIGHT",
+        "ariaChangeTheme": "Cambiar tema",
+        "ariaOpenOrder": "Abrir pedido",
+        "ariaOpenMenu": "Abrir menú",
+        "ariaCloseMenu": "Cerrar menú",
+        "mobileNavigationLabel": "Navegación"
       },
-
-      ctaTransition: {
-        eyebrow: "Encargos & Mostrador",
-        titlePrefix: "Pan recién horneado",
-        titleAccent: "en tu mesa.",
-        description: "Retirá tus hogazas y cajas de bollería caliente reservando previamente desde el mostrador online.",
-        buttonText: "Hacer Encargo",
-        image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=1920&q=85",
+      "contactUi": {
+        "waitTimeTableLabel": "Salón",
+        "waitTimeDeliveryLabel": "Delivery",
+        "minutesSuffix": "min"
       },
-
-      contact: {
-        eyebrow: "Retiro en Obrador",
-        statusBadge: "Horno Prendido",
-        mainLabel: "Obrador Castelli",
-        title: "Pasá a buscar tu pan.",
-        formEyebrow: "Encargos Especiales",
-        formTitulo: "¿Buscás panadería para un evento o cafetería?",
-        formSubtitulo: "Producción por mayor de hogazas, brioches para hamburguesas y viennoiserie.",
-        nameLabel: "Nombre / Local",
-        phoneLabel: "WhatsApp",
-        emailLabel: "Correo",
-        messageLabel: "Volumen semanal y productos de interés",
-        submitSending: "Abriendo WhatsApp...",
-        submitSent: "Mensaje enviado ✓",
-        botonEnviar: "Hablar con Panadería",
-        addressLabel: "Obrador",
-        scheduleLabel: "Horarios de Mostrador",
-        mapEyebrow: "Ubicación",
-        directionsButton: "Cómo llegar",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        copyButton: "Copiar",
-        copiedButton: "Copiado",
-        mapsButton: "Abrir Maps",
-        receptionPrompt: "¿Tenés un restaurante o cafetería?",
-        receptionButton: "Consultar Lista Mayorista",
+      "menu": {
+        "eyebrow": "Horno & Obrador",
+        "title": "Mostrador",
+        "subtitle": "Hogazas, croissants, focaccia y cajas de desayuno para retirar durante la jornada."
       },
-
-      waiterModal: {
-        eyebrow: "Mostrador Castelli",
-        callTitle: "Hablar con el Panadero",
-        callSubtitle: "Dudas sobre harinas, conservación o alérgenos",
-        callMessage: "Consulta sobre hogazas y fermentaciones",
-        billTitle: "Abonar en Caja",
-        billSubtitle: "Efectivo con 10% de ahorro o medios electrónicos",
-        paymentPrompt: "¿Cómo preferís pagar?",
-        sentTitle: "Aviso recibido",
-        sentSubtitle: "El panadero te espera en mostrador:",
-        backButton: "Volver",
-        confirmButton: "Confirmar",
-        errorMessage: "Error de comunicación con mostrador.",
+      "ctaTransition": {
+        "eyebrow": "Panadería de Masa Madre & Obrador",
+        "titlePrefix": "El tiempo",
+        "titleAccent": "también se amasa.",
+        "description": "Masa madre, laminado francés y horno de piso en producción diaria.",
+        "buttonText": "Encargar",
+        "image": "https://images.unsplash.com/photo-1525265332434-d52e2314161d?w=1600&q=85&auto=format&fit=crop"
       },
-
-      footer: {
-        backgroundImage: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=1920&q=85",
-        description: "Miga Madre Obrador · Panadería de Masa Madre & Viennoiserie",
-        credits: "Gastro Engine Core",
-        navigationLabel: "Navegación",
-        contactLabel: "Contacto",
-        establishmentLabel: "El Obrador",
-        hoursLabel: "Horarios",
-        socialsLabel: "Comunidad",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        locationLabel: "Dirección",
-        identityLabel: "Oficio",
-        backToTop: "Volver arriba",
+      "contact": {
+        "eyebrow": "Ubicación & Concierge",
+        "statusBadge": "Operación activa",
+        "mainLabel": "Establecimiento",
+        "title": "Mostrador & Encargos",
+        "formEyebrow": "Contacto",
+        "formTitulo": "Mostrador & Encargos",
+        "formSubtitulo": "Masa madre, laminado francés y horno de piso en producción diaria.",
+        "nameLabel": "Nombre / empresa",
+        "phoneLabel": "Teléfono / WhatsApp",
+        "emailLabel": "Correo electrónico",
+        "messageLabel": "Mensaje",
+        "submitSending": "Abriendo WhatsApp...",
+        "submitSent": "Mensaje enviado ✓",
+        "botonEnviar": "Consultar",
+        "addressLabel": "Dirección",
+        "scheduleLabel": "Horarios & Canales",
+        "mapEyebrow": "Ubicación",
+        "directionsButton": "Cómo llegar",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "copyButton": "Copiar",
+        "copiedButton": "Copiado",
+        "mapsButton": "Abrir ubicación",
+        "receptionPrompt": "Mostrador & Encargos",
+        "receptionButton": "Consultar"
       },
-    },
+      "waiterModal": {
+        "eyebrow": "MIGA MADRE",
+        "callTitle": "Solicitar atención",
+        "callSubtitle": "Asistencia para ordenar o consultas",
+        "callMessage": "Solicita asistencia desde la mesa",
+        "billTitle": "Pedir la Cuenta",
+        "billSubtitle": "Efectivo, Tarjeta o QR",
+        "paymentPrompt": "¿Cómo deseás abonar la cuenta?",
+        "sentTitle": "Aviso Enviado",
+        "sentSubtitle": "El equipo ya fue notificado:",
+        "backButton": "Volver",
+        "confirmButton": "Confirmar",
+        "errorMessage": "No pudimos notificar al servicio."
+      },
+      "footer": {
+        "backgroundImage": "https://images.unsplash.com/photo-1609525313344-a56b96f20718?w=1600&q=85&auto=format&fit=crop",
+        "description": "MIGA MADRE · Panadería de Autor",
+        "credits": "Gastro Engine Core",
+        "navigationLabel": "Navegación",
+        "contactLabel": "Contacto",
+        "establishmentLabel": "Establecimiento",
+        "hoursLabel": "Horarios",
+        "socialsLabel": "Comunidad",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "locationLabel": "Ubicación",
+        "identityLabel": "Identidad",
+        "backToTop": "Volver arriba"
+      }
+    }
   },
-
-  menu: {
-    categories: bakeryCategories,
-    products: bakeryProducts,
-  },
-};
+  "menu": {
+    "categories": bakeryCategories,
+    "products": bakeryProducts
+  }
+} satisfies GastroPreset;

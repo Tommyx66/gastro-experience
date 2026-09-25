@@ -1,556 +1,531 @@
 import type { GastroPreset } from "./types";
 
-const bodegonCategories = [
-  { id: "cantina", name: "Entradas & Tortillas", description: "Tortillas babé al momento, empanadas y picadas de cantina." },
-  { id: "milanesas", name: "Milanesas Gigantes", description: "Cortes de ternera bien golpeados, gratinados y para compartir." },
-  { id: "pastas", name: "Pastas al Huevo", description: "Pastas frescas amasadas al mediodía con estofados de cocción lenta." },
-  { id: "bodega", name: "Vermut & Sifón", description: "Aperitivos tirados, soda de sifón pesado y vinos de la casa." },
-  { id: "postres", name: "Postres de Cantina", description: "Flanes de 12 yemas con dulce de leche y budines mixtos." },
-];
+import {
+  bodegonCategories,
+  bodegonProducts,
+} from "@/data/menus/bodegon";
 
-const guarniciones = [
-  { id: "papas-fritas", name: "Papas fritas a caballo", priceDelta: 0 },
-  { id: "pure-mixto", name: "Puré mixto con manteca", priceDelta: 0 },
-  { id: "ensalada-rusa", name: "Ensalada rusa de la casa", priceDelta: 0 },
-];
-
-const bodegonProducts = [
-  {
-    id: "mila-napolitana-bodegon",
-    categoryId: "milanesas",
-    name: "Milanesa Napolitana para Dos",
-    description: "Corte de ternera empanado, salsa de tomate casera, jamón cocido y montaña de mozzarella gratinada.",
-    price: 24800,
-    image: "https://images.unsplash.com/photo-1606755456206-b25206cde27e?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Para compartir", "Best Seller"],
-    prepTime: "22 min",
-    isFeatured: true,
-  },
-  {
-    id: "tortilla-espanola",
-    categoryId: "cantina",
-    name: "Tortilla de Papas Babé",
-    description: "Papas confitadas lentamente con cebolla, huevos de campo y centro bien líquido y cremoso.",
-    price: 12600,
-    image: "https://images.unsplash.com/photo-1604908554027-1d3a6c0d6f5a?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Punto babé"],
-    prepTime: "14 min",
-    isFeatured: true,
-  },
-  {
-    id: "tallarines-estofado-bodegon",
-    categoryId: "pastas",
-    name: "Tallarines Caseros con Estofado de Osobuco",
-    description: "Fideos al huevo al dente bañados en salsa de tomate cocida durante 6 horas con osobuco tierno.",
-    price: 18200,
-    image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Receta de la abuela"],
-    prepTime: "18 min",
-  },
-  {
-    id: "vermut-sifon-bodegon",
-    categoryId: "bodega",
-    name: "Vermut de Grifo con Sifón de Soda",
-    description: "Vermut rosso servido en vaso pingüino con rodaja de naranja, aceituna verde y sifón de vidrio.",
-    price: 5800,
-    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1600&q=85",
-    tags: ["El aperitivo"],
-    prepTime: "4 min",
-  },
-  {
-    id: "flan-casero-bodegon",
-    categoryId: "postres",
-    name: "Flan Casero Mixto (Dulce & Crema)",
-    description: "Flan de huevos de campo con agujeritos, servido con dulce de leche repostero y crema montada.",
-    price: 6400,
-    image: "https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Clásico porteño"],
-    prepTime: "4 min",
-  },
-];
-
-export const bodegonPreset: GastroPreset = {
-  id: "bodegon",
-  label: "Bodegón Porteño & Cantina",
-
-  theme: {
-    mode: "hybrid",
-    accent: "#C7923E",
-    accentStrong: "#E2AC55",
-    accentContrast: "#14100D",
-
-    colors: {
-      light: {
-        bg: "#F9F6F0",
-        bgElevated: "#FFFFFF",
-        surface: "#FFFFFF",
-        surfaceElevated: "#EBE3D7",
-        surfaceInverse: "#18130F",
-        text: "#1E1712",
-        textMuted: "#605347",
-        textSubtle: "#827467",
-        accent: "#A67222",
-        accentStrong: "#7D5210",
-        accentContrast: "#FFFFFF",
-        accentSoft: "rgba(166, 114, 34, 0.12)",
-        accentFaint: "rgba(166, 114, 34, 0.05)",
-        accentBorder: "rgba(166, 114, 34, 0.35)",
-        border: "rgba(30, 23, 18, 0.11)",
-        borderStrong: "rgba(30, 23, 18, 0.22)",
-        overlay: "rgba(249, 246, 240, 0.92)",
-        control: "rgba(30, 23, 18, 0.05)",
-        controlHover: "rgba(30, 23, 18, 0.09)",
-        success: "#059669",
-        warning: "#B45309",
-        danger: "#DC2626",
-      },
-      hybrid: {
-        bg: "#14100D",
-        bgElevated: "#1A1511",
-        surface: "#211A14",
-        surfaceElevated: "#2C231B",
-        surfaceInverse: "#F7F0E6",
-        text: "#F7F0E6",
-        textMuted: "#C6B7A4",
-        textSubtle: "#8F8170",
-        accent: "#C7923E",
-        accentStrong: "#E2AC55",
-        accentContrast: "#14100D",
-        accentSoft: "rgba(199, 146, 62, 0.16)",
-        accentFaint: "rgba(199, 146, 62, 0.08)",
-        accentBorder: "rgba(199, 146, 62, 0.38)",
-        border: "rgba(247, 240, 230, 0.11)",
-        borderStrong: "rgba(247, 240, 230, 0.22)",
-        overlay: "rgba(20, 16, 13, 0.92)",
-        control: "rgba(247, 240, 230, 0.05)",
-        controlHover: "rgba(247, 240, 230, 0.09)",
-        success: "#34D399",
-        warning: "#F59E0B",
-        danger: "#F87171",
-      },
-      dark: {
-        bg: "#120E0B",
-        bgElevated: "#18130F",
-        surface: "#1E1813",
-        surfaceElevated: "#28201A",
-        surfaceInverse: "#F7F0E6",
-        text: "#F7F0E6",
-        textMuted: "#C6B7A4",
-        textSubtle: "#8F8170",
-        accent: "#C7923E",
-        accentStrong: "#E2AC55",
-        accentContrast: "#14100D",
-        accentSoft: "rgba(199, 146, 62, 0.16)",
-        accentFaint: "rgba(199, 146, 62, 0.08)",
-        accentBorder: "rgba(199, 146, 62, 0.38)",
-        border: "rgba(247, 240, 230, 0.11)",
-        borderStrong: "rgba(247, 240, 230, 0.22)",
-        overlay: "rgba(18, 14, 11, 0.92)",
-        control: "rgba(247, 240, 230, 0.05)",
-        controlHover: "rgba(247, 240, 230, 0.09)",
-        success: "#34D399",
-        warning: "#F59E0B",
-        danger: "#F87171",
-      },
+export const bodegonPreset = {
+  "id": "bodegon",
+  "label": "Bodegón Porteño & Cantina",
+  "theme": {
+    "mode": "hybrid",
+    "accent": "#C59745",
+    "accentStrong": "#E0B86E",
+    "accentContrast": "#090807",
+    "colors": {
+      "hybrid": {
+        "bg": "#17130F",
+        "bgElevated": "#201A15",
+        "surface": "#2A2119",
+        "surfaceElevated": "#33271E",
+        "surfaceInverse": "#F6EFE4",
+        "text": "#F6EFE4",
+        "textMuted": "#CDBEAA",
+        "textSubtle": "#948575",
+        "accent": "#C59745",
+        "accentStrong": "#E0B86E",
+        "accentContrast": "#17110C",
+        "accentSoft": "rgba(197,151,69,0.16)",
+        "accentFaint": "rgba(197,151,69,0.08)",
+        "accentBorder": "rgba(197,151,69,0.38)",
+        "border": "rgba(246,239,228,0.12)",
+        "borderStrong": "rgba(246,239,228,0.22)",
+        "overlay": "rgba(23,19,15,0.90)",
+        "control": "rgba(246,239,228,0.05)",
+        "controlHover": "rgba(246,239,228,0.09)",
+        "success": "#34D399",
+        "warning": "#F59E0B",
+        "danger": "#F87171"
+      }
     },
-
-    typography: {
-      display: "Georgia, 'Times New Roman', serif",
-      body: "Inter, Arial, sans-serif",
-      ui: "Inter, Arial, sans-serif",
-      mono: "monospace",
-    },
+    "typography": {
+      "display": "DM Serif Display, Georgia, serif",
+      "body": "Inter, Arial, Helvetica, sans-serif",
+      "ui": "Inter, Arial, Helvetica, sans-serif",
+      "mono": "monospace"
+    }
   },
-
-  visual: {
-    navbar: "editorial",
-    hero: "editorial",
-    heroStyle: {
-      variant: "editorial",
-      imageTreatment: "film",
-      overlay: "editorial",
-      composition: "standard",
-      ctaShape: "circle",
-      grain: true,
-      parallax: true,
-      intensity: 0.92,
+  "visual": {
+    "navbar": "editorial",
+    "hero": "editorial",
+    "heroStyle": {
+      "variant": "editorial",
+      "imageTreatment": "film",
+      "overlay": "editorial",
+      "composition": "editorial",
+      "ctaShape": "outline",
+      "grain": true,
+      "parallax": false,
+      "intensity": 0.8
     },
-    menu: "catalog",
-    productCard: "photo",
-    contact: "split",
-    cta: "immersive",
-    footer: "editorial",
-    story: {
-      variant: "cantina",
-      layout: "lookbook",
-      imageTreatment: "sepia",
-      cardShape: "ticket",
-      density: "balanced",
-      watermark: true,
-      grain: true,
-      numbering: true,
-      motion: { speed: 0.42, direction: "left", hoverLift: 2, parallax: false, pauseOnHover: true },
-    },
+    "menu": "catalog",
+    "productCard": "photo",
+    "contact": "split",
+    "cta": "immersive",
+    "footer": "editorial",
+    "story": {
+      "variant": "cantina",
+      "layout": "lookbook",
+      "imageTreatment": "sepia",
+      "cardShape": "ticket",
+      "density": "balanced",
+      "watermark": true,
+      "grain": true,
+      "numbering": true,
+      "motion": {
+        "speed": 0.42,
+        "direction": "left",
+        "hoverLift": 2,
+        "parallax": false,
+        "pauseOnHover": true
+      }
+    }
   },
-
-  operation: {
-    primary: "table",
-    supported: ["table", "pickup"],
+  "operation": {
+    "primary": "table",
+    "supported": [
+      "table",
+      "pickup"
+    ]
   },
-
-  capabilities: {
-    ordering: true,
-    delivery: false,
-    pickup: true,
-    tableOrders: true,
-    waiterCall: true,
-    reservation: true,
-    story: true,
-    coffeeCustomizer: false,
-    beerTaps: false,
-    iceCreamSizes: false,
-    toppings: false,
-    brunch: false,
-    takeaway: true,
+  "capabilities": {
+    "ordering": true,
+    "story": true,
+    "delivery": false,
+    "pickup": true,
+    "tableOrders": true,
+    "waiterCall": true,
+    "reservation": true,
+    "coffeeCustomizer": false,
+    "beerTaps": false,
+    "iceCreamSizes": false,
+    "toppings": false,
+    "brunch": false,
+    "takeaway": true
   },
-
-  siteOverrides: {
-    brand: {
-      name: "CANTINA LA VEREDA",
-      shortName: "La Vereda",
-      descriptor: "Bodegón Tradicional & Cocina Porteña",
-      tagline: "Platos abundantes, recetas familiares y sobremesa larga",
-      description: "Bodegón tradicional con milanesas gigantes para compartir, pastas al fierrito y vermut de sifón.",
-      logo: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=120&q=80",
-      favicon: "/favicon.ico",
+  "siteOverrides": {
+    "brand": {
+      "name": "LA VEREDA",
+      "shortName": "Vereda",
+      "descriptor": "Bodegón Porteño",
+      "tagline": "Platos abundantes, vermut y sobremesas largas",
+      "description": "Bodegón de cocina de barrio con platos de olla, milanesas y pastas caseras.",
+      "logo": "/favicon.ico",
+      "favicon": "/favicon.ico"
     },
-
-    features: {
-      ordering: true,
-      delivery: false,
-      pickup: true,
-      tableOrders: true,
-      waiterCall: true,
-      reservation: true,
-      story: true,
+    "features": {
+      "ordering": true,
+      "delivery": false,
+      "pickup": true,
+      "tableOrders": true,
+      "waiterCall": true,
+      "reservation": true,
+      "story": true
     },
-
-    operation: {
-      schedule: "Martes a Domingo · 12:00 a 16:00 y 20:00 a 01:00 hs",
-      estimatedTime: {
-        delivery: { min: 0, max: 0 },
-        pickup: { min: 20, max: 30 },
-        table: { min: 15, max: 28 },
-      },
+    "operation": {
+      "schedule": "Martes a Domingo · 12:00 a 16:00 y 20:00 a 01:00 hs",
+      "estimatedTime": {
+        "delivery": {
+          "min": 25,
+          "max": 45
+        },
+        "pickup": {
+          "min": 10,
+          "max": 25
+        },
+        "table": {
+          "min": 10,
+          "max": 30
+        }
+      }
     },
-
-    navigation: {
-      links: [
-        { label: "Inicio", href: "inicio" },
-        { label: "Cantina", href: "historia" },
-        { label: "Carta", href: "menu" },
-        { label: "Reservar", href: "contacto" },
+    "navigation": {
+      "links": [
+        {
+          "label": "Inicio",
+          "href": "inicio"
+        },
+        {
+          "label": "Cantina",
+          "href": "historia"
+        },
+        {
+          "label": "Carta",
+          "href": "menu"
+        },
+        {
+          "label": "Reservas",
+          "href": "contacto"
+        }
       ],
-      cta: "Ver Carta",
+      "cta": "Ver la carta"
     },
-
-    ordering: {
-      enabled: true,
-      channels: ["web"] as const,
-      fulfillment: ["onsite", "pickup"] as const,
-      cashDiscountPercent: 10,
-      paymentMethods: [
-        { id: "cash", label: "Efectivo en Mesa", requiresProof: false },
-        { id: "card", label: "Tarjeta de Débito / Crédito", requiresProof: false },
-        { id: "transfer", label: "Transferencia / QR", requiresProof: true },
+    "ordering": {
+      "enabled": true,
+      "channels": [
+        "web",
+        "table"
       ],
-      whatsapp: {
-        number: "549223000000",
-        defaultMessage: "Hola La Vereda, quería hacer una reserva para el salón.",
-        tableOrderMessage: "Hola, adjunto el pedido de la mesa.",
-        labelCheckout: "Enviar comanda por WhatsApp",
-      },
+      "fulfillment": [
+        "pickup",
+        "onsite"
+      ],
+      "cashDiscountPercent": 10,
+      "paymentMethods": [
+        {
+          "id": "cash",
+          "label": "Efectivo",
+          "requiresProof": false
+        },
+        {
+          "id": "card",
+          "label": "Tarjeta",
+          "requiresProof": false
+        },
+        {
+          "id": "transfer",
+          "label": "Transferencia / QR",
+          "requiresProof": true
+        }
+      ],
+      "whatsapp": {
+        "number": "549223000000",
+        "defaultMessage": "Hola, quiero hacer un pedido en LA VEREDA.",
+        "tableOrderMessage": "Hola, envío el pedido desde mesa en LA VEREDA.",
+        "labelCheckout": "Enviar pedido por WhatsApp"
+      }
     },
-
-    contact: {
-      address: "11 de Septiembre 3120 (esquina Catamarca)",
-      zone: "Barrio La Perla",
-      city: "Mar del Plata",
-      country: "Argentina",
-      fullAddress: "11 de Septiembre 3120, Mar del Plata, Argentina",
-      phone: "+54 9 223 555-0188",
-      email: "cantina@lavereda.com",
-      instagram: "https://instagram.com",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=11+de+Septiembre+3120+Mar+del+Plata",
-      coordinates: {
-        lat: -37.994211,
-        lng: -57.548902,
-        zoom: 16,
-        latDisplay: "37°59′39″ S",
-        lngDisplay: "57°32′56″ W",
-      },
+    "contact": {
+      "address": "Olavarría 2840 (esq. Brown)",
+      "zone": "Barrio Chauvin",
+      "city": "Mar del Plata",
+      "country": "Argentina",
+      "fullAddress": "Mar del Plata, Buenos Aires, Argentina",
+      "phone": "+54 9 223 555-0100",
+      "email": "hola@veredademo.com",
+      "instagram": "https://instagram.com",
+      "mapsUrl": "https://www.google.com/maps",
+      "coordinates": {
+        "lat": -38.0,
+        "lng": -57.55,
+        "zoom": 15,
+        "latDisplay": "38°00′00″ S",
+        "lngDisplay": "57°33′00″ W"
+      }
     },
-
-    seo: {
-      title: "Cantina La Vereda | Bodegón Porteño en Mar del Plata",
-      description: "Milanesas gigantes para compartir, pastas caseras, vermut de sifón y sobremesas de familia en La Perla.",
-      locale: "es_AR",
+    "seo": {
+      "title": "LA VEREDA | Bodegón Porteño & Cantina",
+      "description": "Cocina porteña abundante, vermut y sobremesas largas.",
+      "locale": "es_AR"
     },
-
-    content: {
-      hero: {
-        eyebrow: "Cantina de Barrio · Cocina Clásica",
-        titlePrefix: "Platos grandes",
-        titleAccent: "y sobremesa.",
-        subtitle: "Milanesas napolitanas al hierro para compartir, pastas al fierrito y vermut servido con soda de sifón.",
-        cta: "Abrir Carta de Cantina",
-        ctaHref: "menu",
-        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85",
-      },
-
-      story: {
-        eyebrow: "La Cantina",
-        watermark: "MESA",
-        titlePrefix: "Comer bien,",
-        titleAccent: "entre muchos.",
-        sectionTag: "La Cocina Tradicional",
-        primaryDescription: "Nuestras porciones están pensadas para ir al centro de la mesa. Platos que se disfrutan con pan, tenedor y conversación.",
-        secondaryDescription: "Cocinamos con recetas heredadas: salsas que hierven toda la mañana y carnes tiernizadas al momento.",
-        backgroundImage: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=1800&q=85",
-        labels: {
-          processLine: "Sifón · Olla · Sobremesa",
-          openArchive: "Explorar cantina",
-          traceability: "De la Casa",
-          closeSheet: "Cerrar Ficha",
-        },
-        archive: [
-          {
-            titulo: "Rebozado a Mano",
-            subtitulo: "Carne Seleccionada",
-            nota: "Peceto tiernizado, pan rallado fino y ajo con perejil fresco picado al momento.",
-            origen: "Cocina La Vereda",
-            src: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Masa al Huevo",
-            subtitulo: "Amasado Diario",
-            nota: "Harina y yemas de campo sobadas a palote para lograr fideos que absorben el estofado.",
-            origen: "Mesa de Pastas",
-            src: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Sifón de Vidrio",
-            subtitulo: "El Aperitivo",
-            nota: "Gas carbónico enérgico para golpear el vermut y abrir el apetito antes de la comida.",
-            origen: "Barra de Entrada",
-            src: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Sobremesa Larga",
-            subtitulo: "Salón Compartido",
-            nota: "Mesas juntas, café en pocillo y copas que se quedan hasta que se apagan las luces.",
-            origen: "Salón Central",
-            src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85",
-          },
-        ],
-      },
-
-      productDetail: {
-        fallbackTag: "Cantina",
-        options: { required: "Elegir guarnición", optional: "Huevos fritos extra", requiredMark: "*", personalized: "Opción de plato" },
-        notes: { label: "Aclaraciones a cocina", placeholder: "Ej. carne bien cocida, cebolla bien dorada..." },
-        actions: {
-          add: "Pedir al Centro",
-          added: "Marchando",
-          chooseRequired: "Elegir guarnición",
-          decreaseQuantity: "Menos",
-          increaseQuantity: "Más",
-          close: "Volver a carta",
-        },
-      },
-
-      cart: {
-        eyebrow: "Mesa de Cantina",
-        title: "Tu pedido",
-        emptyTitle: "Mesa despejada",
-        emptyDescription: "Agregá tortillas, milanesas o pastas para marchar la comida.",
-        productSingular: "fuente",
-        productPlural: "fuentes",
-        remove: "Quitar",
-        subtotal: "Subtotal cantina",
-        continueDescription: "Revisá los platos antes de confirmarle al mozo.",
-        checkoutButton: "Marchar a Cocina",
-        close: "Cerrar",
-        closeOrder: "Cerrar mesa",
-      },
-
-      checkout: {
-        disabled: { title: "Cocina cerrada", description: "El bodegón abre para los turnos de almuerzo y cena." },
-        header: { backLabel: "Carta", title: "Comanda de la Cantina", onlineLabel: "Para Llevar", tablePrefix: "Mesa" },
-        hero: { tableLabel: "Mesa", onlineLabel: "Comanda", title: "Tus Platos", description: "Revisá la comida elegida antes de que empiece a salir." },
-        selection: { label: "Platos a compartir", units: "platos", perUnit: "c/u", remove: "Quitar", decrease: "Menos", increase: "Más" },
-        empty: { title: "No agregaste platos", description: "Elegí de la carta de milanesas o pastas.", button: "Ver Carta" },
-        form: {
-          fulfillmentLabel: "Modalidad",
-          delivery: "Envío",
-          pickup: "Retiro en Cantina",
-          customerNameLabel: "Nombre para el ticket",
-          customerNamePlaceholder: "Tu nombre",
-          addressLabel: "Dirección",
-          addressPlaceholder: "Calle y número",
-          paymentLabel: "Forma de Pago",
-          notesLabel: "Aclaraciones para la cocina",
-          notesDeliveryPlaceholder: "Indicaciones para el retiro...",
-          notesTablePlaceholder: "Ej. el flan al final, soda con hielo...",
-        },
-        summary: { subtotal: "Total consumo", cashPrefix: "Efectivo", total: "Total a pagar", completedLabel: "Listo para salir", estimatedLabel: "Salida de cocina en" },
-        actions: { processing: "Marchando pedido...", sendToKitchen: "Marchar Comanda", newOrder: "Pedir otro plato", openWhatsApp: "Confirmar por WhatsApp", continueArrow: "Continuar" },
-        confirmation: {
-          preparedLabel: "Comanda Lista",
-          confirmedLabel: "Olla y Plancha Marchando",
-          whatsAppDescription: "Enviá el mensaje para que el cocinero baje las fuentes.",
-          tableDescriptionPrefix: "La cocina de la cantina ya recibió tu pedido",
-          kitchenTableSuffix: "",
-          preparedToastTitle: "Comanda lista",
-          preparedToastDescription: "Se abrirá WhatsApp con el pedido armado.",
-          confirmedToastTitle: "Platos marchando",
-          confirmedToastDescriptionPrefix: "Las fuentes están saliendo",
-        },
-        validation: {
-          emptyTitle: "Mesa vacía",
-          emptyDescription: "Agregá al menos un plato.",
-          nameTitle: "Nombre requerido",
-          nameDescription: "El mozo necesita identificar la mesa.",
-          addressTitle: "Falta dirección",
-          addressDescription: "Ingresá a dónde enviamos el pedido.",
-          submitErrorTitle: "Error al enviar comanda",
-          submitErrorDescription: "Comprobá tu conexión con el salón.",
-        },
-        helper: { table: "La comanda ingresa directamente a las ollas de la cantina.", online: "Se abrirá WhatsApp con el pedido listo." },
-        aria: { decrease: "Disminuir", increase: "Aumentar", remove: "Quitar", openWhatsApp: "Abrir WhatsApp", newOrder: "Pedir otra vez" },
-      },
-
-      menuUi: {
-        productPersonalizable: "Con guarnición",
-        viewDetail: "Detalle del plato",
-        prepLabel: "Tiempo de olla",
-        fallbackKitchen: "Cocina casera",
-        choose: "Elegir guarnición",
-        added: "Marchando",
-        add: "Pedir",
-        ariaViewProduct: "Ver plato",
-        categoryCountSingular: "plato",
-        categoryCountPlural: "platos",
-        allCategories: "Todos",
-        listView: "Carta",
-        gridView: "Platos",
-        ariaListView: "Ver como carta",
-        ariaGridView: "Ver como fotos",
-        ariaAllCategories: "Ver todas las opciones",
-      },
-
-      tableUi: {
-        serviceLabel: "Servicio de Cantina",
-        tablePrefix: "Mesa",
-        waiterButton: "Llamar al Mozo",
-        allCategories: "Toda la carta",
-        listView: "Carta",
-        gridView: "Platos",
-        ariaListView: "Ver carta",
-        ariaGridView: "Ver platos",
-        ariaWaiter: "Solicitar asistencia",
-      },
-
-      cartUi: { ariaOpen: "Abrir comanda" },
-      navbarUi: {
-        themeDark: "CANTINA",
-        themeLight: "DÍA",
-        ariaChangeTheme: "Cambiar ambiente",
-        ariaOpenOrder: "Ver comanda",
-        ariaOpenMenu: "Abrir carta",
-        ariaCloseMenu: "Cerrar carta",
-        mobileNavigationLabel: "Secciones",
-      },
-      contactUi: { waitTimeTableLabel: "Cocina", waitTimeDeliveryLabel: "Para llevar", minutesSuffix: "min" },
-
-      menu: {
-        eyebrow: "Fuentes Grandes & Pastas",
-        title: "Carta de Cantina",
-        subtitle: "Milanesas napolitanas al hierro para dos, pastas caseras al huevo y vermut con soda de sifón.",
-      },
-
-      ctaTransition: {
-        eyebrow: "Mesas para Grupos",
-        titlePrefix: "Juntá a la familia",
-        titleAccent: "en La Vereda.",
-        description: "Reservá mesas grandes para cumpleaños, domingos al mediodía y celebraciones entre amigos.",
-        buttonText: "Reservar Mesa Grande",
-        image: "https://images.unsplash.com/photo-1604908554027-1d3a6c0d6f5a?auto=format&fit=crop&w=1920&q=85",
-      },
-
-      contact: {
-        eyebrow: "Salón & Reservas",
-        statusBadge: "Cantina Abierta",
-        mainLabel: "Salón La Perla",
-        title: "Vení a comer bien.",
-        formEyebrow: "Reservas de Grupo",
-        formTitulo: "¿Querés juntar a toda la familia?",
-        formSubtitulo: "Mesas largas preparadas con fuentes al medio para compartir sin apuro.",
-        nameLabel: "Nombre y apellido",
-        phoneLabel: "WhatsApp",
-        emailLabel: "Correo",
-        messageLabel: "Día, hora y cantidad de adultos y chicos",
-        submitSending: "Abriendo WhatsApp...",
-        submitSent: "Mensaje enviado ✓",
-        botonEnviar: "Avisar a la Cantina",
-        addressLabel: "Bodegón",
-        scheduleLabel: "Horarios de Salón",
-        mapEyebrow: "Ubicación",
-        directionsButton: "Cómo llegar",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        copyButton: "Copiar",
-        copiedButton: "Copiado",
-        mapsButton: "Abrir Maps",
-        receptionPrompt: "¿Querés celebrar un cumpleaños con menú fijo?",
-        receptionButton: "Hablar con el Encargado",
-      },
-
-      waiterModal: {
-        eyebrow: "Mesa Familiar",
-        callTitle: "Llamar al Mozo",
-        callSubtitle: "Pedir más pan, soda, hielo o consultar el plato del día",
-        callMessage: "Atención solicitada en mesa",
-        billTitle: "Pedir la Cuenta",
-        billSubtitle: "Efectivo con 10% de ahorro o tarjetas",
-        paymentPrompt: "¿Cómo preferís pagar?",
-        sentTitle: "Aviso recibido",
-        sentSubtitle: "El mozo se acerca a la mesa:",
-        backButton: "Volver",
-        confirmButton: "Confirmar",
-        errorMessage: "Error al comunicar con la caja.",
-      },
-
-      footer: {
-        backgroundImage: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=85",
-        description: "Cantina La Vereda · Bodegón Tradicional & Cocina Criolla",
-        credits: "Gastro Engine Core",
-        navigationLabel: "Navegación",
-        contactLabel: "Contacto",
-        establishmentLabel: "El Bodegón",
-        hoursLabel: "Turnos",
-        socialsLabel: "Comunidad",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        locationLabel: "Dirección",
-        identityLabel: "Tradición",
-        backToTop: "Volver arriba",
-      },
-    },
+    "content": {
+      "hero": {
+        "eyebrow": "Bodegón · Barrio & Cantina",
+        "titlePrefix": "Lo",
+        "titleAccent": "de siempre, pero bien.",
+        "subtitle": "Milanesas, platos de olla, pasta casera y vermut servido como corresponde.",
+        "cta": "Ver la carta",
+        "ctaHref": "menu",
+        "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=1600&q=85&auto=format&fit=crop"
+      },showcase: {
+    enabled: true,
+    variant: "heroic-split", // Activa el plato del día destacado
+    badgeText: "Sugerencia del Mozo",
+    eyebrow: "Plato del Día de la Cantina",
+    titlePrefix: "Comer bien,",
+    titleAccent: "abundante",
+    titleSuffix: "y compartido.",
+    description: "Milanesas gigantes al hierro de nalga tierna, gratinadas con abundante mozzarella y salsa casera.",
+    targetProductId: "milanesa-napolitana-compartir",
+    actionButtonLabel: "Marchar para la mesa",
+    metrics: [
+      { label: "Porción", value: "Para 2", isAccent: true },
+      { label: "Guarnición", value: "Fritas o puré" },
+      { label: "Cocción", value: "Al momento" }
+    ],
+    footerNote: {
+      left: "Sale con fritas a caballo",
+      right: "Receta de la casa"
+    }
   },
-
-  menu: {
-    categories: bodegonCategories,
-    products: bodegonProducts,
+      
+      "story": {
+        "eyebrow": "Cantina · Cocina de Barrio",
+        "watermark": "MESA",
+        "titlePrefix": "Lo que importa",
+        "titleAccent": "se comparte.",
+        "sectionTag": "Archivo de la Casa",
+        "primaryDescription": "Una mesa generosa, recetas reconocibles y una barra donde la sobremesa empieza antes del plato principal.",
+        "secondaryDescription": "Una mesa generosa, recetas reconocibles y una barra donde la sobremesa empieza antes del plato principal. La propuesta cambia con la materia, el servicio y el momento del día.",
+        "backgroundImage": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=1600&q=85&auto=format&fit=crop",
+        "labels": {
+          "processLine": "Archivo de la Casa",
+          "openArchive": "Explorar archivo de la casa",
+          "traceability": "Trazabilidad",
+          "closeSheet": "Cerrar Ficha"
+        },
+        "archive": [
+          {
+            "titulo": "Vereda · Proceso",
+            "subtitulo": "Lo",
+            "nota": "Una mesa generosa, recetas reconocibles y una barra donde la sobremesa empieza antes del plato principal.",
+            "origen": "LA VEREDA",
+            "src": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1600&q=85&auto=format&fit=crop"
+          },
+          {
+            "titulo": "Materia · Selección",
+            "subtitulo": "Archivo de la Casa",
+            "nota": "Una pieza de la identidad que define la experiencia y le da continuidad a la marca.",
+            "origen": "LA VEREDA",
+            "src": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=1600&q=85&auto=format&fit=crop"
+          }
+        ]
+      },
+      "productDetail": {
+        "fallbackTag": "Especialidad",
+        "options": {
+          "required": "Elegí 1",
+          "optional": "Opcional",
+          "requiredMark": "*",
+          "personalized": "Personalización"
+        },
+        "notes": {
+          "label": "Instrucciones o aclaraciones",
+          "placeholder": "Ej. sin un ingrediente, presentación especial..."
+        },
+        "actions": {
+          "add": "Sumar",
+          "added": "Agregado",
+          "chooseRequired": "Seleccioná opciones requeridas",
+          "decreaseQuantity": "Disminuir cantidad",
+          "increaseQuantity": "Aumentar cantidad",
+          "close": "Cerrar detalle"
+        }
+      },
+      "cart": {
+        "eyebrow": "Comanda",
+        "title": "Tu pedido",
+        "emptyTitle": "Pedido vacío",
+        "emptyDescription": "Elegí productos de la carta para comenzar.",
+        "productSingular": "producto",
+        "productPlural": "productos",
+        "remove": "Quitar",
+        "subtotal": "Subtotal",
+        "continueDescription": "Revisá datos, entrega y pago en la siguiente pantalla.",
+        "checkoutButton": "Ver pedido",
+        "close": "Cerrar",
+        "closeOrder": "Cerrar pedido"
+      },
+      "checkout": {
+        "disabled": {
+          "title": "Pedidos no disponibles",
+          "description": "El canal de pedidos está temporalmente desactivado."
+        },
+        "header": {
+          "backLabel": "Carta",
+          "title": "Tu pedido",
+          "onlineLabel": "Pedido online",
+          "tablePrefix": "Mesa"
+        },
+        "hero": {
+          "tableLabel": "Mesa",
+          "onlineLabel": "Pedido online",
+          "title": "Tu pedido",
+          "description": "Revisá la selección y completá los últimos datos."
+        },
+        "selection": {
+          "label": "Selección",
+          "units": "unidades",
+          "perUnit": "c/u",
+          "remove": "Quitar",
+          "decrease": "Disminuir",
+          "increase": "Aumentar"
+        },
+        "empty": {
+          "title": "Pedido vacío",
+          "description": "Elegí productos desde la carta para comenzar.",
+          "button": "Volver a la carta"
+        },
+        "form": {
+          "fulfillmentLabel": "Entrega",
+          "delivery": "Envío",
+          "pickup": "Retiro",
+          "customerNameLabel": "Nombre",
+          "customerNamePlaceholder": "Tu nombre",
+          "addressLabel": "Dirección",
+          "addressPlaceholder": "Dirección y timbre",
+          "paymentLabel": "Medio de pago",
+          "notesLabel": "Aclaraciones",
+          "notesDeliveryPlaceholder": "Ej. timbre, piso, recepción...",
+          "notesTablePlaceholder": "Ej. sin sal, sin cebolla..."
+        },
+        "summary": {
+          "subtotal": "Subtotal",
+          "cashPrefix": "Efectivo",
+          "total": "Total",
+          "completedLabel": "Pedido completo",
+          "estimatedLabel": "Demora estimada"
+        },
+        "actions": {
+          "processing": "Procesando...",
+          "sendToKitchen": "Enviar pedido",
+          "newOrder": "Nueva orden",
+          "openWhatsApp": "Abrir WhatsApp",
+          "continueArrow": "Continuar"
+        },
+        "confirmation": {
+          "preparedLabel": "Pedido preparado",
+          "confirmedLabel": "Pedido confirmado",
+          "whatsAppDescription": "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
+          "tableDescriptionPrefix": "La cocina recibió tu pedido",
+          "kitchenTableSuffix": "de la Mesa",
+          "preparedToastTitle": "Pedido preparado",
+          "preparedToastDescription": "Abrimos WhatsApp para continuar.",
+          "confirmedToastTitle": "Pedido confirmado",
+          "confirmedToastDescriptionPrefix": "La cocina recibió la comanda."
+        },
+        "validation": {
+          "emptyTitle": "La comanda está vacía",
+          "emptyDescription": "Elegí al menos un producto antes de continuar.",
+          "nameTitle": "Falta tu nombre",
+          "nameDescription": "Necesitamos identificar tu pedido.",
+          "addressTitle": "Falta la dirección",
+          "addressDescription": "Completá la dirección para el envío.",
+          "submitErrorTitle": "No pudimos enviar el pedido",
+          "submitErrorDescription": "Revisá tu conexión e intentá nuevamente."
+        },
+        "helper": {
+          "table": "El pedido se enviará directamente al servicio.",
+          "online": "La siguiente acción abrirá WhatsApp con la comanda preparada."
+        },
+        "aria": {
+          "decrease": "Disminuir cantidad",
+          "increase": "Aumentar cantidad",
+          "remove": "Quitar producto",
+          "openWhatsApp": "Abrir WhatsApp",
+          "newOrder": "Crear nueva orden"
+        }
+      },
+      "menuUi": {
+        "productPersonalizable": "Personalizable",
+        "viewDetail": "Ver detalle",
+        "prepLabel": "Preparación",
+        "fallbackKitchen": "Cocina de autor",
+        "choose": "Elegir",
+        "added": "Listo",
+        "add": "Agregar",
+        "ariaViewProduct": "Ver detalle de",
+        "categoryCountSingular": "producto",
+        "categoryCountPlural": "productos",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaAllCategories": "Mostrar todos los productos"
+      },
+      "tableUi": {
+        "serviceLabel": "Servicio en salón",
+        "tablePrefix": "Mesa",
+        "waiterButton": "Mozo / Cuenta",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaWaiter": "Solicitar atención o pedir la cuenta"
+      },
+      "cartUi": {
+        "ariaOpen": "Abrir pedido"
+      },
+      "navbarUi": {
+        "themeDark": "DARK",
+        "themeLight": "LIGHT",
+        "ariaChangeTheme": "Cambiar tema",
+        "ariaOpenOrder": "Abrir pedido",
+        "ariaOpenMenu": "Abrir menú",
+        "ariaCloseMenu": "Cerrar menú",
+        "mobileNavigationLabel": "Navegación"
+      },
+      "contactUi": {
+        "waitTimeTableLabel": "Salón",
+        "waitTimeDeliveryLabel": "Delivery",
+        "minutesSuffix": "min"
+      },
+      "menu": {
+        "eyebrow": "Cantina & Cocina de Olla",
+        "title": "Carta",
+        "subtitle": "Plato del día, milanesas para compartir, pastas caseras y vermut de sifón."
+      },
+      "ctaTransition": {
+        "eyebrow": "Bodegón Porteño & Cantina",
+        "titlePrefix": "Lo que importa",
+        "titleAccent": "se comparte.",
+        "description": "Cocina porteña abundante, vermut y sobremesas largas.",
+        "buttonText": "Ver la carta",
+        "image": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=1600&q=85&auto=format&fit=crop"
+      },
+      "contact": {
+        "eyebrow": "Ubicación & Concierge",
+        "statusBadge": "Operación activa",
+        "mainLabel": "Establecimiento",
+        "title": "Salón, reservas y take away",
+        "formEyebrow": "Contacto",
+        "formTitulo": "Salón, reservas y take away",
+        "formSubtitulo": "Cocina porteña abundante, vermut y sobremesas largas.",
+        "nameLabel": "Nombre / empresa",
+        "phoneLabel": "Teléfono / WhatsApp",
+        "emailLabel": "Correo electrónico",
+        "messageLabel": "Mensaje",
+        "submitSending": "Abriendo WhatsApp...",
+        "submitSent": "Mensaje enviado ✓",
+        "botonEnviar": "Consultar",
+        "addressLabel": "Dirección",
+        "scheduleLabel": "Horarios & Canales",
+        "mapEyebrow": "Ubicación",
+        "directionsButton": "Cómo llegar",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "copyButton": "Copiar",
+        "copiedButton": "Copiado",
+        "mapsButton": "Abrir ubicación",
+        "receptionPrompt": "Salón, reservas y take away",
+        "receptionButton": "Consultar"
+      },
+      "waiterModal": {
+        "eyebrow": "LA VEREDA",
+        "callTitle": "Solicitar atención",
+        "callSubtitle": "Asistencia para ordenar o consultas",
+        "callMessage": "Solicita asistencia desde la mesa",
+        "billTitle": "Pedir la Cuenta",
+        "billSubtitle": "Efectivo, Tarjeta o QR",
+        "paymentPrompt": "¿Cómo deseás abonar la cuenta?",
+        "sentTitle": "Aviso Enviado",
+        "sentSubtitle": "El equipo ya fue notificado:",
+        "backButton": "Volver",
+        "confirmButton": "Confirmar",
+        "errorMessage": "No pudimos notificar al servicio."
+      },
+      "footer": {
+        "backgroundImage": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=1600&q=85&auto=format&fit=crop",
+        "description": "LA VEREDA · Bodegón Porteño",
+        "credits": "Gastro Engine Core",
+        "navigationLabel": "Navegación",
+        "contactLabel": "Contacto",
+        "establishmentLabel": "Establecimiento",
+        "hoursLabel": "Horarios",
+        "socialsLabel": "Comunidad",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "locationLabel": "Ubicación",
+        "identityLabel": "Identidad",
+        "backToTop": "Volver arriba"
+      }
+    }
   },
-};
+  "menu": {
+    "categories": bodegonCategories,
+    "products": bodegonProducts
+  }
+} satisfies GastroPreset;

@@ -1,37 +1,6 @@
-export interface MenuOptionItem {
-  id: string;
-  name: string;
-  priceDelta?: number;
-}
+import type { MenuCategory, MenuProduct } from "@/data/menu";
 
-export interface MenuOptionGroup {
-  id: string;
-  name: string;
-  type: "single" | "multiple";
-  required?: boolean;
-  items: MenuOptionItem[];
-}
-
-export interface MenuProduct {
-  id: string;
-  categoryId: string;
-  name: string;
-  description?: string;
-  price: number;
-  image?: string;
-  tags?: string[];
-  optionGroups?: MenuOptionGroup[];
-  isFeatured?: boolean;
-  prepTime?: string;
-}
-
-export interface MenuCategory {
-  id: string;
-  name: string;
-  description?: string;
-}
-
-export const menuCategories: MenuCategory[] = [
+export const restaurantCategories: MenuCategory[] = [
   {
     id: "entradas",
     name: "Tapeo & Entradas",
@@ -82,11 +51,10 @@ export const menuCategories: MenuCategory[] = [
   },
 ];
 
-export const menuProducts: MenuProduct[] = [
+export const restaurantProducts: MenuProduct[] = [
   // =========================================================
   // 01. TAPEO & ENTRADAS
   // =========================================================
-
   {
     id: "papas-trufa",
     categoryId: "entradas",
@@ -104,21 +72,9 @@ export const menuProducts: MenuProduct[] = [
         name: "Adicionales con cargo",
         type: "multiple",
         items: [
-          {
-            id: "extra-trufa",
-            name: "Doble aceite de trufa",
-            priceDelta: 2200,
-          },
-          {
-            id: "extra-bacon",
-            name: "Panceta crocante picada",
-            priceDelta: 1800,
-          },
-          {
-            id: "dip-alioli",
-            name: "Dip de alioli ahumado",
-            priceDelta: 1200,
-          },
+          { id: "extra-trufa", name: "Doble aceite de trufa", priceDelta: 2200 },
+          { id: "extra-bacon", name: "Panceta crocante picada", priceDelta: 1800 },
+          { id: "dip-alioli", name: "Dip de alioli ahumado", priceDelta: 1200 },
         ],
       },
       {
@@ -126,21 +82,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Modificaciones sin cargo",
         type: "multiple",
         items: [
-          {
-            id: "sin-ciboulette",
-            name: "Sin ciboulette",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-sal",
-            name: "Sin sal",
-            priceDelta: 0,
-          },
+          { id: "sin-ciboulette", name: "Sin ciboulette", priceDelta: 0 },
+          { id: "sin-sal", name: "Sin sal", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "provoleta-brasa",
     categoryId: "entradas",
@@ -158,16 +105,8 @@ export const menuProducts: MenuProduct[] = [
         name: "Panera & Aderezos",
         type: "multiple",
         items: [
-          {
-            id: "focaccia-masa-madre",
-            name: "Focaccia tibia de masa madre",
-            priceDelta: 1600,
-          },
-          {
-            id: "chimi-ahumado",
-            name: "Chimichurri ahumado casero",
-            priceDelta: 900,
-          },
+          { id: "focaccia-masa-madre", name: "Focaccia tibia de masa madre", priceDelta: 1600 },
+          { id: "chimi-ahumado", name: "Chimichurri ahumado casero", priceDelta: 900 },
         ],
       },
       {
@@ -175,21 +114,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Modificaciones",
         type: "multiple",
         items: [
-          {
-            id: "sin-tomates",
-            name: "Sin tomates confitados",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-oregano",
-            name: "Sin orégano",
-            priceDelta: 0,
-          },
+          { id: "sin-tomates", name: "Sin tomates confitados", priceDelta: 0 },
+          { id: "sin-oregano", name: "Sin orégano", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "empanadas-corte",
     categoryId: "entradas",
@@ -208,16 +138,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "tres-empanadas",
-            name: "3 unidades",
-            priceDelta: 0,
-          },
-          {
-            id: "seis-empanadas",
-            name: "6 unidades para compartir",
-            priceDelta: 5200,
-          },
+          { id: "tres-empanadas", name: "3 unidades", priceDelta: 0 },
+          { id: "seis-empanadas", name: "6 unidades para compartir", priceDelta: 5200 },
         ],
       },
       {
@@ -225,21 +147,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Salsas",
         type: "multiple",
         items: [
-          {
-            id: "salsa-criolla",
-            name: "Salsa criolla",
-            priceDelta: 600,
-          },
-          {
-            id: "salsa-picante",
-            name: "Salsa picante de la casa",
-            priceDelta: 700,
-          },
+          { id: "salsa-criolla", name: "Salsa criolla", priceDelta: 600 },
+          { id: "salsa-picante", name: "Salsa picante de la casa", priceDelta: 700 },
         ],
       },
     ],
   },
-
   {
     id: "burrata-tomates",
     categoryId: "entradas",
@@ -258,16 +171,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "focaccia-clasica",
-            name: "Focaccia de masa madre",
-            priceDelta: 0,
-          },
-          {
-            id: "pan-rustico",
-            name: "Pan rústico tostado",
-            priceDelta: 500,
-          },
+          { id: "focaccia-clasica", name: "Focaccia de masa madre", priceDelta: 0 },
+          { id: "pan-rustico", name: "Pan rústico tostado", priceDelta: 500 },
         ],
       },
       {
@@ -275,21 +180,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "jamon-crudo-burrata",
-            name: "Jamón crudo estacionado",
-            priceDelta: 2900,
-          },
-          {
-            id: "pesto-albahaca",
-            name: "Pesto fresco de albahaca",
-            priceDelta: 1100,
-          },
+          { id: "jamon-crudo-burrata", name: "Jamón crudo estacionado", priceDelta: 2900 },
+          { id: "pesto-albahaca", name: "Pesto fresco de albahaca", priceDelta: 1100 },
         ],
       },
     ],
   },
-
   {
     id: "croquetas-bondiola",
     categoryId: "entradas",
@@ -308,21 +204,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "mostaza-antigua",
-            name: "Mostaza antigua",
-            priceDelta: 0,
-          },
-          {
-            id: "alioli-hierbas",
-            name: "Alioli de hierbas",
-            priceDelta: 0,
-          },
+          { id: "mostaza-antigua", name: "Mostaza antigua", priceDelta: 0 },
+          { id: "alioli-hierbas", name: "Alioli de hierbas", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "langostinos-brasa",
     categoryId: "entradas",
@@ -341,16 +228,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "ajo-suave",
-            name: "Suave",
-            priceDelta: 0,
-          },
-          {
-            id: "ajo-intenso",
-            name: "Intenso",
-            priceDelta: 0,
-          },
+          { id: "ajo-suave", name: "Suave", priceDelta: 0 },
+          { id: "ajo-intenso", name: "Intenso", priceDelta: 0 },
         ],
       },
       {
@@ -358,16 +237,8 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-pan",
-            name: "Pan rústico extra",
-            priceDelta: 800,
-          },
-          {
-            id: "extra-limon",
-            name: "Limón adicional",
-            priceDelta: 300,
-          },
+          { id: "extra-pan", name: "Pan rústico extra", priceDelta: 800 },
+          { id: "extra-limon", name: "Limón adicional", priceDelta: 300 },
         ],
       },
     ],
@@ -376,7 +247,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 02. HUERTA & ENSALADAS
   // =========================================================
-
   {
     id: "ensalada-rucula",
     categoryId: "ensaladas",
@@ -394,26 +264,13 @@ export const menuProducts: MenuProduct[] = [
         name: "Sumar proteína",
         type: "single",
         items: [
-          {
-            id: "sin-proteina",
-            name: "Sin proteína",
-            priceDelta: 0,
-          },
-          {
-            id: "pollo-grillado",
-            name: "Pollo grillado",
-            priceDelta: 3200,
-          },
-          {
-            id: "salmon-ahumado",
-            name: "Salmón ahumado",
-            priceDelta: 4900,
-          },
+          { id: "sin-proteina", name: "Sin proteína", priceDelta: 0 },
+          { id: "pollo-grillado", name: "Pollo grillado", priceDelta: 3200 },
+          { id: "salmon-ahumado", name: "Salmón ahumado", priceDelta: 4900 },
         ],
       },
     ],
   },
-
   {
     id: "caesar-pollo",
     categoryId: "ensaladas",
@@ -432,16 +289,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pollo-caesar",
-            name: "Pollo grillado",
-            priceDelta: 0,
-          },
-          {
-            id: "langostinos-caesar",
-            name: "Langostinos al grill",
-            priceDelta: 3900,
-          },
+          { id: "pollo-caesar", name: "Pollo grillado", priceDelta: 0 },
+          { id: "langostinos-caesar", name: "Langostinos al grill", priceDelta: 3900 },
         ],
       },
       {
@@ -449,21 +298,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Modificaciones",
         type: "multiple",
         items: [
-          {
-            id: "sin-croutons",
-            name: "Sin croutons",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-aderezo-caesar",
-            name: "Aderezo aparte",
-            priceDelta: 0,
-          },
+          { id: "sin-croutons", name: "Sin croutons", priceDelta: 0 },
+          { id: "sin-aderezo-caesar", name: "Aderezo aparte", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "ensalada-burrata",
     categoryId: "ensaladas",
@@ -476,7 +316,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Estacional"],
     prepTime: "8 min",
   },
-
   {
     id: "ensalada-griega",
     categoryId: "ensaladas",
@@ -494,16 +333,8 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-feta",
-            name: "Extra queso feta",
-            priceDelta: 1300,
-          },
-          {
-            id: "extra-olivas",
-            name: "Extra aceitunas",
-            priceDelta: 700,
-          },
+          { id: "extra-feta", name: "Extra queso feta", priceDelta: 1300 },
+          { id: "extra-olivas", name: "Extra aceitunas", priceDelta: 700 },
         ],
       },
     ],
@@ -512,7 +343,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 03. PASTAS ARTESANALES
   // =========================================================
-
   {
     id: "ravioles-burrata",
     categoryId: "pastas",
@@ -531,21 +361,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pomodoro",
-            name: "Pomodoro de la casa",
-            priceDelta: 0,
-          },
-          {
-            id: "crema-trufa-ravioles",
-            name: "Crema de parmesano y trufa",
-            priceDelta: 2400,
-          },
+          { id: "pomodoro", name: "Pomodoro de la casa", priceDelta: 0 },
+          { id: "crema-trufa-ravioles", name: "Crema de parmesano y trufa", priceDelta: 2400 },
         ],
       },
     ],
   },
-
   {
     id: "tagliatelle-carbonara",
     categoryId: "pastas",
@@ -563,21 +384,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-panceta-carbonara",
-            name: "Extra panceta crocante",
-            priceDelta: 1800,
-          },
-          {
-            id: "extra-parmesano",
-            name: "Extra parmesano",
-            priceDelta: 1300,
-          },
+          { id: "extra-panceta-carbonara", name: "Extra panceta crocante", priceDelta: 1800 },
+          { id: "extra-parmesano", name: "Extra parmesano", priceDelta: 1300 },
         ],
       },
     ],
   },
-
   {
     id: "gnocchi-osobuco",
     categoryId: "pastas",
@@ -597,21 +409,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "parmesano-normal",
-            name: "Parmesano",
-            priceDelta: 0,
-          },
-          {
-            id: "parmesano-extra-gnocchi",
-            name: "Parmesano extra",
-            priceDelta: 1200,
-          },
+          { id: "parmesano-normal", name: "Parmesano", priceDelta: 0 },
+          { id: "parmesano-extra-gnocchi", name: "Parmesano extra", priceDelta: 1200 },
         ],
       },
     ],
   },
-
   {
     id: "lasagna-carne",
     categoryId: "pastas",
@@ -626,12 +429,9 @@ export const menuProducts: MenuProduct[] = [
     isFeatured: true,
   },
 
-  
-
   // =========================================================
   // 04. FUEGOS & CARNES
   // =========================================================
-
   {
     id: "ojo-de-bife",
     categoryId: "fuegos",
@@ -651,21 +451,9 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "jugoso",
-            name: "Jugoso (Rojo brillante, tibio)",
-            priceDelta: 0,
-          },
-          {
-            id: "a-punto",
-            name: "A punto (Rosado y tierno)",
-            priceDelta: 0,
-          },
-          {
-            id: "cocido",
-            name: "Cocido (Sin tonos rosados)",
-            priceDelta: 0,
-          },
+          { id: "jugoso", name: "Jugoso (Rojo brillante, tibio)", priceDelta: 0 },
+          { id: "a-punto", name: "A punto (Rosado y tierno)", priceDelta: 0 },
+          { id: "cocido", name: "Cocido (Sin tonos rosados)", priceDelta: 0 },
         ],
       },
       {
@@ -674,21 +462,9 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pure-ahumado",
-            name: "Puré de papas ahumado con manteca",
-            priceDelta: 0,
-          },
-          {
-            id: "papas-rusticas",
-            name: "Papas rústicas al romero",
-            priceDelta: 0,
-          },
-          {
-            id: "ensalada-rucula",
-            name: "Rúcula y lascas de parmesano",
-            priceDelta: 0,
-          },
+          { id: "pure-ahumado", name: "Puré de papas ahumado con manteca", priceDelta: 0 },
+          { id: "papas-rusticas", name: "Papas rústicas al romero", priceDelta: 0 },
+          { id: "ensalada-rucula", name: "Rúcula y lascas de parmesano", priceDelta: 0 },
         ],
       },
       {
@@ -696,21 +472,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Salsas y extras",
         type: "multiple",
         items: [
-          {
-            id: "chimi-hierbas",
-            name: "Chimichurri fresco de la casa",
-            priceDelta: 800,
-          },
-          {
-            id: "salsa-malbec",
-            name: "Reducción de Malbec",
-            priceDelta: 1400,
-          },
+          { id: "chimi-hierbas", name: "Chimichurri fresco de la casa", priceDelta: 800 },
+          { id: "salsa-malbec", name: "Reducción de Malbec", priceDelta: 1400 },
         ],
       },
     ],
   },
-
   {
     id: "costillar-braseado",
     categoryId: "fuegos",
@@ -730,21 +497,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pure-boniato",
-            name: "Puré rústico de boniato y miel",
-            priceDelta: 0,
-          },
-          {
-            id: "papas-romero-asado",
-            name: "Papas rústicas crocantes",
-            priceDelta: 0,
-          },
+          { id: "pure-boniato", name: "Puré rústico de boniato y miel", priceDelta: 0 },
+          { id: "papas-romero-asado", name: "Papas rústicas crocantes", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "bife-chorizo",
     categoryId: "fuegos",
@@ -763,21 +521,9 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "jugoso-bife",
-            name: "Jugoso",
-            priceDelta: 0,
-          },
-          {
-            id: "punto-bife",
-            name: "A punto",
-            priceDelta: 0,
-          },
-          {
-            id: "cocido-bife",
-            name: "Cocido",
-            priceDelta: 0,
-          },
+          { id: "jugoso-bife", name: "Jugoso", priceDelta: 0 },
+          { id: "punto-bife", name: "A punto", priceDelta: 0 },
+          { id: "cocido-bife", name: "Cocido", priceDelta: 0 },
         ],
       },
       {
@@ -786,26 +532,13 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "papas-romero-bife",
-            name: "Papas al romero",
-            priceDelta: 0,
-          },
-          {
-            id: "pure-bife",
-            name: "Puré de papa ahumado",
-            priceDelta: 0,
-          },
-          {
-            id: "verduras-brasa-bife",
-            name: "Vegetales a la brasa",
-            priceDelta: 900,
-          },
+          { id: "papas-romero-bife", name: "Papas al romero", priceDelta: 0 },
+          { id: "pure-bife", name: "Puré de papa ahumado", priceDelta: 0 },
+          { id: "verduras-brasa-bife", name: "Vegetales a la brasa", priceDelta: 900 },
         ],
       },
     ],
   },
-
   {
     id: "entraña-brasa",
     categoryId: "fuegos",
@@ -824,16 +557,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "papas-entrania",
-            name: "Papas rústicas",
-            priceDelta: 0,
-          },
-          {
-            id: "ensalada-entrania",
-            name: "Ensalada fresca",
-            priceDelta: 0,
-          },
+          { id: "papas-entrania", name: "Papas rústicas", priceDelta: 0 },
+          { id: "ensalada-entrania", name: "Ensalada fresca", priceDelta: 0 },
         ],
       },
       {
@@ -841,21 +566,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Salsas",
         type: "multiple",
         items: [
-          {
-            id: "chimi-entrania",
-            name: "Chimichurri",
-            priceDelta: 800,
-          },
-          {
-            id: "criolla-entrania",
-            name: "Salsa criolla",
-            priceDelta: 700,
-          },
+          { id: "chimi-entrania", name: "Chimichurri", priceDelta: 800 },
+          { id: "criolla-entrania", name: "Salsa criolla", priceDelta: 700 },
         ],
       },
     ],
   },
-
   {
     id: "pollo-brasa",
     categoryId: "fuegos",
@@ -874,21 +590,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pure-pollo",
-            name: "Puré de papa",
-            priceDelta: 0,
-          },
-          {
-            id: "vegetales-pollo",
-            name: "Vegetales grillados",
-            priceDelta: 700,
-          },
+          { id: "pure-pollo", name: "Puré de papa", priceDelta: 0 },
+          { id: "vegetales-pollo", name: "Vegetales grillados", priceDelta: 700 },
         ],
       },
     ],
   },
-
   {
     id: "salmon-brasa",
     categoryId: "fuegos",
@@ -907,21 +614,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pure-salmon",
-            name: "Puré de coliflor",
-            priceDelta: 0,
-          },
-          {
-            id: "ensalada-salmon",
-            name: "Ensalada de hojas verdes",
-            priceDelta: 0,
-          },
+          { id: "pure-salmon", name: "Puré de coliflor", priceDelta: 0 },
+          { id: "ensalada-salmon", name: "Ensalada de hojas verdes", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "bondiola-lenta",
     categoryId: "fuegos",
@@ -940,16 +638,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pure-bondiola",
-            name: "Puré de boniato",
-            priceDelta: 0,
-          },
-          {
-            id: "papas-bondiola",
-            name: "Papas rústicas",
-            priceDelta: 0,
-          },
+          { id: "pure-bondiola", name: "Puré de boniato", priceDelta: 0 },
+          { id: "papas-bondiola", name: "Papas rústicas", priceDelta: 0 },
         ],
       },
       {
@@ -957,21 +647,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Terminación",
         type: "multiple",
         items: [
-          {
-            id: "extra-mostaza",
-            name: "Mostaza antigua extra",
-            priceDelta: 600,
-          },
-          {
-            id: "extra-miel",
-            name: "Miel especiada",
-            priceDelta: 500,
-          },
+          { id: "extra-mostaza", name: "Mostaza antigua extra", priceDelta: 600 },
+          { id: "extra-miel", name: "Miel especiada", priceDelta: 500 },
         ],
       },
     ],
   },
-
   {
     id: "tabla-fuegos",
     categoryId: "fuegos",
@@ -991,21 +672,9 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "tabla-punto-jugoso",
-            name: "Jugoso",
-            priceDelta: 0,
-          },
-          {
-            id: "tabla-punto",
-            name: "A punto",
-            priceDelta: 0,
-          },
-          {
-            id: "tabla-punto-cocido",
-            name: "Cocido",
-            priceDelta: 0,
-          },
+          { id: "tabla-punto-jugoso", name: "Jugoso", priceDelta: 0 },
+          { id: "tabla-punto", name: "A punto", priceDelta: 0 },
+          { id: "tabla-punto-cocido", name: "Cocido", priceDelta: 0 },
         ],
       },
       {
@@ -1013,16 +682,8 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "chori-extra",
-            name: "Chorizo criollo extra",
-            priceDelta: 2200,
-          },
-          {
-            id: "papas-extra-tabla",
-            name: "Porción de papas extra",
-            priceDelta: 2600,
-          },
+          { id: "chori-extra", name: "Chorizo criollo extra", priceDelta: 2200 },
+          { id: "papas-extra-tabla", name: "Porción de papas extra", priceDelta: 2600 },
         ],
       },
     ],
@@ -1031,7 +692,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 05. HAMBURGUESAS
   // =========================================================
-
   {
     id: "smash-royale",
     categoryId: "burgers",
@@ -1051,16 +711,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "doble-180g",
-            name: "Doble medallón smash (180g)",
-            priceDelta: 0,
-          },
-          {
-            id: "triple-270g",
-            name: "Triple medallón smash (270g)",
-            priceDelta: 2900,
-          },
+          { id: "doble-180g", name: "Doble medallón smash (180g)", priceDelta: 0 },
+          { id: "triple-270g", name: "Triple medallón smash (270g)", priceDelta: 2900 },
         ],
       },
       {
@@ -1069,16 +721,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "papas-clasicas",
-            name: "Papas rústicas",
-            priceDelta: 0,
-          },
-          {
-            id: "papas-cheddar-bacon",
-            name: "Papas con cheddar y bacon",
-            priceDelta: 2400,
-          },
+          { id: "papas-clasicas", name: "Papas rústicas", priceDelta: 0 },
+          { id: "papas-cheddar-bacon", name: "Papas con cheddar y bacon", priceDelta: 2400 },
         ],
       },
       {
@@ -1086,21 +730,9 @@ export const menuProducts: MenuProduct[] = [
         name: "Ingredientes adicionales",
         type: "multiple",
         items: [
-          {
-            id: "extra-bacon-b",
-            name: "Extra panceta crocante",
-            priceDelta: 1800,
-          },
-          {
-            id: "extra-cheddar-b",
-            name: "Extra queso cheddar fundido",
-            priceDelta: 1500,
-          },
-          {
-            id: "huevo-burger",
-            name: "Huevo a la plancha",
-            priceDelta: 1200,
-          },
+          { id: "extra-bacon-b", name: "Extra panceta crocante", priceDelta: 1800 },
+          { id: "extra-cheddar-b", name: "Extra queso cheddar fundido", priceDelta: 1500 },
+          { id: "huevo-burger", name: "Huevo a la plancha", priceDelta: 1200 },
         ],
       },
       {
@@ -1108,26 +740,13 @@ export const menuProducts: MenuProduct[] = [
         name: "Quitar ingredientes",
         type: "multiple",
         items: [
-          {
-            id: "sin-cebolla",
-            name: "Sin cebolla crispy",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-panceta",
-            name: "Sin panceta",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-mostaza",
-            name: "Sin salsa Dijon",
-            priceDelta: 0,
-          },
+          { id: "sin-cebolla", name: "Sin cebolla crispy", priceDelta: 0 },
+          { id: "sin-panceta", name: "Sin panceta", priceDelta: 0 },
+          { id: "sin-mostaza", name: "Sin salsa Dijon", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "burger-trufada",
     categoryId: "burgers",
@@ -1146,16 +765,8 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "punto-jugosa",
-            name: "Jugosa",
-            priceDelta: 0,
-          },
-          {
-            id: "punto-cocida",
-            name: "Bien cocida",
-            priceDelta: 0,
-          },
+          { id: "punto-jugosa", name: "Jugosa", priceDelta: 0 },
+          { id: "punto-cocida", name: "Bien cocida", priceDelta: 0 },
         ],
       },
       {
@@ -1163,21 +774,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Modificaciones",
         type: "multiple",
         items: [
-          {
-            id: "sin-alioli-negro",
-            name: "Sin emulsión de alioli",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-hongos",
-            name: "Sin hongos",
-            priceDelta: 0,
-          },
+          { id: "sin-alioli-negro", name: "Sin emulsión de alioli", priceDelta: 0 },
+          { id: "sin-hongos", name: "Sin hongos", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "crispy-chicken",
     categoryId: "burgers",
@@ -1196,21 +798,9 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "picante-clasico",
-            name: "Picante Nashville medio",
-            priceDelta: 0,
-          },
-          {
-            id: "picante-extra",
-            name: "Fuego intenso",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-picante",
-            name: "Suave / cero picante",
-            priceDelta: 0,
-          },
+          { id: "picante-clasico", name: "Picante Nashville medio", priceDelta: 0 },
+          { id: "picante-extra", name: "Fuego intenso", priceDelta: 0 },
+          { id: "sin-picante", name: "Suave / cero picante", priceDelta: 0 },
         ],
       },
       {
@@ -1218,26 +808,13 @@ export const menuProducts: MenuProduct[] = [
         name: "Quitar ingredientes",
         type: "multiple",
         items: [
-          {
-            id: "sin-pickles",
-            name: "Sin pickles",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-coleslaw",
-            name: "Sin coleslaw",
-            priceDelta: 0,
-          },
-          {
-            id: "sin-tartara",
-            name: "Sin salsa tártara",
-            priceDelta: 0,
-          },
+          { id: "sin-pickles", name: "Sin pickles", priceDelta: 0 },
+          { id: "sin-coleslaw", name: "Sin coleslaw", priceDelta: 0 },
+          { id: "sin-tartara", name: "Sin salsa tártara", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "blue-cheese-burger",
     categoryId: "burgers",
@@ -1255,21 +832,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-blue",
-            name: "Extra queso azul",
-            priceDelta: 1500,
-          },
-          {
-            id: "extra-onion-jam",
-            name: "Extra cebolla al Malbec",
-            priceDelta: 800,
-          },
+          { id: "extra-blue", name: "Extra queso azul", priceDelta: 1500 },
+          { id: "extra-onion-jam", name: "Extra cebolla al Malbec", priceDelta: 800 },
         ],
       },
     ],
   },
-
   {
     id: "burger-pollo-grill",
     categoryId: "burgers",
@@ -1287,16 +855,8 @@ export const menuProducts: MenuProduct[] = [
         name: "Adicionales",
         type: "multiple",
         items: [
-          {
-            id: "extra-provolone",
-            name: "Extra provolone",
-            priceDelta: 1400,
-          },
-          {
-            id: "extra-pollo",
-            name: "Doble porción de pollo",
-            priceDelta: 2800,
-          },
+          { id: "extra-provolone", name: "Extra provolone", priceDelta: 1400 },
+          { id: "extra-pollo", name: "Doble porción de pollo", priceDelta: 2800 },
         ],
       },
     ],
@@ -1305,7 +865,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 06. PIZZAS & MASA MADRE
   // =========================================================
-
   {
     id: "pizza-margherita",
     categoryId: "pizzas",
@@ -1323,21 +882,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "burrata-pizza",
-            name: "Burrata",
-            priceDelta: 3200,
-          },
-          {
-            id: "prosciutto-pizza",
-            name: "Prosciutto crudo",
-            priceDelta: 2900,
-          },
+          { id: "burrata-pizza", name: "Burrata", priceDelta: 3200 },
+          { id: "prosciutto-pizza", name: "Prosciutto crudo", priceDelta: 2900 },
         ],
       },
     ],
   },
-
   {
     id: "pizza-diavola",
     categoryId: "pizzas",
@@ -1356,21 +906,12 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "medio-picante-pizza",
-            name: "Picante medio",
-            priceDelta: 0,
-          },
-          {
-            id: "fuego-pizza",
-            name: "Muy picante",
-            priceDelta: 0,
-          },
+          { id: "medio-picante-pizza", name: "Picante medio", priceDelta: 0 },
+          { id: "fuego-pizza", name: "Muy picante", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "pizza-hongos",
     categoryId: "pizzas",
@@ -1388,21 +929,12 @@ export const menuProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "trufa-pizza",
-            name: "Aceite de trufa",
-            priceDelta: 2200,
-          },
-          {
-            id: "burrata-hongos-pizza",
-            name: "Burrata",
-            priceDelta: 3200,
-          },
+          { id: "trufa-pizza", name: "Aceite de trufa", priceDelta: 2200 },
+          { id: "burrata-hongos-pizza", name: "Burrata", priceDelta: 3200 },
         ],
       },
     ],
   },
-
   {
     id: "pizza-jamon",
     categoryId: "pizzas",
@@ -1416,7 +948,6 @@ export const menuProducts: MenuProduct[] = [
     prepTime: "14 min",
     isFeatured: true,
   },
-
   {
     id: "pizza-carne",
     categoryId: "pizzas",
@@ -1433,7 +964,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 07. CERVEZAS & BARRA
   // =========================================================
-
   {
     id: "cerveza-ipa",
     categoryId: "drinks",
@@ -1446,9 +976,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Tirada"],
     prepTime: "2 min",
   },
-
-  
-
   {
     id: "gin-botanico",
     categoryId: "drinks",
@@ -1467,26 +994,13 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "citrico",
-            name: "Cítrico (Pomelo rosado y romero)",
-            priceDelta: 0,
-          },
-          {
-            id: "frutos-rojos",
-            name: "Frutos rojos y flor de hibisco",
-            priceDelta: 0,
-          },
-          {
-            id: "pepino",
-            name: "Fresco (Pepino y pimienta rosa)",
-            priceDelta: 0,
-          },
+          { id: "citrico", name: "Cítrico (Pomelo rosado y romero)", priceDelta: 0 },
+          { id: "frutos-rojos", name: "Frutos rojos y flor de hibisco", priceDelta: 0 },
+          { id: "pepino", name: "Fresco (Pepino y pimienta rosa)", priceDelta: 0 },
         ],
       },
     ],
   },
-
   {
     id: "negroni-casa",
     categoryId: "drinks",
@@ -1499,7 +1013,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Clásico"],
     prepTime: "4 min",
   },
-
   {
     id: "whiskey-old-fashioned",
     categoryId: "drinks",
@@ -1512,7 +1025,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Whisky", "Clásico"],
     prepTime: "5 min",
   },
-
   {
     id: "vino-malbec",
     categoryId: "drinks",
@@ -1525,7 +1037,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Vino", "Copa"],
     prepTime: "2 min",
   },
-
   {
     id: "vermut-tonica",
     categoryId: "drinks",
@@ -1542,7 +1053,6 @@ export const menuProducts: MenuProduct[] = [
   // =========================================================
   // 08. FINAL DULCE
   // =========================================================
-
   {
     id: "cheesecake-bosque",
     categoryId: "desserts",
@@ -1555,7 +1065,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Casero"],
     prepTime: "5 min",
   },
-
   {
     id: "volcan-chocolate",
     categoryId: "desserts",
@@ -1575,26 +1084,13 @@ export const menuProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "helado-pistacho",
-            name: "Pistacho tostado",
-            priceDelta: 0,
-          },
-          {
-            id: "helado-crema",
-            name: "Crema americana clásica",
-            priceDelta: 0,
-          },
-          {
-            id: "helado-vainilla",
-            name: "Vainilla de Madagascar",
-            priceDelta: 500,
-          },
+          { id: "helado-pistacho", name: "Pistacho tostado", priceDelta: 0 },
+          { id: "helado-crema", name: "Crema americana clásica", priceDelta: 0 },
+          { id: "helado-vainilla", name: "Vainilla de Madagascar", priceDelta: 500 },
         ],
       },
     ],
   },
-
   {
     id: "tiramisu-casa",
     categoryId: "desserts",
@@ -1607,7 +1103,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Clásico"],
     prepTime: "5 min",
   },
-
   {
     id: "panna-cotta",
     categoryId: "desserts",
@@ -1620,8 +1115,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Suave", "Fresco"],
     prepTime: "5 min",
   },
-
-
   {
     id: "affogato",
     categoryId: "desserts",
@@ -1634,7 +1127,6 @@ export const menuProducts: MenuProduct[] = [
     tags: ["Café", "Italiano"],
     prepTime: "4 min",
   },
-
   {
     id: "tabla-dulce",
     categoryId: "desserts",
@@ -1649,3 +1141,7 @@ export const menuProducts: MenuProduct[] = [
     isFeatured: true,
   },
 ];
+
+// Alias para compatibilidad total con cualquier import
+export const menuCategories = restaurantCategories;
+export const menuProducts = restaurantProducts;

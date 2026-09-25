@@ -1,523 +1,521 @@
 import type { GastroPreset } from "./types";
 
-const icecreamCategories = [
-  { id: "potes", name: "Potes por Kilo", description: "Formatos térmicos sellados para llevar con combinación libre de sabores." },
-  { id: "cucuruchos", name: "Cucuruchos & Vasos", description: "Waffles artesanales horneados en el local con bochas al momento." },
-  { id: "especialidades", name: "Pasticceria Fredda", description: "Affogatos con espresso doble, semifríos y tortas heladas." },
-];
+import {
+  icecreamCategories,
+  icecreamProducts,
+} from "@/data/menus/icecream";
 
-const gelatoFlavors = [
-  { id: "pistacho", name: "Pistacho Puro de Sicilia", priceDelta: 0 },
-  { id: "dulce-granizado", name: "Dulce de Leche a la Antigua", priceDelta: 0 },
-  { id: "choc-70", name: "Chocolate Origen Ecuador 70%", priceDelta: 0 },
-  { id: "limon-albahaca", name: "Limón Sutil & Albahaca Fresca", priceDelta: 0 },
-  { id: "frutos-rojos", name: "Frambuesa & Frutos Silvestres", priceDelta: 0 },
-  { id: "sambayon", name: "Sambayón con Oporto & Pasas", priceDelta: 0 },
-];
-
-const icecreamProducts = [
-  {
-    id: "pote-1kg-gelato",
-    categoryId: "potes",
-    name: "Pote Térmico 1 Kilogramo",
-    description: "Hasta 4 sabores a elección. Incluye 4 cucuruchos artesanales de obsequio.",
-    price: 18500,
-    image: "https://images.unsplash.com/photo-1576506295286-5cda18df43e7?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Familiar", "Hasta 4 sabores"],
-    prepTime: "5 min",
-    isFeatured: true,
-  },
-  {
-    id: "pote-medio-gelato",
-    categoryId: "potes",
-    name: "Pote Térmico 1/2 Kilogramo",
-    description: "Hasta 3 sabores a elección con cierre hermético para congelador.",
-    price: 10400,
-    image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Hasta 3 sabores"],
-    prepTime: "4 min",
-  },
-  {
-    id: "cucurucho-doble-gelato",
-    categoryId: "cucuruchos",
-    name: "Cucurucho Doble Artesanal",
-    description: "Dos bochas generosas sobre masa de waffle dulce horneada a la vista.",
-    price: 6800,
-    image: "https://images.unsplash.com/photo-1464306076886-da185f6a9d05?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Waffle casero"],
-    prepTime: "3 min",
-    isFeatured: true,
-  },
-  {
-    id: "affogato-gelato-art",
-    categoryId: "especialidades",
-    name: "Affogato al Caffè",
-    description: "Bocha cremosa de fior di latte servida en copa de vidrio y bañada con doble shot de espresso caliente.",
-    price: 6200,
-    image: "https://images.unsplash.com/photo-1523294587484-bae6cc870010?auto=format&fit=crop&w=1600&q=85",
-    tags: ["Italiano clásico"],
-    prepTime: "3 min",
-  },
-];
-
-export const icecreamPreset: GastroPreset = {
-  id: "icecream",
-  label: "Gelateria Artesanal & Pasticceria Fredda",
-
-  theme: {
-    mode: "light",
-    accent: "#B85C38",
-    accentStrong: "#8F3D1F",
-    accentContrast: "#FFFFFF",
-
-    colors: {
-      light: {
-        bg: "#F7F2EC",
-        bgElevated: "#FFFDFB",
-        surface: "#FFFFFF",
-        surfaceElevated: "#EFE6DC",
-        surfaceInverse: "#221A15",
-        text: "#221A15",
-        textMuted: "#63544B",
-        textSubtle: "#8C7B70",
-        accent: "#B85C38",
-        accentStrong: "#8F3D1F",
-        accentContrast: "#FFFFFF",
-        accentSoft: "rgba(184, 92, 56, 0.12)",
-        accentFaint: "rgba(184, 92, 56, 0.06)",
-        accentBorder: "rgba(184, 92, 56, 0.30)",
-        border: "rgba(34, 26, 21, 0.11)",
-        borderStrong: "rgba(34, 26, 21, 0.20)",
-        overlay: "rgba(247, 242, 236, 0.90)",
-        control: "rgba(34, 26, 21, 0.04)",
-        controlHover: "rgba(34, 26, 21, 0.08)",
-        success: "#059669",
-        warning: "#B45309",
-        danger: "#DC2626",
-      },
-      dark: {
-        bg: "#15100E",
-        bgElevated: "#1D1613",
-        surface: "#231B17",
-        surfaceElevated: "#2D231E",
-        surfaceInverse: "#F7F2EB",
-        text: "#F7F2EB",
-        textMuted: "#C6B7AC",
-        textSubtle: "#918175",
-        accent: "#D67A53",
-        accentStrong: "#F09872",
-        accentContrast: "#15100E",
-        accentSoft: "rgba(214, 122, 83, 0.16)",
-        accentFaint: "rgba(214, 122, 83, 0.07)",
-        accentBorder: "rgba(214, 122, 83, 0.34)",
-        border: "rgba(247, 242, 235, 0.10)",
-        borderStrong: "rgba(247, 242, 235, 0.18)",
-        overlay: "rgba(21, 16, 14, 0.90)",
-        control: "rgba(247, 242, 235, 0.05)",
-        controlHover: "rgba(247, 242, 235, 0.09)",
-        success: "#34D399",
-        warning: "#F59E0B",
-        danger: "#F87171",
-      },
+export const icecreamPreset = {
+  "id": "icecream",
+  "label": "Gelateria Artesanal & Gelato Italiano",
+  "theme": {
+    "mode": "light",
+    "accent": "#7C9B68",
+    "accentStrong": "#5E7A4C",
+    "accentContrast": "#FFFDF8",
+    "colors": {
+      "light": {
+        "bg": "#F3EEE5",
+        "bgElevated": "#FAF7F0",
+        "surface": "#FFFDF9",
+        "surfaceElevated": "#EAE0D2",
+        "surfaceInverse": "#2A211A",
+        "text": "#2A211A",
+        "textMuted": "#67584D",
+        "textSubtle": "#87776A",
+        "accent": "#7C9B68",
+        "accentStrong": "#5E7A4C",
+        "accentContrast": "#FFFDF8",
+        "accentSoft": "rgba(163,110,67,0.12)",
+        "accentFaint": "rgba(163,110,67,0.06)",
+        "accentBorder": "rgba(163,110,67,0.32)",
+        "border": "rgba(42,33,26,0.11)",
+        "borderStrong": "rgba(42,33,26,0.21)",
+        "overlay": "rgba(243,238,229,0.90)",
+        "control": "rgba(42,33,26,0.045)",
+        "controlHover": "rgba(42,33,26,0.085)",
+        "success": "#059669",
+        "warning": "#B45309",
+        "danger": "#DC2626"
+      }
     },
-
-    typography: {
-      display: "Georgia, 'Times New Roman', serif",
-      body: "Inter, Arial, sans-serif",
-      ui: "Inter, Arial, sans-serif",
-      mono: "monospace",
-    },
+    "typography": {
+      "display": "Fraunces, Georgia, serif",
+      "body": "Inter, Arial, Helvetica, sans-serif",
+      "ui": "Inter, Arial, Helvetica, sans-serif",
+      "mono": "monospace"
+    }
   },
-
-  visual: {
-    navbar: "minimal",
-    hero: "playful",
-    heroStyle: {
-      variant: "playful",
-      imageTreatment: "natural",
-      overlay: "paper",
-      composition: "centered",
-      ctaShape: "pill",
-      grain: false,
-      parallax: true,
-      intensity: 0.72,
+  "visual": {
+    "navbar": "minimal",
+    "hero": "playful",
+    "heroStyle": {
+      "variant": "playful",
+      "imageTreatment": "natural",
+      "overlay": "paper",
+      "composition": "centered",
+      "ctaShape": "pill",
+      "grain": false,
+      "parallax": true,
+      "intensity": 0.8
     },
-    menu: "compact",
-    productCard: "clean",
-    contact: "minimal",
-    cta: "editorial",
-    footer: "minimal",
-    story: {
-      variant: "gelateria",
-      layout: "stacked",
-      imageTreatment: "natural",
-      cardShape: "soft",
-      density: "airy",
-      watermark: false,
-      grain: false,
-      numbering: false,
-      motion: { speed: 0.42, direction: "left", hoverLift: 10, parallax: true, pauseOnHover: true },
-    },
+    "menu": "compact",
+    "productCard": "clean",
+    "contact": "minimal",
+    "cta": "editorial",
+    "footer": "minimal",
+    "story": {
+      "variant": "gelateria",
+      "layout": "stacked",
+      "imageTreatment": "natural",
+      "cardShape": "soft",
+      "density": "airy",
+      "watermark": false,
+      "grain": false,
+      "numbering": false,
+      "motion": {
+        "speed": 0.42,
+        "direction": "left",
+        "hoverLift": 10,
+        "parallax": true,
+        "pauseOnHover": true
+      }
+    }
   },
-
-  operation: {
-    primary: "counter",
-    supported: ["counter", "pickup", "delivery"],
+  "operation": {
+    "primary": "counter",
+    "supported": [
+      "counter",
+      "pickup",
+      "delivery"
+    ]
   },
-
-  capabilities: {
-    ordering: true,
-    delivery: true,
-    pickup: true,
-    tableOrders: false,
-    waiterCall: false,
-    reservation: false,
-    story: true,
-    coffeeCustomizer: false,
-    beerTaps: false,
-    iceCreamSizes: true,
-    toppings: true,
-    brunch: false,
-    takeaway: true,
+  "capabilities": {
+    "ordering": true,
+    "story": true,
+    "delivery": true,
+    "pickup": true,
+    "tableOrders": false,
+    "waiterCall": false,
+    "reservation": false,
+    "coffeeCustomizer": false,
+    "beerTaps": false,
+    "iceCreamSizes": true,
+    "toppings": true,
+    "brunch": false,
+    "takeaway": true
   },
-
-  siteOverrides: {
-    brand: {
-      name: "GELATERIA MODENA",
-      shortName: "Modena",
-      descriptor: "Gelato Italiano & Pasticceria",
-      tagline: "Leche fresca de pastura, fruta pura y frío controlado",
-      description: "Gelato artesanal al estilo italiano con pozetti herméticos y potes para delivery.",
-      logo: "https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=120&q=80",
-      favicon: "/favicon.ico",
+  "siteOverrides": {
+    "brand": {
+      "name": "NUVOLA GELATERIA",
+      "shortName": "Nuvola",
+      "descriptor": "Gelato Italiano",
+      "tagline": "Pistacho, crema fresca y fruta de estación",
+      "description": "Gelateria artesanal inspirada en el ritual italiano y los sabores frescos.",
+      "logo": "/favicon.ico",
+      "favicon": "/favicon.ico"
     },
-
-    features: {
-      ordering: true,
-      delivery: true,
-      pickup: true,
-      tableOrders: false,
-      waiterCall: false,
-      reservation: false,
-      story: true,
+    "features": {
+      "ordering": true,
+      "delivery": true,
+      "pickup": true,
+      "tableOrders": false,
+      "waiterCall": false,
+      "reservation": false,
+      "story": true
     },
-
-    operation: {
-      schedule: "Lunes a Domingo · 12:00 a 00:30 hs",
-      estimatedTime: {
-        delivery: { min: 25, max: 40 },
-        pickup: { min: 8, max: 15 },
-        table: { min: 5, max: 10 },
-      },
+    "operation": {
+      "schedule": "Lunes a Domingo · 11:00 a 00:30 hs",
+      "estimatedTime": {
+        "delivery": {
+          "min": 25,
+          "max": 45
+        },
+        "pickup": {
+          "min": 10,
+          "max": 25
+        },
+        "table": {
+          "min": 10,
+          "max": 30
+        }
+      }
     },
-
-    navigation: {
-      links: [
-        { label: "Inicio", href: "inicio" },
-        { label: "El Gelato", href: "historia" },
-        { label: "Sabores", href: "menu" },
-        { label: "Pedir Pote", href: "contacto" },
+    "navigation": {
+      "links": [
+        {
+          "label": "Inicio",
+          "href": "inicio"
+        },
+        {
+          "label": "Sabores",
+          "href": "historia"
+        },
+        {
+          "label": "Gelato",
+          "href": "menu"
+        },
+        {
+          "label": "Pedidos",
+          "href": "contacto"
+        }
       ],
-      cta: "Pedir Gelato",
+      "cta": "Elegir sabores"
     },
-
-    ordering: {
-      enabled: true,
-      channels: ["web"] as const,
-      fulfillment: ["pickup", "delivery"] as const,
-      cashDiscountPercent: 10,
-      paymentMethods: [
-        { id: "cash", label: "Efectivo", requiresProof: false },
-        { id: "card", label: "Débito / Crédito", requiresProof: false },
-        { id: "transfer", label: "Mercado Pago / QR", requiresProof: true },
+    "ordering": {
+      "enabled": true,
+      "channels": [
+        "web"
       ],
-      whatsapp: {
-        number: "549223000000",
-        defaultMessage: "Hola Gelateria Modena, quería hacer un pedido de potes térmicos.",
-        tableOrderMessage: "Hola, adjunto mi pedido de heladería.",
-        labelCheckout: "Enviar pedido por WhatsApp",
-      },
+      "fulfillment": [
+        "delivery",
+        "pickup"
+      ],
+      "cashDiscountPercent": 10,
+      "paymentMethods": [
+        {
+          "id": "cash",
+          "label": "Efectivo",
+          "requiresProof": false
+        },
+        {
+          "id": "card",
+          "label": "Tarjeta",
+          "requiresProof": false
+        },
+        {
+          "id": "transfer",
+          "label": "Transferencia / QR",
+          "requiresProof": true
+        }
+      ],
+      "whatsapp": {
+        "number": "549223000000",
+        "defaultMessage": "Hola, quiero hacer un pedido en NUVOLA GELATERIA.",
+        "tableOrderMessage": "Hola, envío el pedido desde mesa en NUVOLA GELATERIA.",
+        "labelCheckout": "Enviar pedido por WhatsApp"
+      }
     },
-
-    contact: {
-      address: "Alberti 1490 (entre Guemes y Olavarría)",
-      zone: "Zona Güemes",
-      city: "Mar del Plata",
-      country: "Argentina",
-      fullAddress: "Alberti 1490, Mar del Plata, Argentina",
-      phone: "+54 9 223 555-0155",
-      email: "ciao@gelateriamodena.com",
-      instagram: "https://instagram.com",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Alberti+1490+Mar+del+Plata",
-      coordinates: {
-        lat: -38.012111,
-        lng: -57.543502,
-        zoom: 16,
-        latDisplay: "38°00′43″ S",
-        lngDisplay: "57°32′36″ W",
-      },
+    "contact": {
+      "address": "Güemes 2150 (entre Avellaneda y Alberti)",
+      "zone": "Zona Güemes",
+      "city": "Mar del Plata",
+      "country": "Argentina",
+      "fullAddress": "Mar del Plata, Buenos Aires, Argentina",
+      "phone": "+54 9 223 555-0100",
+      "email": "hola@nuvolademo.com",
+      "instagram": "https://instagram.com",
+      "mapsUrl": "https://www.google.com/maps",
+      "coordinates": {
+        "lat": -38.0,
+        "lng": -57.55,
+        "zoom": 15,
+        "latDisplay": "38°00′00″ S",
+        "lngDisplay": "57°33′00″ W"
+      }
     },
-
-    seo: {
-      title: "Gelateria Modena | Gelato Italiano & Potes Térmicos",
-      description: "Gelato natural con técnica de pozetti italianos, pistacho puro y frutas de estación en Mar del Plata.",
-      locale: "es_AR",
+    "seo": {
+      "title": "NUVOLA GELATERIA | Gelateria Artesanal & Gelato Italiano",
+      "description": "Gelato italiano artesanal, vitrinas de temporada y pedidos para compartir.",
+      "locale": "es_AR"
     },
-
-    content: {
-      hero: {
-        eyebrow: "Gelato Naturale · Receta Tradicional",
-        titlePrefix: "Crema pura",
-        titleAccent: "batida en frío.",
-        subtitle: "Pistacho siciliano tostado, fruta fresca de temporada y potes térmicos con despacho inmediato.",
-        cta: "Elegir Sabores de Vitrina",
-        ctaHref: "menu",
-        image: "https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=1920&q=85",
-      },
-
-      story: {
-        eyebrow: "El Laboratorio",
-        watermark: "CREMA",
-        titlePrefix: "La materia",
-        titleAccent: "prima.",
-        sectionTag: "Técnica Italiana",
-        primaryDescription: "Elaboramos cada sabor sin bases industriales ni conservantes añadidos. La cremosidad proviene de la densidad láctea y la velocidad de mantecación.",
-        secondaryDescription: "Nuestras cubas de pozetti mantienen el helado a -12°C protegidas de la luz y el aire para que la textura no cristalice.",
-        backgroundImage: "https://images.unsplash.com/photo-1557142046-c704a3adf364?auto=format&fit=crop&w=1800&q=85",
-        labels: {
-          processLine: "Leche · Fruta · Mantecado",
-          openArchive: "Explorar laboratorio",
-          traceability: "Ingrediente Puro",
-          closeSheet: "Cerrar Ficha",
-        },
-        archive: [
-          {
-            titulo: "Pistacho Puro",
-            subtitulo: "Pasta 100% Bronte",
-            nota: "Tostado delicado que conserva el color verde oliva y el sabor terroso original.",
-            origen: "Sicilia · Italia",
-            src: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Fruta Fresca",
-            subtitulo: "Sorbettos al Agua",
-            nota: "Frambuesas recolectadas a mano para conseguir un balance cítrico y dulce perfecto.",
-            origen: "Productores de la Costa",
-            src: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Chocolate Amargo",
-            subtitulo: "Cacao 70%",
-            nota: "Intensidad pura sin leche agregada para una textura aterciopelada y densa.",
-            origen: "Ecuador Seleccionado",
-            src: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=1200&q=85",
-          },
-          {
-            titulo: "Cubas de Pozetti",
-            subtitulo: "Frío Hermético",
-            nota: "Las tapas de acero inoxidable aíslan la crema evitando la formación de cristales de hielo.",
-            origen: "Laboratorio Modena",
-            src: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=85",
-          },
-        ],
-      },
-
-      productDetail: {
-        fallbackTag: "Gelato",
-        options: { required: "Elegí sabores", optional: "Cucuruchos extra", requiredMark: "*", personalized: "Selección de sabores" },
-        notes: { label: "Aclaraciones de envío", placeholder: "Ej. timbre que no anda, enviar cucharas extra..." },
-        actions: {
-          add: "Agregar al Pedido",
-          added: "Agregado",
-          chooseRequired: "Seleccioná tus sabores",
-          decreaseQuantity: "Menos",
-          increaseQuantity: "Más",
-          close: "Volver a sabores",
-        },
-      },
-
-      cart: {
-        eyebrow: "Potes & Cucuruchos",
-        title: "Tu pedido dulce",
-        emptyTitle: "Sin potes elegidos",
-        emptyDescription: "Seleccioná tus gustos favoritos de vitrina para delivery o retiro.",
-        productSingular: "pote",
-        productPlural: "potes",
-        remove: "Quitar",
-        subtotal: "Subtotal heladería",
-        continueDescription: "Ingresá tu domicilio en el próximo paso.",
-        checkoutButton: "Enviar Pedido",
-        close: "Cerrar",
-        closeOrder: "Cerrar pedido",
-      },
-
-      checkout: {
-        disabled: { title: "Vitrina cerrada", description: "El despacho de helados está cerrado en este horario." },
-        header: { backLabel: "Sabores", title: "Tu Pedido de Gelato", onlineLabel: "Delivery Térmico", tablePrefix: "Pote" },
-        hero: { tableLabel: "Mostrador", onlineLabel: "Delivery", title: "Tu Helado", description: "Revisá los sabores y el tamaño del pote antes de enviar." },
-        selection: { label: "Potes y sabores", units: "potes", perUnit: "c/u", remove: "Quitar", decrease: "Menos", increase: "Más" },
-        empty: { title: "No elegiste sabores aún", description: "Elegí tu pote de kilo o medio kilo en la carta.", button: "Ver Sabores" },
-        form: {
-          fulfillmentLabel: "Modalidad de Entrega",
-          delivery: "Envío a Domicilio",
-          pickup: "Retiro en Local",
-          customerNameLabel: "Nombre para el pedido",
-          customerNamePlaceholder: "Tu nombre",
-          addressLabel: "Dirección de entrega",
-          addressPlaceholder: "Calle, número y departamento",
-          paymentLabel: "Forma de Pago",
-          notesLabel: "Aclaraciones",
-          notesDeliveryPlaceholder: "Ej. mandar servilletas extra, timbre 2B...",
-          notesTablePlaceholder: "Ej. para consumir en el banco de afuera...",
-        },
-        summary: { subtotal: "Subtotal", cashPrefix: "Efectivo", total: "Total a abonar", completedLabel: "Listo para despachar", estimatedLabel: "Llega en aprox." },
-        actions: { processing: "Armando el pote...", sendToKitchen: "Despachar Pote", newOrder: "Pedir otro pote", openWhatsApp: "Pedir por WhatsApp", continueArrow: "Continuar" },
-        confirmation: {
-          preparedLabel: "Pote Preparado",
-          confirmedLabel: "Despacho en Camino",
-          whatsAppDescription: "Enviá el mensaje para que envasemos tu pote térmico.",
-          tableDescriptionPrefix: "Tu helado ya está envasado",
-          kitchenTableSuffix: "",
-          preparedToastTitle: "Pote envasado",
-          preparedToastDescription: "Se abrirá WhatsApp con los sabores detallados.",
-          confirmedToastTitle: "Helado en camino",
-          confirmedToastDescriptionPrefix: "El delivery salió con el pote térmico",
-        },
-        validation: {
-          emptyTitle: "Pedido vacío",
-          emptyDescription: "Agregá al menos un pote de helado.",
-          nameTitle: "Falta tu nombre",
-          nameDescription: "Lo necesitamos para rotular el pote.",
-          addressTitle: "Falta la dirección",
-          addressDescription: "Ingresá dónde enviamos el helado.",
-          submitErrorTitle: "Error al enviar pedido",
-          submitErrorDescription: "Comprobá tu conexión con la heladería.",
-        },
-        helper: { table: "El pedido entra directo al área de despacho de la heladería.", online: "Se abrirá WhatsApp con los sabores organizados por pote." },
-        aria: { decrease: "Disminuir", increase: "Aumentar", remove: "Quitar", openWhatsApp: "Abrir WhatsApp", newOrder: "Pedir otro pote" },
-      },
-
-      menuUi: {
-        productPersonalizable: "Sabores a elección",
-        viewDetail: "Ver sabores",
-        prepLabel: "Envasado",
-        fallbackKitchen: "Vitrina de pozetti",
-        choose: "Elegir gustos",
-        added: "Envasado",
-        add: "Pedir",
-        ariaViewProduct: "Ver producto",
-        categoryCountSingular: "formato",
-        categoryCountPlural: "formatos",
-        allCategories: "Todos",
-        listView: "Lista",
-        gridView: "Vitrina",
-        ariaListView: "Ver como lista",
-        ariaGridView: "Ver como vitrina",
-        ariaAllCategories: "Ver todas las categorías",
-      },
-
-      tableUi: {
-        serviceLabel: "Mostrador Modena",
-        tablePrefix: "Pote",
-        waiterButton: "Consultar Sabores",
-        allCategories: "Vitrina completa",
-        listView: "Lista",
-        gridView: "Vitrina",
-        ariaListView: "Ver lista",
-        ariaGridView: "Ver vitrina",
-        ariaWaiter: "Solicitar asistencia",
-      },
-
-      cartUi: { ariaOpen: "Abrir potes" },
-      navbarUi: {
-        themeDark: "NOCHE",
-        themeLight: "CREMA",
-        ariaChangeTheme: "Cambiar tema",
-        ariaOpenOrder: "Ver pedido",
-        ariaOpenMenu: "Abrir vitrina",
-        ariaCloseMenu: "Cerrar vitrina",
-        mobileNavigationLabel: "Secciones",
-      },
-      contactUi: { waitTimeTableLabel: "Mostrador", waitTimeDeliveryLabel: "Envío", minutesSuffix: "min" },
-
-      menu: {
-        eyebrow: "Pozetti & Frío Italiano",
-        title: "Carta de Sabores",
-        subtitle: "Potes térmicos de 1kg y 1/2kg, cucuruchos de masa casera y pastelería fría.",
-      },
-
-      ctaTransition: {
-        eyebrow: "Delivery Térmico",
-        titlePrefix: "Tu helado favorito",
-        titleAccent: "en tu casa.",
-        description: "Envíos protegidos en potes isotérmicos con cierre sellado para que llegue con la misma textura de vitrina.",
-        buttonText: "Pedir Delivery",
-        image: "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=1920&q=85",
-      },
-
-      contact: {
-        eyebrow: "Mostrador & Retiro",
-        statusBadge: "Pozetti Abiertos",
-        mainLabel: "Local Güemes",
-        title: "Vení por un cucurucho.",
-        formEyebrow: "Eventos Especiales",
-        formTitulo: "¿Querés un carrito de helados para tu fiesta?",
-        formSubtitulo: "Llevamos nuestros pozetti a casamientos, cumpleaños y eventos corporativos.",
-        nameLabel: "Nombre",
-        phoneLabel: "WhatsApp",
-        emailLabel: "Correo",
-        messageLabel: "Fecha, lugar y cantidad de personas",
-        submitSending: "Abriendo WhatsApp...",
-        submitSent: "Mensaje enviado ✓",
-        botonEnviar: "Consultar Carrito",
-        addressLabel: "Heladería",
-        scheduleLabel: "Horarios de Mostrador",
-        mapEyebrow: "Ubicación",
-        directionsButton: "Cómo llegar",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        copyButton: "Copiar",
-        copiedButton: "Copiado",
-        mapsButton: "Abrir Maps",
-        receptionPrompt: "¿Querés gelato artesanal en tu evento?",
-        receptionButton: "Consultar Eventos",
-      },
-
-      waiterModal: {
-        eyebrow: "Mostrador Alberti",
-        callTitle: "Consultar al Maestro Heladero",
-        callSubtitle: "Dudas sobre alérgenos, sabores veganos o celíacos",
-        callMessage: "Consulta sobre ingredientes de helados",
-        billTitle: "Abonar en Mostrador",
-        billSubtitle: "Efectivo con descuento o pagos digitales",
-        paymentPrompt: "¿Cómo preferís abonar?",
-        sentTitle: "Aviso recibido",
-        sentSubtitle: "Te llamamos en mostrador:",
-        backButton: "Volver",
-        confirmButton: "Confirmar",
-        errorMessage: "Error de comunicación.",
-      },
-
-      footer: {
-        backgroundImage: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=1920&q=85",
-        description: "Gelateria Modena · Gelato Artesanal & Pasticceria Fredda",
-        credits: "Gastro Engine Core",
-        navigationLabel: "Navegación",
-        contactLabel: "Contacto",
-        establishmentLabel: "El Local",
-        hoursLabel: "Horarios",
-        socialsLabel: "Comunidad",
-        instagramLabel: "Instagram",
-        whatsappLabel: "WhatsApp",
-        locationLabel: "Dirección",
-        identityLabel: "Artesanal",
-        backToTop: "Volver arriba",
-      },
-    },
+    "content": {
+      showcase: {
+    enabled: true,
+    variant: "curated-grid", // Activa la vitrina de 4 sabores o formatos
+    badgeText: "Naturale",
+    eyebrow: "Pozetti Tradizionali · -12°C",
+    titlePrefix: "Textura pura,",
+    titleAccent: "cero cristales.",
+    description: "Gelato conservado herméticamente bajo tapas de acero inoxidable sin contacto con la luz ni el aire.",
+    targetCategoryId: "potes",
+    actionButtonLabel: "Elegir sabores"
   },
-
-  menu: {
-    categories: icecreamCategories,
-    products: icecreamProducts,
+      "hero": {
+        "eyebrow": "Gelateria · Costa Italiana",
+        "titlePrefix": "Gelato",
+        "titleAccent": "fresco.",
+        "subtitle": "Crema fresca, pistacho, fruta de estación y cucuruchos de waffle preparados al momento.",
+        "cta": "Elegir sabores",
+        "ctaHref": "menu",
+        "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1600&q=85&auto=format&fit=crop"
+      },
+      "story": {
+        "eyebrow": "Laboratorio · Gelato",
+        "watermark": "CREMA",
+        "titlePrefix": "Materia",
+        "titleAccent": "en frío.",
+        "sectionTag": "Gelateria Journal",
+        "primaryDescription": "La textura es parte del sabor: menos artificio, mejor materia prima y una vitrina que cambia con la estación.",
+        "secondaryDescription": "La textura es parte del sabor: menos artificio, mejor materia prima y una vitrina que cambia con la estación. La propuesta cambia con la materia, el servicio y el momento del día.",
+        "backgroundImage": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1600&q=85&auto=format&fit=crop",
+        "labels": {
+          "processLine": "Gelateria Journal",
+          "openArchive": "Explorar gelateria journal",
+          "traceability": "Trazabilidad",
+          "closeSheet": "Cerrar Ficha"
+        },
+        "archive": [
+          {
+            "titulo": "Nuvola · Proceso",
+            "subtitulo": "Gelato",
+            "nota": "La textura es parte del sabor: menos artificio, mejor materia prima y una vitrina que cambia con la estación.",
+            "origen": "NUVOLA GELATERIA",
+            "src": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=1600&q=85&auto=format&fit=crop"
+          },
+          {
+            "titulo": "Materia · Selección",
+            "subtitulo": "Gelateria Journal",
+            "nota": "Una pieza de la identidad que define la experiencia y le da continuidad a la marca.",
+            "origen": "NUVOLA GELATERIA",
+            "src": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=1600&q=85&auto=format&fit=crop"
+          }
+        ]
+      },
+      "productDetail": {
+        "fallbackTag": "Especialidad",
+        "options": {
+          "required": "Elegí 1",
+          "optional": "Opcional",
+          "requiredMark": "*",
+          "personalized": "Personalización"
+        },
+        "notes": {
+          "label": "Instrucciones o aclaraciones",
+          "placeholder": "Ej. sin un ingrediente, presentación especial..."
+        },
+        "actions": {
+          "add": "Sumar",
+          "added": "Agregado",
+          "chooseRequired": "Seleccioná opciones requeridas",
+          "decreaseQuantity": "Disminuir cantidad",
+          "increaseQuantity": "Aumentar cantidad",
+          "close": "Cerrar detalle"
+        }
+      },
+      "cart": {
+        "eyebrow": "Pedido",
+        "title": "Tu pedido",
+        "emptyTitle": "Pedido vacío",
+        "emptyDescription": "Elegí productos de la carta para comenzar.",
+        "productSingular": "producto",
+        "productPlural": "productos",
+        "remove": "Quitar",
+        "subtotal": "Subtotal",
+        "continueDescription": "Revisá datos, entrega y pago en la siguiente pantalla.",
+        "checkoutButton": "Ver pedido",
+        "close": "Cerrar",
+        "closeOrder": "Cerrar pedido"
+      },
+      "checkout": {
+        "disabled": {
+          "title": "Pedidos no disponibles",
+          "description": "El canal de pedidos está temporalmente desactivado."
+        },
+        "header": {
+          "backLabel": "Carta",
+          "title": "Tu pedido",
+          "onlineLabel": "Pedido online",
+          "tablePrefix": "Mesa"
+        },
+        "hero": {
+          "tableLabel": "Mesa",
+          "onlineLabel": "Pedido online",
+          "title": "Tu pedido",
+          "description": "Revisá la selección y completá los últimos datos."
+        },
+        "selection": {
+          "label": "Selección",
+          "units": "unidades",
+          "perUnit": "c/u",
+          "remove": "Quitar",
+          "decrease": "Disminuir",
+          "increase": "Aumentar"
+        },
+        "empty": {
+          "title": "Pedido vacío",
+          "description": "Elegí productos desde la carta para comenzar.",
+          "button": "Volver a la carta"
+        },
+        "form": {
+          "fulfillmentLabel": "Entrega",
+          "delivery": "Envío",
+          "pickup": "Retiro",
+          "customerNameLabel": "Nombre",
+          "customerNamePlaceholder": "Tu nombre",
+          "addressLabel": "Dirección",
+          "addressPlaceholder": "Dirección y timbre",
+          "paymentLabel": "Medio de pago",
+          "notesLabel": "Aclaraciones",
+          "notesDeliveryPlaceholder": "Ej. timbre, piso, recepción...",
+          "notesTablePlaceholder": "Ej. sin sal, sin cebolla..."
+        },
+        "summary": {
+          "subtotal": "Subtotal",
+          "cashPrefix": "Efectivo",
+          "total": "Total",
+          "completedLabel": "Pedido completo",
+          "estimatedLabel": "Demora estimada"
+        },
+        "actions": {
+          "processing": "Procesando...",
+          "sendToKitchen": "Enviar pedido",
+          "newOrder": "Nueva orden",
+          "openWhatsApp": "Abrir WhatsApp",
+          "continueArrow": "Continuar"
+        },
+        "confirmation": {
+          "preparedLabel": "Pedido preparado",
+          "confirmedLabel": "Pedido confirmado",
+          "whatsAppDescription": "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
+          "tableDescriptionPrefix": "La cocina recibió tu pedido",
+          "kitchenTableSuffix": "de la Mesa",
+          "preparedToastTitle": "Pedido preparado",
+          "preparedToastDescription": "Abrimos WhatsApp para continuar.",
+          "confirmedToastTitle": "Pedido confirmado",
+          "confirmedToastDescriptionPrefix": "La cocina recibió la comanda."
+        },
+        "validation": {
+          "emptyTitle": "La comanda está vacía",
+          "emptyDescription": "Elegí al menos un producto antes de continuar.",
+          "nameTitle": "Falta tu nombre",
+          "nameDescription": "Necesitamos identificar tu pedido.",
+          "addressTitle": "Falta la dirección",
+          "addressDescription": "Completá la dirección para el envío.",
+          "submitErrorTitle": "No pudimos enviar el pedido",
+          "submitErrorDescription": "Revisá tu conexión e intentá nuevamente."
+        },
+        "helper": {
+          "table": "El pedido se enviará directamente al servicio.",
+          "online": "La siguiente acción abrirá WhatsApp con la comanda preparada."
+        },
+        "aria": {
+          "decrease": "Disminuir cantidad",
+          "increase": "Aumentar cantidad",
+          "remove": "Quitar producto",
+          "openWhatsApp": "Abrir WhatsApp",
+          "newOrder": "Crear nueva orden"
+        }
+      },
+      "menuUi": {
+        "productPersonalizable": "Personalizable",
+        "viewDetail": "Ver detalle",
+        "prepLabel": "Preparación",
+        "fallbackKitchen": "Cocina de autor",
+        "choose": "Elegir",
+        "added": "Listo",
+        "add": "Agregar",
+        "ariaViewProduct": "Ver detalle de",
+        "categoryCountSingular": "producto",
+        "categoryCountPlural": "productos",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaAllCategories": "Mostrar todos los productos"
+      },
+      "tableUi": {
+        "serviceLabel": "Servicio en salón",
+        "tablePrefix": "Mesa",
+        "waiterButton": "Mozo / Cuenta",
+        "allCategories": "Todos",
+        "listView": "Vista lista",
+        "gridView": "Vista grilla",
+        "ariaListView": "Cambiar a vista lista",
+        "ariaGridView": "Cambiar a vista grilla",
+        "ariaWaiter": "Solicitar atención o pedir la cuenta"
+      },
+      "cartUi": {
+        "ariaOpen": "Abrir pedido"
+      },
+      "navbarUi": {
+        "themeDark": "DARK",
+        "themeLight": "LIGHT",
+        "ariaChangeTheme": "Cambiar tema",
+        "ariaOpenOrder": "Abrir pedido",
+        "ariaOpenMenu": "Abrir menú",
+        "ariaCloseMenu": "Cerrar menú",
+        "mobileNavigationLabel": "Navegación"
+      },
+      "contactUi": {
+        "waitTimeTableLabel": "Salón",
+        "waitTimeDeliveryLabel": "Delivery",
+        "minutesSuffix": "min"
+      },
+      "menu": {
+        "eyebrow": "Gelato & Pasticceria Fredda",
+        "title": "Sabores",
+        "subtitle": "Cucuruchos, potes, affogatos y toppings para construir tu propia combinación."
+      },
+      "ctaTransition": {
+        "eyebrow": "Gelateria Artesanal & Gelato Italiano",
+        "titlePrefix": "Materia",
+        "titleAccent": "en frío.",
+        "description": "Gelato italiano artesanal, vitrinas de temporada y pedidos para compartir.",
+        "buttonText": "Elegir sabores",
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1600&q=85&auto=format&fit=crop"
+      },
+      "contact": {
+        "eyebrow": "Ubicación & Concierge",
+        "statusBadge": "Operación activa",
+        "mainLabel": "Establecimiento",
+        "title": "Pick-up & Delivery",
+        "formEyebrow": "Contacto",
+        "formTitulo": "Pick-up & Delivery",
+        "formSubtitulo": "Gelato italiano artesanal, vitrinas de temporada y pedidos para compartir.",
+        "nameLabel": "Nombre / empresa",
+        "phoneLabel": "Teléfono / WhatsApp",
+        "emailLabel": "Correo electrónico",
+        "messageLabel": "Mensaje",
+        "submitSending": "Abriendo WhatsApp...",
+        "submitSent": "Mensaje enviado ✓",
+        "botonEnviar": "Consultar",
+        "addressLabel": "Dirección",
+        "scheduleLabel": "Horarios & Canales",
+        "mapEyebrow": "Ubicación",
+        "directionsButton": "Cómo llegar",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "copyButton": "Copiar",
+        "copiedButton": "Copiado",
+        "mapsButton": "Abrir ubicación",
+        "receptionPrompt": "Pick-up & Delivery",
+        "receptionButton": "Consultar"
+      },
+      "waiterModal": {
+        "eyebrow": "NUVOLA GELATERIA",
+        "callTitle": "Solicitar atención",
+        "callSubtitle": "Asistencia para ordenar o consultas",
+        "callMessage": "Solicita asistencia desde la mesa",
+        "billTitle": "Pedir la Cuenta",
+        "billSubtitle": "Efectivo, Tarjeta o QR",
+        "paymentPrompt": "¿Cómo deseás abonar la cuenta?",
+        "sentTitle": "Aviso Enviado",
+        "sentSubtitle": "El equipo ya fue notificado:",
+        "backButton": "Volver",
+        "confirmButton": "Confirmar",
+        "errorMessage": "No pudimos notificar al servicio."
+      },
+      "footer": {
+        "backgroundImage": "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=1600&q=85&auto=format&fit=crop",
+        "description": "NUVOLA GELATERIA · Gelato Italiano",
+        "credits": "Gastro Engine Core",
+        "navigationLabel": "Navegación",
+        "contactLabel": "Contacto",
+        "establishmentLabel": "Establecimiento",
+        "hoursLabel": "Horarios",
+        "socialsLabel": "Comunidad",
+        "instagramLabel": "Instagram",
+        "whatsappLabel": "WhatsApp",
+        "locationLabel": "Ubicación",
+        "identityLabel": "Identidad",
+        "backToTop": "Volver arriba"
+      }
+    }
   },
-};
+  "menu": {
+    "categories": icecreamCategories,
+    "products": icecreamProducts
+  }
+} satisfies GastroPreset;

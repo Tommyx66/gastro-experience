@@ -18,8 +18,7 @@ export function Toaster() {
 
   return (
     <Sonner
-      theme={theme}
-      position="top-center"
+theme={theme === "hybrid" ? "system" : theme}      position="top-center"
       icons={{
         success: (
           <CircleCheckIcon className="size-4" />

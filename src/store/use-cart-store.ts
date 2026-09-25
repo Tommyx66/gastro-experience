@@ -316,141 +316,149 @@ function migrateLegacyCartItems(
     return [];
   }
 
-  return items
-    .map((rawItem) => {
-      if (
-        !rawItem ||
-        typeof rawItem !==
-          "object"
-      ) {
-        return null;
-      }
-
-      const item =
-        rawItem as Record<
-          string,
-          unknown
-        >;
-
-      const productId =
-        String(
-          item.productId ??
-            ""
-        );
-
-      if (!productId) {
-        return null;
-      }
-
-      /*
-       * La versión vieja del carrito
-       * estaba vinculada al menú de Restaurant.
-       * Solo la usamos para migrar
-       * los datos existentes.
-       */
-      const product =
-        legacyRestaurantProducts.find(
-          (candidate) =>
-            candidate.id ===
-            productId
-        );
-
-      const options =
-        normalizeOptions(
-          item.options
-        );
-
-      const rawBasePrice =
-        safeNumber(
-          item.basePrice,
-          NaN
-        );
-
-      const fallbackProductPrice =
-        product?.price ?? 0;
-
-      const basePrice =
-        Number.isFinite(
-          rawBasePrice
-        )
-          ? rawBasePrice
-          : fallbackProductPrice;
-
-      const optionDelta =
-        calculateOptionsDelta(
-          options
-        );
-
-      const price =
-        basePrice +
-        optionDelta;
-
-      const quantity =
-        normalizeQuantity(
-          item.quantity
-        );
-
-      const notes =
-        typeof item.notes ===
-        "string"
-          ? item.notes.trim()
-          : "";
-
-      const cartItemId =
-        typeof item.cartItemId ===
-          "string" &&
-        item.cartItemId.length >
-          0
-          ? item.cartItemId
-          : generateCartItemId(
-              productId,
-              options,
-              notes
-            );
-
-      return {
-        cartItemId,
-        productId,
-
-        name: String(
-          item.name ??
-            product?.name ??
-            "Producto"
-        ),
-
-        image:
-          typeof item.image ===
-          "string"
-            ? item.image
-            : product?.image,
-
-        basePrice:
-          safeNumber(
-            basePrice,
-            fallbackProductPrice
-          ),
-
-        price:
-          safeNumber(
-            price,
-            fallbackProductPrice
-          ),
-
-        quantity,
-
-        notes:
-          notes ||
-          undefined,
-
-        options,
-      };
-    })
-    .filter(
+  const migratedItems =
+    items.map<CartItem | null>(
       (
-        item
-      ): item is CartItem =>
-        item !== null
+        rawItem
+      ): CartItem | null => {
+        if (
+          !rawItem ||
+          typeof rawItem !==
+            "object"
+        ) {
+          return null;
+        }
+
+        const item =
+          rawItem as Record<
+            string,
+            unknown
+          >;
+
+        const productId =
+          String(
+            item.productId ??
+              ""
+          );
+
+        if (!productId) {
+          return null;
+        }
+
+        /*
+         * La versión vieja del carrito
+         * estaba vinculada al menú de Restaurant.
+         * Solo la usamos para migrar
+         * los datos existentes.
+         */
+        const product =
+          legacyRestaurantProducts.find(
+            (candidate) =>
+              candidate.id ===
+              productId
+          );
+
+        const options =
+          normalizeOptions(
+            item.options
+          );
+
+        const rawBasePrice =
+          safeNumber(
+            item.basePrice,
+            NaN
+          );
+
+        const fallbackProductPrice =
+          product?.price ?? 0;
+
+        const basePrice =
+          Number.isFinite(
+            rawBasePrice
+          )
+            ? rawBasePrice
+            : fallbackProductPrice;
+
+        const optionDelta =
+          calculateOptionsDelta(
+            options
+          );
+
+        const price =
+          basePrice +
+          optionDelta;
+
+        const quantity =
+          normalizeQuantity(
+            item.quantity
+          );
+
+        const notes =
+          typeof item.notes ===
+          "string"
+            ? item.notes.trim()
+            : "";
+
+        const cartItemId =
+          typeof item.cartItemId ===
+            "string" &&
+          item.cartItemId.length >
+            0
+            ? item.cartItemId
+            : generateCartItemId(
+                productId,
+                options,
+                notes
+              );
+
+        const migratedItem:
+          CartItem = {
+            cartItemId,
+            productId,
+
+            name: String(
+              item.name ??
+                product?.name ??
+                "Producto"
+            ),
+
+            image:
+              typeof item.image ===
+              "string"
+                ? item.image
+                : product?.image,
+
+            basePrice:
+              safeNumber(
+                basePrice,
+                fallbackProductPrice
+              ),
+
+            price:
+              safeNumber(
+                price,
+                fallbackProductPrice
+              ),
+
+            quantity,
+
+            notes:
+              notes ||
+              undefined,
+
+            options,
+          };
+
+        return migratedItem;
+      }
     );
+
+  return migratedItems.filter(
+    (
+      item
+    ): item is CartItem =>
+      item !== null
+  );
 }
 
 function migrateLegacyOrder(

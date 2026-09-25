@@ -17,6 +17,8 @@ export interface MenuOptionGroup {
   name: string;
   type: MenuOptionType;
   required?: boolean;
+  maxSelectable?: number; // Límite de sabores o adicionales
+  minSelectable?: number;
   items: MenuOptionItem[];
 }
 

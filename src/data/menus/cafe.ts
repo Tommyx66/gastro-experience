@@ -1,7 +1,4 @@
-import type {
-  MenuCategory,
-  MenuProduct,
-} from "@/data/menu";
+import type { MenuCategory, MenuProduct } from "@/data/menu";
 
 export const cafeCategories: MenuCategory[] = [
   {
@@ -46,9 +43,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 01. CAFÉ DE ESPECIALIDAD
   // =========================================================
-
- 
-
   {
     id: "flat-white",
     categoryId: "coffee",
@@ -67,16 +61,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "flat-medium",
-            name: "Mediano",
-            priceDelta: 0,
-          },
-          {
-            id: "flat-large",
-            name: "Grande",
-            priceDelta: 700,
-          },
+          { id: "flat-medium", name: "Mediano", priceDelta: 0 },
+          { id: "flat-large", name: "Grande", priceDelta: 700 },
         ],
       },
       {
@@ -85,26 +71,13 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "milk-whole",
-            name: "Leche entera",
-            priceDelta: 0,
-          },
-          {
-            id: "milk-desla",
-            name: "Deslactosada",
-            priceDelta: 500,
-          },
-          {
-            id: "milk-oat",
-            name: "Avena",
-            priceDelta: 900,
-          },
+          { id: "milk-whole", name: "Leche entera", priceDelta: 0 },
+          { id: "milk-desla", name: "Deslactosada", priceDelta: 500 },
+          { id: "milk-oat", name: "Avena", priceDelta: 900 },
         ],
       },
     ],
   },
-
   {
     id: "cappuccino-cafe",
     categoryId: "coffee",
@@ -123,16 +96,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "cappuccino-whole",
-            name: "Leche entera",
-            priceDelta: 0,
-          },
-          {
-            id: "cappuccino-oat",
-            name: "Leche de avena",
-            priceDelta: 900,
-          },
+          { id: "cappuccino-whole", name: "Leche entera", priceDelta: 0 },
+          { id: "cappuccino-oat", name: "Leche de avena", priceDelta: 900 },
         ],
       },
       {
@@ -140,26 +105,13 @@ export const cafeProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "cappuccino-extra-shot",
-            name: "Shot extra",
-            priceDelta: 1800,
-          },
-          {
-            id: "cappuccino-vanilla",
-            name: "Vainilla",
-            priceDelta: 600,
-          },
-          {
-            id: "cappuccino-caramel",
-            name: "Caramelo",
-            priceDelta: 600,
-          },
+          { id: "cappuccino-extra-shot", name: "Shot extra", priceDelta: 1800 },
+          { id: "cappuccino-vanilla", name: "Vainilla", priceDelta: 600 },
+          { id: "cappuccino-caramel", name: "Caramelo", priceDelta: 600 },
         ],
       },
     ],
   },
-
   {
     id: "latte-cafe",
     categoryId: "coffee",
@@ -178,16 +130,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "latte-medium",
-            name: "Mediano",
-            priceDelta: 0,
-          },
-          {
-            id: "latte-large",
-            name: "Grande",
-            priceDelta: 800,
-          },
+          { id: "latte-medium", name: "Mediano", priceDelta: 0 },
+          { id: "latte-large", name: "Grande", priceDelta: 800 },
         ],
       },
       {
@@ -196,26 +140,13 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "latte-whole",
-            name: "Entera",
-            priceDelta: 0,
-          },
-          {
-            id: "latte-oat",
-            name: "Avena",
-            priceDelta: 900,
-          },
-          {
-            id: "latte-almond",
-            name: "Almendras",
-            priceDelta: 1000,
-          },
+          { id: "latte-whole", name: "Entera", priceDelta: 0 },
+          { id: "latte-oat", name: "Avena", priceDelta: 900 },
+          { id: "latte-almond", name: "Almendras", priceDelta: 1000 },
         ],
       },
     ],
   },
-
   {
     id: "filter-coffee",
     categoryId: "coffee",
@@ -228,7 +159,6 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["V60", "Origen"],
     prepTime: "7 min",
   },
-
   {
     id: "mocha-cafe",
     categoryId: "coffee",
@@ -247,16 +177,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "mocha-whole",
-            name: "Entera",
-            priceDelta: 0,
-          },
-          {
-            id: "mocha-oat",
-            name: "Avena",
-            priceDelta: 900,
-          },
+          { id: "mocha-whole", name: "Entera", priceDelta: 0 },
+          { id: "mocha-oat", name: "Avena", priceDelta: 900 },
         ],
       },
     ],
@@ -265,7 +187,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 02. BAKERY & MASA MADRE
   // =========================================================
-
   {
     id: "croissant-manteca",
     categoryId: "bakery",
@@ -279,7 +200,6 @@ export const cafeProducts: MenuProduct[] = [
     prepTime: "2 min",
     isFeatured: true,
   },
-
   {
     id: "roll-canela",
     categoryId: "bakery",
@@ -292,7 +212,6 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["Brioche", "Dulce"],
     prepTime: "2 min",
   },
-
   {
     id: "focaccia-cafe",
     categoryId: "bakery",
@@ -305,7 +224,6 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["Masa madre"],
     prepTime: "3 min",
   },
-
   {
     id: "tostada-pan-madre",
     categoryId: "bakery",
@@ -324,21 +242,9 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "toast-mermelada",
-            name: "Mermelada de frutos rojos",
-            priceDelta: 0,
-          },
-          {
-            id: "toast-miel",
-            name: "Miel de monte",
-            priceDelta: 400,
-          },
-          {
-            id: "toast-dulce",
-            name: "Dulce de leche",
-            priceDelta: 500,
-          },
+          { id: "toast-mermelada", name: "Mermelada de frutos rojos", priceDelta: 0 },
+          { id: "toast-miel", name: "Miel de monte", priceDelta: 400 },
+          { id: "toast-dulce", name: "Dulce de leche", priceDelta: 500 },
         ],
       },
     ],
@@ -347,7 +253,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 03. BRUNCH
   // =========================================================
-
   {
     id: "avocado-toast",
     categoryId: "brunch",
@@ -367,21 +272,9 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "egg-poached",
-            name: "Poché",
-            priceDelta: 0,
-          },
-          {
-            id: "egg-scrambled",
-            name: "Revueltos",
-            priceDelta: 0,
-          },
-          {
-            id: "egg-fried",
-            name: "A la plancha",
-            priceDelta: 0,
-          },
+          { id: "egg-poached", name: "Poché", priceDelta: 0 },
+          { id: "egg-scrambled", name: "Revueltos", priceDelta: 0 },
+          { id: "egg-fried", name: "A la plancha", priceDelta: 0 },
         ],
       },
       {
@@ -389,21 +282,12 @@ export const cafeProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-salmon",
-            name: "Salmón ahumado",
-            priceDelta: 3200,
-          },
-          {
-            id: "extra-bacon-brunch",
-            name: "Panceta crocante",
-            priceDelta: 1800,
-          },
+          { id: "extra-salmon", name: "Salmón ahumado", priceDelta: 3200 },
+          { id: "extra-bacon-brunch", name: "Panceta crocante", priceDelta: 1800 },
         ],
       },
     ],
   },
-
   {
     id: "eggs-benedict",
     categoryId: "brunch",
@@ -422,16 +306,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "benedict-brioche",
-            name: "Brioche",
-            priceDelta: 0,
-          },
-          {
-            id: "benedict-sourdough",
-            name: "Masa madre",
-            priceDelta: 500,
-          },
+          { id: "benedict-brioche", name: "Brioche", priceDelta: 0 },
+          { id: "benedict-sourdough", name: "Masa madre", priceDelta: 500 },
         ],
       },
       {
@@ -440,21 +316,12 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "benedict-ham",
-            name: "Jamón artesanal",
-            priceDelta: 0,
-          },
-          {
-            id: "benedict-salmon",
-            name: "Salmón ahumado",
-            priceDelta: 2800,
-          },
+          { id: "benedict-ham", name: "Jamón artesanal", priceDelta: 0 },
+          { id: "benedict-salmon", name: "Salmón ahumado", priceDelta: 2800 },
         ],
       },
     ],
   },
-
   {
     id: "pancakes-cafe",
     categoryId: "brunch",
@@ -472,26 +339,13 @@ export const cafeProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "extra-maple",
-            name: "Maple extra",
-            priceDelta: 700,
-          },
-          {
-            id: "extra-fruit",
-            name: "Fruta de estación",
-            priceDelta: 1200,
-          },
-          {
-            id: "extra-almond",
-            name: "Almendras tostadas",
-            priceDelta: 800,
-          },
+          { id: "extra-maple", name: "Maple extra", priceDelta: 700 },
+          { id: "extra-fruit", name: "Fruta de estación", priceDelta: 1200 },
+          { id: "extra-almond", name: "Almendras tostadas", priceDelta: 800 },
         ],
       },
     ],
   },
-
   {
     id: "granola-yogurt",
     categoryId: "brunch",
@@ -508,7 +362,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 04. SALADOS
   // =========================================================
-
   {
     id: "croque-monsieur",
     categoryId: "salty",
@@ -521,7 +374,6 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["Clásico"],
     prepTime: "9 min",
   },
-
   {
     id: "sandwich-pastron",
     categoryId: "salty",
@@ -541,16 +393,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "pastron-mustard",
-            name: "Mostaza antigua",
-            priceDelta: 0,
-          },
-          {
-            id: "pastron-mayo",
-            name: "Mayonesa de hierbas",
-            priceDelta: 0,
-          },
+          { id: "pastron-mustard", name: "Mostaza antigua", priceDelta: 0 },
+          { id: "pastron-mayo", name: "Mayonesa de hierbas", priceDelta: 0 },
         ],
       },
       {
@@ -558,21 +402,12 @@ export const cafeProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "pastron-extra-meat",
-            name: "Extra pastrón",
-            priceDelta: 2600,
-          },
-          {
-            id: "pastron-cheese",
-            name: "Extra gruyère",
-            priceDelta: 1800,
-          },
+          { id: "pastron-extra-meat", name: "Extra pastrón", priceDelta: 2600 },
+          { id: "pastron-cheese", name: "Extra gruyère", priceDelta: 1800 },
         ],
       },
     ],
   },
-
   {
     id: "focaccia-salmon",
     categoryId: "salty",
@@ -589,7 +424,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 05. PASTELERÍA
   // =========================================================
-
   {
     id: "cheesecake-cafe",
     categoryId: "pastry",
@@ -603,7 +437,6 @@ export const cafeProducts: MenuProduct[] = [
     prepTime: "3 min",
     isFeatured: true,
   },
-
   {
     id: "carrot-cake",
     categoryId: "pastry",
@@ -616,9 +449,6 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["Especiado"],
     prepTime: "3 min",
   },
-
-
-
   {
     id: "lemon-pie-cafe",
     categoryId: "pastry",
@@ -635,7 +465,6 @@ export const cafeProducts: MenuProduct[] = [
   // =========================================================
   // 06. FRÍOS & NATURALES
   // =========================================================
-
   {
     id: "cold-brew",
     categoryId: "cold-drinks",
@@ -654,16 +483,8 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "coldbrew-medium",
-            name: "Mediano",
-            priceDelta: 0,
-          },
-          {
-            id: "coldbrew-large",
-            name: "Grande",
-            priceDelta: 900,
-          },
+          { id: "coldbrew-medium", name: "Mediano", priceDelta: 0 },
+          { id: "coldbrew-large", name: "Grande", priceDelta: 900 },
         ],
       },
       {
@@ -671,21 +492,12 @@ export const cafeProducts: MenuProduct[] = [
         name: "Leche",
         type: "single",
         items: [
-          {
-            id: "coldbrew-black",
-            name: "Sin leche",
-            priceDelta: 0,
-          },
-          {
-            id: "coldbrew-oat",
-            name: "Leche de avena",
-            priceDelta: 900,
-          },
+          { id: "coldbrew-black", name: "Sin leche", priceDelta: 0 },
+          { id: "coldbrew-oat", name: "Leche de avena", priceDelta: 900 },
         ],
       },
     ],
   },
-
   {
     id: "iced-latte",
     categoryId: "cold-drinks",
@@ -704,21 +516,9 @@ export const cafeProducts: MenuProduct[] = [
         type: "single",
         required: true,
         items: [
-          {
-            id: "iced-whole",
-            name: "Entera",
-            priceDelta: 0,
-          },
-          {
-            id: "iced-oat",
-            name: "Avena",
-            priceDelta: 900,
-          },
-          {
-            id: "iced-almond",
-            name: "Almendras",
-            priceDelta: 1000,
-          },
+          { id: "iced-whole", name: "Entera", priceDelta: 0 },
+          { id: "iced-oat", name: "Avena", priceDelta: 900 },
+          { id: "iced-almond", name: "Almendras", priceDelta: 1000 },
         ],
       },
       {
@@ -726,21 +526,12 @@ export const cafeProducts: MenuProduct[] = [
         name: "Extras",
         type: "multiple",
         items: [
-          {
-            id: "iced-shot",
-            name: "Shot extra",
-            priceDelta: 1800,
-          },
-          {
-            id: "iced-vanilla",
-            name: "Vainilla",
-            priceDelta: 600,
-          },
+          { id: "iced-shot", name: "Shot extra", priceDelta: 1800 },
+          { id: "iced-vanilla", name: "Vainilla", priceDelta: 600 },
         ],
       },
     ],
   },
-
   {
     id: "lemonade-cafe",
     categoryId: "cold-drinks",
@@ -753,6 +544,8 @@ export const cafeProducts: MenuProduct[] = [
     tags: ["Natural", "Sin alcohol"],
     prepTime: "4 min",
   },
-
-  
 ];
+
+// Alias para compatibilidad total con cualquier import
+export const menuCategories = cafeCategories;
+export const menuProducts = cafeProducts;
