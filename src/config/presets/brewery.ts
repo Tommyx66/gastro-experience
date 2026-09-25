@@ -1,668 +1,697 @@
 import type { GastroPreset } from "./types";
 
-import {
-  breweryCategories,
-  breweryProducts,
-} from "@/data/menus/brewery";
+import { breweryCategories, breweryProducts } from "@/data/menus/brewery";
 
 export const breweryPreset = {
-  "id": "brewery",
-  "label": "Cervecería Artesanal & Taproom",
-  "theme": {
-    "mode": "dark",
-    "accent": "#D49A32",
-    "accentStrong": "#F59E0B",
-    "accentContrast": "#090807",
-    "colors": {
-      "dark": {
-        "bg": "#070707",
-        "bgElevated": "#0D0C0A",
-        "surface": "#12110F",
-        "surfaceElevated": "#1A1713",
-        "surfaceInverse": "#F7F3EB",
-        "text": "#F7F3EB",
-        "textMuted": "#C9C0B4",
-        "textSubtle": "#8B837A",
-        "accent": "#D49A32",
-        "accentStrong": "#F59E0B",
-        "accentContrast": "#090807",
-        "accentSoft": "rgba(200,165,106,0.14)",
-        "accentFaint": "rgba(200,165,106,0.07)",
-        "accentBorder": "rgba(200,165,106,0.35)",
-        "border": "rgba(255,255,255,0.10)",
-        "borderStrong": "rgba(255,255,255,0.18)",
-        "overlay": "rgba(7,7,7,0.90)",
-        "control": "rgba(255,255,255,0.045)",
-        "controlHover": "rgba(255,255,255,0.09)",
-        "success": "#34D399",
-        "warning": "#F59E0B",
-        "danger": "#F87171"
-      }
-    },
-    "typography": {
-      "display": "Barlow Condensed, Inter, Arial, sans-serif",
-      "body": "Inter, Arial, Helvetica, sans-serif",
-      "ui": "Inter, Arial, Helvetica, sans-serif",
-      "mono": "monospace"
-    }
-  },
-  "visual": {
-    "navbar": "editorial",
-    "hero": "industrial",
-    "heroStyle": {
-      "variant": "industrial",
-      "imageTreatment": "highContrast",
-      "overlay": "edge",
-      "composition": "split",
-      "ctaShape": "square",
-      "grain": true,
-      "parallax": false,
-      "intensity": 1
-    },
-    "menu": "catalog",
-    "productCard": "clean",
-    "contact": "split",
-    "cta": "immersive",
-    "footer": "editorial",
-    "story": {
-      "variant": "taproom",
-      "layout": "marquee",
-      "imageTreatment": "highContrast",
-      "cardShape": "poster",
-      "density": "dense",
-      "watermark": true,
-      "grain": true,
-      "numbering": true,
-      "motion": {
-        "speed": 1.1,
-        "direction": "right",
-        "hoverLift": 8,
-        "parallax": false,
-        "pauseOnHover": true
-      }
-    }
-  },
-  "operation": {
-    "primary": "table",
-    "supported": [
-      "table",
-      "pickup",
-      "counter"
-    ]
-  },
-  "capabilities": {
-    "ordering": true,
-    "story": true,
-    "delivery": false,
-    "pickup": true,
-    "tableOrders": true,
-    "waiterCall": true,
-    "reservation": false,
-    "coffeeCustomizer": false,
-    "beerTaps": true,
-    "iceCreamSizes": false,
-    "toppings": false,
-    "brunch": false,
-    "takeaway": true
-  },
-  "siteOverrides": {
-    "brand": {
-      "name": "HOP DISTRICT",
-      "shortName": "Hop",
-      "descriptor": "Independent Taproom",
-      "tagline": "Lúpulo, fuego y noches largas",
-      "description": "Cervezas propias, cocina de plancha y una barra pensada para quedarse.",
-      "logo": "/images/brand/hop-district-mark.svg",
-      "favicon": "/favicon.ico"
-    },
-    "features": {
-      "ordering": true,
-      "delivery": false,
-      "pickup": true,
-      "tableOrders": true,
-      "waiterCall": true,
-      "reservation": false,
-      "story": true
-    },
-    "operation": {
-      "schedule": "Martes a Domingo · 18:00 a 02:00 hs",
-      "estimatedTime": {
-        "delivery": {
-          "min": 25,
-          "max": 45
-        },
-        "pickup": {
-          "min": 10,
-          "max": 25
-        },
-        "table": {
-          "min": 10,
-          "max": 30
-        }
-      }
-    },
-    "navigation": {
-      "links": [
-        {
-          "label": "Taproom",
-          "href": "inicio"
-        },
-        {
-          "label": "Brewhouse",
-          "href": "historia"
-        },
-        {
-          "label": "Carta",
-          "href": "menu"
-        },
-        {
-          "label": "Visitanos",
-          "href": "contacto"
-        }
-      ],
-      "cta": "Ver canillas"
-    },
-    "ordering": {
-      "enabled": true,
-      "channels": [
-        "web",
-        "table"
-      ],
-      "fulfillment": [
-        "pickup",
-        "onsite"
-      ],
-      "cashDiscountPercent": 10,
-      "paymentMethods": [
-        {
-          "id": "cash",
-          "label": "Efectivo",
-          "requiresProof": false
-        },
-        {
-          "id": "card",
-          "label": "Tarjeta",
-          "requiresProof": false
-        },
-        {
-          "id": "transfer",
-          "label": "Transferencia / QR",
-          "requiresProof": true
-        }
-      ],
-      "whatsapp": {
-        "number": "549223000000",
-        "defaultMessage": "Hola, quiero hacer un pedido en HOP DISTRICT.",
-        "tableOrderMessage": "Hola, envío el pedido desde mesa en HOP DISTRICT.",
-        "labelCheckout": "Enviar pedido por WhatsApp"
-      }
-    },
-    "contact": {
-      "address": "Independencia 2780 (esq. Castelli)",
-      "zone": "Macrocentro",
-      "city": "Mar del Plata",
-      "country": "Argentina",
-      "fullAddress": "Mar del Plata, Buenos Aires, Argentina",
-      "phone": "+54 9 223 555-0100",
-      "email": "hola@hopdemo.com",
-      "instagram": "https://instagram.com",
-      "mapsUrl": "https://www.google.com/maps",
-      "coordinates": {
-        "lat": -38.0,
-        "lng": -57.55,
-        "zoom": 15,
-        "latDisplay": "38°00′00″ S",
-        "lngDisplay": "57°33′00″ W"
-      }
-    },
-    "seo": {
-      "title": "HOP DISTRICT | Cervecería Artesanal & Taproom",
-      "description": "Cervezas propias, smash y tapeo en un taproom industrial.",
-      "locale": "es_AR"
-    },
-    "content": {
-      "hero": {
-        "eyebrow": "HOP DISTRICT · TAPROOM",
-        "titlePrefix": "La noche",
-        "titleAccent": "empieza en la barra.",
-        "subtitle": "Lúpulo, plancha y cerveza fresca en un taproom que cambia con cada lote y se prende cuando cae el sol.",
-        "cta": "Ver canillas",
-        "ctaHref": "menu",
-        "image": "/images/showcase/brewery/taproom-atmosphere.jpg"
+  id: "brewery",
+  label: "Cervecería Artesanal & Taproom",
+  theme: {
+    mode: "dark",
+    accent: "#D49A32",
+    accentStrong: "#F59E0B",
+    accentContrast: "#090807",
+    colors: {
+      dark: {
+        bg: "#070707",
+        bgElevated: "#0D0C0A",
+        surface: "#12110F",
+        surfaceElevated: "#1A1713",
+        surfaceInverse: "#F7F3EB",
+        text: "#F7F3EB",
+        textMuted: "#C9C0B4",
+        textSubtle: "#8B837A",
+        accent: "#D49A32",
+        accentStrong: "#F59E0B",
+        accentContrast: "#090807",
+        accentSoft: "rgba(200,165,106,0.14)",
+        accentFaint: "rgba(200,165,106,0.07)",
+        accentBorder: "rgba(200,165,106,0.35)",
+        border: "rgba(255,255,255,0.10)",
+        borderStrong: "rgba(255,255,255,0.18)",
+        overlay: "rgba(7,7,7,0.90)",
+        control: "rgba(255,255,255,0.045)",
+        controlHover: "rgba(255,255,255,0.09)",
+        success: "#34D399",
+        warning: "#F59E0B",
+        danger: "#F87171",
       },
-      "showcase": {
-        "enabled": true,
-        "engine": "product-showroom",
-        "iconKind": "beer",
-        "atmosphereImage": "https://images.unsplash.com/photo-1774109057644-8e1ac727c1b3?w=1800&q=86&auto=format&fit=crop",
-        "header": {
-          "eyebrow": "TAP 01—11 · BARRA EN ROTACIÓN",
-          "titlePrefix": "Abrimos",
-          "titleAccent": "canillas.",
-          "titleSuffix": "",
-          "description": "Cuatro cervezas en foco, cuatro perfiles distintos. Llevamos cada lote al centro de la escena con ficha técnica, carácter y formato de servicio."
+      light: {
+        bg: "#F3F0E8",
+        bgElevated: "#FBF9F4",
+        surface: "#FFFEFA",
+        surfaceElevated: "#F7F2E8",
+        surfaceInverse: "#14120E",
+        text: "#17140F",
+        textMuted: "#5E584F",
+        textSubtle: "#82786B",
+        accent: "#B97912",
+        accentStrong: "#D18A16",
+        accentContrast: "#FFF9ED",
+        accentSoft: "rgba(185,121,18,0.12)",
+        accentFaint: "rgba(185,121,18,0.06)",
+        accentBorder: "rgba(151,96,11,0.30)",
+        border: "rgba(23,20,15,0.11)",
+        borderStrong: "rgba(23,20,15,0.18)",
+        overlay: "rgba(243,240,232,0.92)",
+        control: "rgba(23,20,15,0.045)",
+        controlHover: "rgba(23,20,15,0.085)",
+        success: "#17835A",
+        warning: "#B97912",
+        danger: "#C84F45",
+      },
+    },
+    typography: {
+      display: "Barlow Condensed, Inter, Arial, sans-serif",
+      body: "Inter, Arial, Helvetica, sans-serif",
+      ui: "Inter, Arial, Helvetica, sans-serif",
+      mono: "monospace",
+    },
+  },
+  visual: {
+    navbar: "editorial",
+    hero: "industrial",
+    heroStyle: {
+      variant: "industrial",
+      imageTreatment: "highContrast",
+      overlay: "edge",
+      composition: "split",
+      ctaShape: "square",
+      grain: true,
+      parallax: false,
+      intensity: 1,
+    },
+    menu: "catalog",
+    productCard: "clean",
+    contact: "split",
+    cta: "immersive",
+    footer: "editorial",
+    story: {
+      variant: "taproom",
+      layout: "marquee",
+      imageTreatment: "highContrast",
+      cardShape: "poster",
+      density: "dense",
+      watermark: true,
+      grain: true,
+      numbering: true,
+      motion: {
+        speed: 1.1,
+        direction: "right",
+        hoverLift: 8,
+        parallax: false,
+        pauseOnHover: true,
+      },
+    },
+  },
+  operation: {
+    primary: "table",
+    supported: ["table", "pickup", "counter"],
+  },
+  capabilities: {
+    ordering: true,
+    story: true,
+    delivery: false,
+    pickup: true,
+    tableOrders: true,
+    waiterCall: true,
+    reservation: false,
+    coffeeCustomizer: false,
+    beerTaps: true,
+    iceCreamSizes: false,
+    toppings: false,
+    brunch: false,
+    takeaway: true,
+  },
+  siteOverrides: {
+    brand: {
+      name: "HOP DISTRICT",
+      shortName: "Hop",
+      descriptor: "Independent Taproom",
+      tagline: "Lúpulo, fuego y noches largas",
+      description:
+        "Cervezas propias, cocina de plancha y una barra pensada para quedarse.",
+      logo: "/images/brand/hop-district-mark.svg",
+      favicon: "/favicon.ico",
+    },
+    features: {
+      ordering: true,
+      delivery: false,
+      pickup: true,
+      tableOrders: true,
+      waiterCall: true,
+      reservation: false,
+      story: true,
+    },
+    operation: {
+      schedule: "Martes a Domingo · 18:00 a 02:00 hs",
+      estimatedTime: {
+        delivery: {
+          min: 25,
+          max: 45,
         },
-        "labels": {
-          "technical": "Ficha técnica",
-          "previous": "Canilla anterior",
-          "next": "Siguiente canilla",
-          "action": "Pedir esta cerveza"
+        pickup: {
+          min: 10,
+          max: 25,
         },
-        "products": [
+        table: {
+          min: 10,
+          max: 30,
+        },
+      },
+    },
+    navigation: {
+      links: [
+        {
+          label: "Taproom",
+          href: "inicio",
+        },
+        {
+          label: "Brewhouse",
+          href: "historia",
+        },
+        {
+          label: "Carta",
+          href: "menu",
+        },
+        {
+          label: "Visitanos",
+          href: "contacto",
+        },
+      ],
+      cta: "Ver canillas",
+    },
+    ordering: {
+      enabled: true,
+      channels: ["web", "table"],
+      fulfillment: ["pickup", "onsite"],
+      cashDiscountPercent: 10,
+      paymentMethods: [
+        {
+          id: "cash",
+          label: "Efectivo",
+          requiresProof: false,
+        },
+        {
+          id: "card",
+          label: "Tarjeta",
+          requiresProof: false,
+        },
+        {
+          id: "transfer",
+          label: "Transferencia / QR",
+          requiresProof: true,
+        },
+      ],
+      whatsapp: {
+        number: "549223000000",
+        defaultMessage: "Hola, quiero hacer un pedido en HOP DISTRICT.",
+        tableOrderMessage: "Hola, envío el pedido desde mesa en HOP DISTRICT.",
+        labelCheckout: "Enviar pedido por WhatsApp",
+      },
+    },
+    contact: {
+      address: "Independencia 2780 (esq. Castelli)",
+      zone: "Macrocentro",
+      city: "Mar del Plata",
+      country: "Argentina",
+      fullAddress: "Mar del Plata, Buenos Aires, Argentina",
+      phone: "+54 9 223 555-0100",
+      email: "hola@hopdemo.com",
+      instagram: "https://instagram.com",
+      mapsUrl: "https://www.google.com/maps",
+      coordinates: {
+        lat: -38.0,
+        lng: -57.55,
+        zoom: 15,
+        latDisplay: "38°00′00″ S",
+        lngDisplay: "57°33′00″ W",
+      },
+    },
+    seo: {
+      title: "HOP DISTRICT | Cervecería Artesanal & Taproom",
+      description: "Cervezas propias, smash y tapeo en un taproom industrial.",
+      locale: "es_AR",
+    },
+    content: {
+      hero: {
+        eyebrow: "HOP DISTRICT · TAPROOM",
+        titlePrefix: "La noche",
+        titleAccent: "empieza en la barra.",
+        subtitle:
+          "Lúpulo, plancha y cerveza fresca en un taproom que cambia con cada lote y se prende cuando cae el sol.",
+        cta: "Ver canillas",
+        ctaHref: "menu",
+        image: "/images/showcase/brewery/taproom-atmosphere.jpg",
+      },
+      showcase: {
+        enabled: true,
+        engine: "product-showroom",
+        iconKind: "beer",
+        atmosphereImage:
+          "https://images.unsplash.com/photo-1774109057644-8e1ac727c1b3?w=1800&q=86&auto=format&fit=crop",
+        header: {
+          eyebrow: "TAP 01—11 · BARRA EN ROTACIÓN",
+          titlePrefix: "Abrimos",
+          titleAccent: "canillas.",
+          titleSuffix: "",
+          description:
+            "Cuatro cervezas en foco, cuatro perfiles distintos. Llevamos cada lote al centro de la escena con ficha técnica, carácter y formato de servicio.",
+        },
+        labels: {
+          technical: "Ficha técnica",
+          previous: "Canilla anterior",
+          next: "Siguiente canilla",
+          action: "Pedir esta cerveza",
+        },
+        products: [
           {
-            "id": "tap-01-pils",
-            "menuProductName": "Bohemian Pilsener",
-            "index": "01",
-            "badge": "TAP 01",
-            "name": "Bohemian Pilsener",
-            "style": "Czech Pilsener",
-            "subtitle": "Dorada · Floral · Seco",
-            "description": "Lager limpia y brillante con final seco, cuerpo ligero y un perfil de lúpulo noble pensado para una pinta que pide otra.",
-            "artwork": {
-              "type": "can",
-              "src": "/images/showcase/brewery/pils-can.png",
-              "rotation": -11,
-              "scale": 1.08,
-              "x": 12,
-              "y": 4,
-              "glow": "rgba(226,190,73,.42)",
-              "shadowColor": "rgba(25,18,5,.78)"
+            id: "tap-01-pils",
+            menuProductName: "Bohemian Pilsener",
+            index: "01",
+            badge: "TAP 01",
+            name: "Bohemian Pilsener",
+            style: "Czech Pilsener",
+            subtitle: "Dorada · Floral · Seco",
+            description:
+              "Lager limpia y brillante con final seco, cuerpo ligero y un perfil de lúpulo noble pensado para una pinta que pide otra.",
+            artwork: {
+              type: "can",
+              src: "/images/showcase/brewery/pils-can.png",
+              rotation: -11,
+              scale: 1.08,
+              x: 12,
+              y: 4,
+              glow: "rgba(226,190,73,.42)",
+              shadowColor: "rgba(25,18,5,.78)",
             },
-            "accentColor": "#E4BE49",
-            "ambientGlow": "rgba(228,190,73,.18)",
-            "technical": [
-              { "label": "ALC", "value": "5.0%", "highlight": true },
-              { "label": "IBU", "value": "34" },
-              { "label": "SRM", "value": "3" },
-              { "label": "OG", "value": "1.048" }
+            accentColor: "#E4BE49",
+            ambientGlow: "rgba(228,190,73,.18)",
+            technical: [
+              { label: "ALC", value: "5.0%", highlight: true },
+              { label: "IBU", value: "34" },
+              { label: "SRM", value: "3" },
+              { label: "OG", value: "1.048" },
             ],
-            "secondary": [
-              { "label": "Lúpulos", "value": "Saaz" },
-              { "label": "Maltas", "value": "Pilsen · Vienna" }
+            secondary: [
+              { label: "Lúpulos", value: "Saaz" },
+              { label: "Maltas", value: "Pilsen · Vienna" },
             ],
-            "price": 5900,
-            "footer": ["CERVEZA DE BARRIL", "SERVICIO FRÍO"]
+            price: 5900,
+            footer: ["CERVEZA DE BARRIL", "SERVICIO FRÍO"],
           },
           {
-            "id": "tap-04-west-coast",
-            "menuProductName": "West Coast IPA",
-            "index": "04",
-            "badge": "TAP 04",
-            "name": "West Coast IPA",
-            "style": "American IPA",
-            "subtitle": "Cítrica · Resinosa · Pino",
-            "description": "Final seco y amargor firme. Centennial, Simcoe y Columbus dejan pomelo, resina y pino en primer plano.",
-            "artwork": {
-              "type": "can",
-              "src": "/images/showcase/brewery/west-coast-ipa-can.png",
-              "rotation": -14,
-              "scale": 1.1,
-              "x": 8,
-              "y": 0,
-              "glow": "rgba(224,88,48,.44)",
-              "shadowColor": "rgba(34,9,5,.80)"
+            id: "tap-04-west-coast",
+            menuProductName: "West Coast IPA",
+            index: "04",
+            badge: "TAP 04",
+            name: "West Coast IPA",
+            style: "American IPA",
+            subtitle: "Cítrica · Resinosa · Pino",
+            description:
+              "Final seco y amargor firme. Centennial, Simcoe y Columbus dejan pomelo, resina y pino en primer plano.",
+            artwork: {
+              type: "can",
+              src: "/images/showcase/brewery/west-coast-ipa-can.png",
+              rotation: -14,
+              scale: 1.1,
+              x: 8,
+              y: 0,
+              glow: "rgba(224,88,48,.44)",
+              shadowColor: "rgba(34,9,5,.80)",
             },
-            "accentColor": "#E25937",
-            "ambientGlow": "rgba(226,89,55,.20)",
-            "technical": [
-              { "label": "ALC", "value": "6.8%", "highlight": true },
-              { "label": "IBU", "value": "65" },
-              { "label": "SRM", "value": "6" },
-              { "label": "OG", "value": "1.062" }
+            accentColor: "#E25937",
+            ambientGlow: "rgba(226,89,55,.20)",
+            technical: [
+              { label: "ALC", value: "6.8%", highlight: true },
+              { label: "IBU", value: "65" },
+              { label: "SRM", value: "6" },
+              { label: "OG", value: "1.062" },
             ],
-            "secondary": [
-              { "label": "Lúpulos", "value": "Centennial · Simcoe · Columbus" },
-              { "label": "Maltas", "value": "Pilsen · Carapils · Munich" }
+            secondary: [
+              { label: "Lúpulos", value: "Centennial · Simcoe · Columbus" },
+              { label: "Maltas", value: "Pilsen · Carapils · Munich" },
             ],
-            "price": 6800,
-            "footer": ["WEST COAST SERIES", "DRY HOPPED"]
+            price: 6800,
+            footer: ["WEST COAST SERIES", "DRY HOPPED"],
           },
           {
-            "id": "tap-07-hazy",
-            "menuProductName": "Hazy Juicy IPA",
-            "index": "07",
-            "badge": "TAP 07",
-            "name": "Hazy Juicy IPA",
-            "style": "New England IPA",
-            "subtitle": "Turbia · Tropical · Sedosa",
-            "description": "Avena y trigo para una textura cremosa, baja percepción de amargor y un dry hop cargado de fruta tropical, mango y maracuyá.",
-            "artwork": {
-              "type": "can",
-              "src": "/images/showcase/brewery/hazy-ipa-can.png",
-              "rotation": -8,
-              "scale": 1.06,
-              "x": 8,
-              "y": 2,
-              "glow": "rgba(211,215,75,.40)",
-              "shadowColor": "rgba(15,20,7,.82)"
+            id: "tap-07-hazy",
+            menuProductName: "Hazy Juicy IPA",
+            index: "07",
+            badge: "TAP 07",
+            name: "Hazy Juicy IPA",
+            style: "New England IPA",
+            subtitle: "Turbia · Tropical · Sedosa",
+            description:
+              "Avena y trigo para una textura cremosa, baja percepción de amargor y un dry hop cargado de fruta tropical, mango y maracuyá.",
+            artwork: {
+              type: "can",
+              src: "/images/showcase/brewery/hazy-ipa-can.png",
+              rotation: -8,
+              scale: 1.06,
+              x: 8,
+              y: 2,
+              glow: "rgba(211,215,75,.40)",
+              shadowColor: "rgba(15,20,7,.82)",
             },
-            "accentColor": "#CBD54D",
-            "ambientGlow": "rgba(203,213,77,.17)",
-            "technical": [
-              { "label": "ALC", "value": "6.4%", "highlight": true },
-              { "label": "IBU", "value": "25" },
-              { "label": "SRM", "value": "4" },
-              { "label": "OG", "value": "1.058" }
+            accentColor: "#CBD54D",
+            ambientGlow: "rgba(203,213,77,.17)",
+            technical: [
+              { label: "ALC", value: "6.4%", highlight: true },
+              { label: "IBU", value: "25" },
+              { label: "SRM", value: "4" },
+              { label: "OG", value: "1.058" },
             ],
-            "secondary": [
-              { "label": "Lúpulos", "value": "Citra · Mosaic · El Dorado" },
-              { "label": "Maltas", "value": "Pilsen · Trigo · Avena" }
+            secondary: [
+              { label: "Lúpulos", value: "Citra · Mosaic · El Dorado" },
+              { label: "Maltas", value: "Pilsen · Trigo · Avena" },
             ],
-            "price": 7400,
-            "footer": ["JUICY SERIES", "DOUBLE DRY HOP"]
+            price: 7400,
+            footer: ["JUICY SERIES", "DOUBLE DRY HOP"],
           },
           {
-            "id": "tap-11-stout",
-            "menuProductName": "Imperial Stout Nitro",
-            "index": "11",
-            "badge": "TAP 11",
-            "name": "Imperial Stout Nitro",
-            "style": "Imperial Stout",
-            "subtitle": "Nitro · Café · Cacao",
-            "description": "Oscura, densa y sedosa. Tirada con nitrógeno para una espuma compacta y notas de espresso, cacao y vainilla tostada.",
-            "artwork": {
-              "type": "image",
-              "src": "/images/showcase/brewery/stout-pint.png",
-              "rotation": 2,
-              "scale": 1.05,
-              "x": 0,
-              "y": 8,
-              "glow": "rgba(129,79,46,.36)",
-              "shadowColor": "rgba(7,5,3,.88)"
+            id: "tap-11-stout",
+            menuProductName: "Imperial Stout Nitro",
+            index: "11",
+            badge: "TAP 11",
+            name: "Imperial Stout Nitro",
+            style: "Imperial Stout",
+            subtitle: "Nitro · Café · Cacao",
+            description:
+              "Oscura, densa y sedosa. Tirada con nitrógeno para una espuma compacta y notas de espresso, cacao y vainilla tostada.",
+            artwork: {
+              type: "image",
+              src: "/images/showcase/brewery/stout-pint.png",
+              rotation: 2,
+              scale: 1.05,
+              x: 0,
+              y: 8,
+              glow: "rgba(129,79,46,.36)",
+              shadowColor: "rgba(7,5,3,.88)",
             },
-            "accentColor": "#A36D46",
-            "ambientGlow": "rgba(125,78,45,.17)",
-            "technical": [
-              { "label": "ALC", "value": "7.8%", "highlight": true },
-              { "label": "IBU", "value": "42" },
-              { "label": "SRM", "value": "38" },
-              { "label": "OG", "value": "1.078" }
+            accentColor: "#A36D46",
+            ambientGlow: "rgba(125,78,45,.17)",
+            technical: [
+              { label: "ALC", value: "7.8%", highlight: true },
+              { label: "IBU", value: "42" },
+              { label: "SRM", value: "38" },
+              { label: "OG", value: "1.078" },
             ],
-            "secondary": [
-              { "label": "Lúpulos", "value": "East Kent Goldings" },
-              { "label": "Maltas", "value": "Roasted Barley · Chocolate · Avena" }
+            secondary: [
+              { label: "Lúpulos", value: "East Kent Goldings" },
+              { label: "Maltas", value: "Roasted Barley · Chocolate · Avena" },
             ],
-            "price": 7400,
-            "footer": ["NITRO LINE", "SERVICIO EN BARRA"]
-          }
-        ]
+            price: 7400,
+            footer: ["NITRO LINE", "SERVICIO EN BARRA"],
+          },
+        ],
       },
-      "story": {
-        "eyebrow": "BREWHOUSE · DETRÁS DE LA BARRA",
-        "watermark": "HOP",
-        "titlePrefix": "Del tanque",
-        "titleAccent": "a la canilla.",
-        "sectionTag": "BREWHOUSE LOG",
-        "primaryDescription": "No empieza en el vaso. Empieza mucho antes: agua, malta, hervor, lúpulo, fermentación y tiempo.",
-        "secondaryDescription": "La pizarra cambia porque los lotes cambian. Una IPA puede pedir más lúpulo, una lager más paciencia y un stout otra forma de servirla.",
-        "backgroundImage": "https://images.unsplash.com/photo-1719752486418-202cd730147c?w=1800&q=86&auto=format&fit=crop",
-        "labels": {
-          "processLine": "Brewhouse Log",
-          "openArchive": "Explorar brewhouse log",
-          "traceability": "Trazabilidad",
-          "closeSheet": "Cerrar Ficha"
+      story: {
+        eyebrow: "BREWHOUSE · DETRÁS DE LA BARRA",
+        watermark: "HOP",
+        titlePrefix: "Del tanque",
+        titleAccent: "a la canilla.",
+        sectionTag: "BREWHOUSE LOG",
+        primaryDescription:
+          "No empieza en el vaso. Empieza mucho antes: agua, malta, hervor, lúpulo, fermentación y tiempo.",
+        secondaryDescription:
+          "La pizarra cambia porque los lotes cambian. Una IPA puede pedir más lúpulo, una lager más paciencia y un stout otra forma de servirla.",
+        backgroundImage:
+          "https://images.unsplash.com/photo-1719752486418-202cd730147c?w=1800&q=86&auto=format&fit=crop",
+        labels: {
+          processLine: "Brewhouse Log",
+          openArchive: "Explorar brewhouse log",
+          traceability: "Trazabilidad",
+          closeSheet: "Cerrar Ficha",
         },
-        "archive": [
+        archive: [
           {
-            "titulo": "Lúpulo · Perfil",
-            "subtitulo": "West Coast",
-            "nota": "Centennial, Simcoe y Columbus para un perfil seco, resinoso y de amargor firme.",
-            "origen": "TAP 04",
-            "src": "https://images.unsplash.com/photo-1608722079481-a35f2c3934e7?w=1600&q=85&auto=format&fit=crop"
+            titulo: "Lúpulo · Perfil",
+            subtitulo: "West Coast",
+            nota: "Centennial, Simcoe y Columbus para un perfil seco, resinoso y de amargor firme.",
+            origen: "TAP 04",
+            src: "https://images.unsplash.com/photo-1608722079481-a35f2c3934e7?w=1600&q=85&auto=format&fit=crop",
           },
           {
-            "titulo": "Servicio · Nitro",
-            "subtitulo": "Stout",
-            "nota": "Nitrógeno, espuma compacta y un servicio pensado para dejar café, cacao y cuerpo en primer plano.",
-            "origen": "TAP 11",
-            "src": "https://images.unsplash.com/photo-1766589220696-4c7d1654d476?w=1600&q=85&auto=format&fit=crop"
-          }
-        ]
+            titulo: "Servicio · Nitro",
+            subtitulo: "Stout",
+            nota: "Nitrógeno, espuma compacta y un servicio pensado para dejar café, cacao y cuerpo en primer plano.",
+            origen: "TAP 11",
+            src: "https://images.unsplash.com/photo-1766589220696-4c7d1654d476?w=1600&q=85&auto=format&fit=crop",
+          },
+        ],
       },
-      "productDetail": {
-        "fallbackTag": "Especialidad",
-        "options": {
-          "required": "Elegí 1",
-          "optional": "Opcional",
-          "requiredMark": "*",
-          "personalized": "Personalización"
+      productDetail: {
+        fallbackTag: "Especialidad",
+        options: {
+          required: "Elegí 1",
+          optional: "Opcional",
+          requiredMark: "*",
+          personalized: "Personalización",
         },
-        "notes": {
-          "label": "Instrucciones o aclaraciones",
-          "placeholder": "Ej. sin un ingrediente, presentación especial..."
+        notes: {
+          label: "Instrucciones o aclaraciones",
+          placeholder: "Ej. sin un ingrediente, presentación especial...",
         },
-        "actions": {
-          "add": "Sumar",
-          "added": "Agregado",
-          "chooseRequired": "Seleccioná opciones requeridas",
-          "decreaseQuantity": "Disminuir cantidad",
-          "increaseQuantity": "Aumentar cantidad",
-          "close": "Cerrar detalle"
-        }
+        actions: {
+          add: "Sumar",
+          added: "Agregado",
+          chooseRequired: "Seleccioná opciones requeridas",
+          decreaseQuantity: "Disminuir cantidad",
+          increaseQuantity: "Aumentar cantidad",
+          close: "Cerrar detalle",
+        },
       },
-      "cart": {
-        "eyebrow": "Comanda",
-        "title": "Tu pedido",
-        "emptyTitle": "Pedido vacío",
-        "emptyDescription": "Elegí productos de la carta para comenzar.",
-        "productSingular": "producto",
-        "productPlural": "productos",
-        "remove": "Quitar",
-        "subtotal": "Subtotal",
-        "continueDescription": "Revisá datos, entrega y pago en la siguiente pantalla.",
-        "checkoutButton": "Ver pedido",
-        "close": "Cerrar",
-        "closeOrder": "Cerrar pedido"
+      cart: {
+        eyebrow: "Comanda",
+        title: "Tu pedido",
+        emptyTitle: "Pedido vacío",
+        emptyDescription: "Elegí productos de la carta para comenzar.",
+        productSingular: "producto",
+        productPlural: "productos",
+        remove: "Quitar",
+        subtotal: "Subtotal",
+        continueDescription:
+          "Revisá datos, entrega y pago en la siguiente pantalla.",
+        checkoutButton: "Ver pedido",
+        close: "Cerrar",
+        closeOrder: "Cerrar pedido",
       },
-      "checkout": {
-        "disabled": {
-          "title": "Pedidos no disponibles",
-          "description": "El canal de pedidos está temporalmente desactivado."
+      checkout: {
+        disabled: {
+          title: "Pedidos no disponibles",
+          description: "El canal de pedidos está temporalmente desactivado.",
         },
-        "header": {
-          "backLabel": "Carta",
-          "title": "Tu pedido",
-          "onlineLabel": "Pedido online",
-          "tablePrefix": "Mesa"
+        header: {
+          backLabel: "Carta",
+          title: "Tu pedido",
+          onlineLabel: "Pedido online",
+          tablePrefix: "Mesa",
         },
-        "hero": {
-          "tableLabel": "Mesa",
-          "onlineLabel": "Pedido online",
-          "title": "Tu pedido",
-          "description": "Revisá la selección y completá los últimos datos."
+        hero: {
+          tableLabel: "Mesa",
+          onlineLabel: "Pedido online",
+          title: "Tu pedido",
+          description: "Revisá la selección y completá los últimos datos.",
         },
-        "selection": {
-          "label": "Selección",
-          "units": "unidades",
-          "perUnit": "c/u",
-          "remove": "Quitar",
-          "decrease": "Disminuir",
-          "increase": "Aumentar"
+        selection: {
+          label: "Selección",
+          units: "unidades",
+          perUnit: "c/u",
+          remove: "Quitar",
+          decrease: "Disminuir",
+          increase: "Aumentar",
         },
-        "empty": {
-          "title": "Pedido vacío",
-          "description": "Elegí productos desde la carta para comenzar.",
-          "button": "Volver a la carta"
+        empty: {
+          title: "Pedido vacío",
+          description: "Elegí productos desde la carta para comenzar.",
+          button: "Volver a la carta",
         },
-        "form": {
-          "fulfillmentLabel": "Entrega",
-          "delivery": "Envío",
-          "pickup": "Retiro",
-          "customerNameLabel": "Nombre",
-          "customerNamePlaceholder": "Tu nombre",
-          "addressLabel": "Dónde estamos",
-          "addressPlaceholder": "Dirección y timbre",
-          "paymentLabel": "Medio de pago",
-          "notesLabel": "Aclaraciones",
-          "notesDeliveryPlaceholder": "Ej. timbre, piso, recepción...",
-          "notesTablePlaceholder": "Ej. sin sal, sin cebolla..."
+        form: {
+          fulfillmentLabel: "Entrega",
+          delivery: "Envío",
+          pickup: "Retiro",
+          customerNameLabel: "Nombre",
+          customerNamePlaceholder: "Tu nombre",
+          addressLabel: "Dónde estamos",
+          addressPlaceholder: "Dirección y timbre",
+          paymentLabel: "Medio de pago",
+          notesLabel: "Aclaraciones",
+          notesDeliveryPlaceholder: "Ej. timbre, piso, recepción...",
+          notesTablePlaceholder: "Ej. sin sal, sin cebolla...",
         },
-        "summary": {
-          "subtotal": "Subtotal",
-          "cashPrefix": "Efectivo",
-          "total": "Total",
-          "completedLabel": "Pedido completo",
-          "estimatedLabel": "Demora estimada"
+        summary: {
+          subtotal: "Subtotal",
+          cashPrefix: "Efectivo",
+          total: "Total",
+          completedLabel: "Pedido completo",
+          estimatedLabel: "Demora estimada",
         },
-        "actions": {
-          "processing": "Procesando...",
-          "sendToKitchen": "Enviar pedido",
-          "newOrder": "Nueva orden",
-          "openWhatsApp": "Abrir WhatsApp",
-          "continueArrow": "Continuar"
+        actions: {
+          processing: "Procesando...",
+          sendToKitchen: "Enviar pedido",
+          newOrder: "Nueva orden",
+          openWhatsApp: "Abrir WhatsApp",
+          continueArrow: "Continuar",
         },
-        "confirmation": {
-          "preparedLabel": "Pedido preparado",
-          "confirmedLabel": "Pedido confirmado",
-          "whatsAppDescription": "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
-          "tableDescriptionPrefix": "La cocina recibió tu pedido",
-          "kitchenTableSuffix": "de la Mesa",
-          "preparedToastTitle": "Pedido preparado",
-          "preparedToastDescription": "Abrimos WhatsApp para continuar.",
-          "confirmedToastTitle": "Pedido confirmado",
-          "confirmedToastDescriptionPrefix": "La cocina recibió la comanda."
+        confirmation: {
+          preparedLabel: "Pedido preparado",
+          confirmedLabel: "Pedido confirmado",
+          whatsAppDescription:
+            "Tu pedido está listo. Solo falta enviarlo desde WhatsApp.",
+          tableDescriptionPrefix: "La cocina recibió tu pedido",
+          kitchenTableSuffix: "de la Mesa",
+          preparedToastTitle: "Pedido preparado",
+          preparedToastDescription: "Abrimos WhatsApp para continuar.",
+          confirmedToastTitle: "Pedido confirmado",
+          confirmedToastDescriptionPrefix: "La cocina recibió la comanda.",
         },
-        "validation": {
-          "emptyTitle": "La comanda está vacía",
-          "emptyDescription": "Elegí al menos un producto antes de continuar.",
-          "nameTitle": "Falta tu nombre",
-          "nameDescription": "Necesitamos identificar tu pedido.",
-          "addressTitle": "Falta la dirección",
-          "addressDescription": "Completá la dirección para el envío.",
-          "submitErrorTitle": "No pudimos enviar el pedido",
-          "submitErrorDescription": "Revisá tu conexión e intentá nuevamente."
+        validation: {
+          emptyTitle: "La comanda está vacía",
+          emptyDescription: "Elegí al menos un producto antes de continuar.",
+          nameTitle: "Falta tu nombre",
+          nameDescription: "Necesitamos identificar tu pedido.",
+          addressTitle: "Falta la dirección",
+          addressDescription: "Completá la dirección para el envío.",
+          submitErrorTitle: "No pudimos enviar el pedido",
+          submitErrorDescription: "Revisá tu conexión e intentá nuevamente.",
         },
-        "helper": {
-          "table": "El pedido se enviará directamente al servicio.",
-          "online": "La siguiente acción abrirá WhatsApp con la comanda preparada."
+        helper: {
+          table: "El pedido se enviará directamente al servicio.",
+          online:
+            "La siguiente acción abrirá WhatsApp con la comanda preparada.",
         },
-        "aria": {
-          "decrease": "Disminuir cantidad",
-          "increase": "Aumentar cantidad",
-          "remove": "Quitar producto",
-          "openWhatsApp": "Abrir WhatsApp",
-          "newOrder": "Crear nueva orden"
-        }
+        aria: {
+          decrease: "Disminuir cantidad",
+          increase: "Aumentar cantidad",
+          remove: "Quitar producto",
+          openWhatsApp: "Abrir WhatsApp",
+          newOrder: "Crear nueva orden",
+        },
       },
-      "menuUi": {
-        "productPersonalizable": "Personalizable",
-        "viewDetail": "Ver detalle",
-        "prepLabel": "Preparación",
-        "fallbackKitchen": "Cocina de autor",
-        "choose": "Elegir",
-        "added": "Listo",
-        "add": "Agregar",
-        "ariaViewProduct": "Ver detalle de",
-        "categoryCountSingular": "producto",
-        "categoryCountPlural": "productos",
-        "allCategories": "Todos",
-        "listView": "Vista lista",
-        "gridView": "Vista grilla",
-        "ariaListView": "Cambiar a vista lista",
-        "ariaGridView": "Cambiar a vista grilla",
-        "ariaAllCategories": "Mostrar todos los productos"
+      menuUi: {
+        productPersonalizable: "Personalizable",
+        viewDetail: "Ver detalle",
+        prepLabel: "Preparación",
+        fallbackKitchen: "Cocina de autor",
+        choose: "Elegir",
+        added: "Listo",
+        add: "Agregar",
+        ariaViewProduct: "Ver detalle de",
+        categoryCountSingular: "producto",
+        categoryCountPlural: "productos",
+        allCategories: "Todos",
+        listView: "Vista lista",
+        gridView: "Vista grilla",
+        ariaListView: "Cambiar a vista lista",
+        ariaGridView: "Cambiar a vista grilla",
+        ariaAllCategories: "Mostrar todos los productos",
       },
-      "tableUi": {
-        "serviceLabel": "Servicio en salón",
-        "tablePrefix": "Mesa",
-        "waiterButton": "Mozo / Cuenta",
-        "allCategories": "Todos",
-        "listView": "Vista lista",
-        "gridView": "Vista grilla",
-        "ariaListView": "Cambiar a vista lista",
-        "ariaGridView": "Cambiar a vista grilla",
-        "ariaWaiter": "Solicitar atención o pedir la cuenta"
+      tableUi: {
+        serviceLabel: "Servicio en salón",
+        tablePrefix: "Mesa",
+        waiterButton: "Mozo / Cuenta",
+        allCategories: "Todos",
+        listView: "Vista lista",
+        gridView: "Vista grilla",
+        ariaListView: "Cambiar a vista lista",
+        ariaGridView: "Cambiar a vista grilla",
+        ariaWaiter: "Solicitar atención o pedir la cuenta",
       },
-      "cartUi": {
-        "ariaOpen": "Abrir pedido"
+      cartUi: {
+        ariaOpen: "Abrir pedido",
       },
-      "navbarUi": {
-        "themeDark": "DARK",
-        "themeLight": "LIGHT",
-        "ariaChangeTheme": "Cambiar tema",
-        "ariaOpenOrder": "Abrir pedido",
-        "ariaOpenMenu": "Abrir menú",
-        "ariaCloseMenu": "Cerrar menú",
-        "mobileNavigationLabel": "Navegación"
+      navbarUi: {
+        themeDark: "DARK",
+        themeLight: "LIGHT",
+        ariaChangeTheme: "Cambiar tema",
+        ariaOpenOrder: "Abrir pedido",
+        ariaOpenMenu: "Abrir menú",
+        ariaCloseMenu: "Cerrar menú",
+        mobileNavigationLabel: "Navegación",
       },
-      "contactUi": {
-        "waitTimeTableLabel": "Salón",
-        "waitTimeDeliveryLabel": "Delivery",
-        "minutesSuffix": "min"
+      contactUi: {
+        waitTimeTableLabel: "Salón",
+        waitTimeDeliveryLabel: "Delivery",
+        minutesSuffix: "min",
       },
-      "menu": {
-        "eyebrow": "Canillas & Plancha",
-        "title": "Carta",
-        "subtitle": "Pizarra de TAPs, smash burgers, tapeo cervecero y growlers."
+      menu: {
+        eyebrow: "Canillas & Plancha",
+        title: "Carta",
+        subtitle: "Pizarra de TAPs, smash burgers, tapeo cervecero y growlers.",
       },
-      "ctaTransition": {
-        "eyebrow": "PLANCHA + PINTA",
-        "titlePrefix": "Una más antes de",
-        "titleAccent": "irte.",
-        "description": "Smash al hierro, cerveza fría y ese momento en que decidís si la noche termina acá o recién empieza.",
-        "buttonText": "Volver a la barra",
-        "image": "https://images.unsplash.com/photo-1703219338477-e0377889b480?w=1800&q=86&auto=format&fit=crop"
+      ctaTransition: {
+        eyebrow: "PLANCHA + PINTA",
+        titlePrefix: "Una más antes de",
+        titleAccent: "irte.",
+        description:
+          "Smash al hierro, cerveza fría y ese momento en que decidís si la noche termina acá o recién empieza.",
+        buttonText: "Volver a la barra",
+        image:
+          "https://images.unsplash.com/photo-1703219338477-e0377889b480?w=1800&q=86&auto=format&fit=crop",
       },
-      "contact": {
-        "eyebrow": "HOP DISTRICT · ENCONTRANOS",
-        "statusBadge": "Canillas abiertas · 18:00—02:00",
-        "mainLabel": "Taproom HOP DISTRICT",
-        "title": "La barra está acá.",
-        "formEyebrow": "Escribinos",
-        "formTitulo": "¿Venís por una pinta o por una mesa?",
-        "formSubtitulo": "Escribinos antes de venir, consultá por disponibilidad o coordiná un pedido para retirar.",
-        "nameLabel": "Nombre / empresa",
-        "phoneLabel": "Teléfono / WhatsApp",
-        "emailLabel": "Correo electrónico",
-        "messageLabel": "Qué necesitás",
-        "submitSending": "Abriendo WhatsApp...",
-        "submitSent": "Mensaje enviado ✓",
-        "botonEnviar": "Abrir WhatsApp",
-        "addressLabel": "Dónde estamos",
-        "scheduleLabel": "Horario de taproom",
-        "mapEyebrow": "Cómo llegar",
-        "directionsButton": "Abrir Maps",
-        "instagramLabel": "Instagram",
-        "whatsappLabel": "WhatsApp",
-        "copyButton": "Copiar",
-        "copiedButton": "Copiado",
-        "mapsButton": "Abrir ubicación",
-        "receptionPrompt": "Taproom · Take Away",
-        "receptionButton": "Consultar"
+      contact: {
+        eyebrow: "HOP DISTRICT · ENCONTRANOS",
+        statusBadge: "Canillas abiertas · 18:00—02:00",
+        mainLabel: "Taproom HOP DISTRICT",
+        title: "La barra está acá.",
+        formEyebrow: "Escribinos",
+        formTitulo: "¿Venís por una pinta o por una mesa?",
+        formSubtitulo:
+          "Escribinos antes de venir, consultá por disponibilidad o coordiná un pedido para retirar.",
+        nameLabel: "Nombre / empresa",
+        phoneLabel: "Teléfono / WhatsApp",
+        emailLabel: "Correo electrónico",
+        messageLabel: "Qué necesitás",
+        submitSending: "Abriendo WhatsApp...",
+        submitSent: "Mensaje enviado ✓",
+        botonEnviar: "Abrir WhatsApp",
+        addressLabel: "Dónde estamos",
+        scheduleLabel: "Horario de taproom",
+        mapEyebrow: "Cómo llegar",
+        directionsButton: "Abrir Maps",
+        instagramLabel: "Instagram",
+        whatsappLabel: "WhatsApp",
+        copyButton: "Copiar",
+        copiedButton: "Copiado",
+        mapsButton: "Abrir ubicación",
+        receptionPrompt: "Taproom · Take Away",
+        receptionButton: "Consultar",
       },
-      "waiterModal": {
-        "eyebrow": "HOP DISTRICT",
-        "callTitle": "Solicitar atención",
-        "callSubtitle": "Asistencia para ordenar o consultas",
-        "callMessage": "Solicita asistencia desde la mesa",
-        "billTitle": "Pedir la Cuenta",
-        "billSubtitle": "Efectivo, Tarjeta o QR",
-        "paymentPrompt": "¿Cómo deseás abonar la cuenta?",
-        "sentTitle": "Aviso Enviado",
-        "sentSubtitle": "El equipo ya fue notificado:",
-        "backButton": "Volver",
-        "confirmButton": "Confirmar",
-        "errorMessage": "No pudimos notificar al servicio."
+      waiterModal: {
+        eyebrow: "HOP DISTRICT",
+        callTitle: "Solicitar atención",
+        callSubtitle: "Asistencia para ordenar o consultas",
+        callMessage: "Solicita asistencia desde la mesa",
+        billTitle: "Pedir la Cuenta",
+        billSubtitle: "Efectivo, Tarjeta o QR",
+        paymentPrompt: "¿Cómo deseás abonar la cuenta?",
+        sentTitle: "Aviso Enviado",
+        sentSubtitle: "El equipo ya fue notificado:",
+        backButton: "Volver",
+        confirmButton: "Confirmar",
+        errorMessage: "No pudimos notificar al servicio.",
       },
-      "footer": {
-        "backgroundImage": "https://images.unsplash.com/photo-1521794710098-57fd82e2a715?w=1800&q=86&auto=format&fit=crop",
-        "description": "HOP DISTRICT · CERVEZA PROPIA · BARRA ABIERTA · MDP",
-        "credits": "Gastro Engine Core",
-        "navigationLabel": "Navegación",
-        "contactLabel": "Contacto",
-        "establishmentLabel": "Establecimiento",
-        "hoursLabel": "Horarios",
-        "socialsLabel": "Comunidad",
-        "instagramLabel": "Instagram",
-        "whatsappLabel": "WhatsApp",
-        "locationLabel": "Ubicación",
-        "identityLabel": "Identidad",
-        "backToTop": "Volver arriba"
-      }
-    }
+      footer: {
+        backgroundImage:
+          "https://images.unsplash.com/photo-1521794710098-57fd82e2a715?w=1800&q=86&auto=format&fit=crop",
+        description: "HOP DISTRICT · CERVEZA PROPIA · BARRA ABIERTA · MDP",
+        credits: "Gastro Engine Core",
+        navigationLabel: "Navegación",
+        contactLabel: "Contacto",
+        establishmentLabel: "Establecimiento",
+        hoursLabel: "Horarios",
+        socialsLabel: "Comunidad",
+        instagramLabel: "Instagram",
+        whatsappLabel: "WhatsApp",
+        locationLabel: "Ubicación",
+        identityLabel: "Identidad",
+        backToTop: "Volver arriba",
+      },
+    },
   },
-  "menu": {
-    "categories": breweryCategories,
-    "products": breweryProducts
-  }
+  menu: {
+    categories: breweryCategories,
+    products: breweryProducts,
+  },
 } satisfies GastroPreset;
