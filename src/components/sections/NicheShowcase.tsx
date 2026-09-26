@@ -4,13 +4,20 @@ import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import {
   AnimatePresence,
   motion,
+  useMotionValue,
   useReducedMotion,
   useSpring,
   useTransform,
-  useMotionValue,
   type PanInfo,
 } from "framer-motion";
-import { ArrowDownRight, ArrowLeft, ArrowRight, Award, Beer, ShoppingBag } from "lucide-react";
+import {
+  ArrowDownRight,
+  ArrowLeft,
+  ArrowRight,
+  Award,
+  Beer,
+  ShoppingBag,
+} from "lucide-react";
 import Image from "next/image";
 
 import { useGastro } from "@/context/gastro-context";
@@ -34,7 +41,9 @@ function formatMoney(value: number) {
   });
 }
 
-function resolveShowcase(config: ReturnType<typeof useGastro>["config"]): GastroShowcaseConfig | null {
+function resolveShowcase(
+  config: ReturnType<typeof useGastro>["config"],
+): GastroShowcaseConfig | null {
   const candidate = (
     config.content as unknown as { showcase?: GastroShowcaseConfig }
   ).showcase;
@@ -46,7 +55,10 @@ function resolveShowcase(config: ReturnType<typeof useGastro>["config"]): Gastro
   return candidate;
 }
 
-function resolveMenuProduct(item: GastroShowcaseProduct, products: MenuProduct[]) {
+function resolveMenuProduct(
+  item: GastroShowcaseProduct,
+  products: MenuProduct[],
+) {
   return products.find(
     (product) =>
       product.id === item.id ||
@@ -66,7 +78,10 @@ function artworkScale(artwork: GastroShowcaseArtwork) {
   return artwork.scale ?? (artwork.type === "can" ? 1.02 : 0.98);
 }
 
-function buildProductShadow(artwork: GastroShowcaseArtwork, hovered: boolean) {
+function buildProductShadow(
+  artwork: GastroShowcaseArtwork,
+  hovered: boolean,
+) {
   const glow = artwork.glow ?? "rgba(255,255,255,.16)";
   const shadow = artwork.shadowColor ?? "rgba(0,0,0,.72)";
 
@@ -103,7 +118,7 @@ function ProductArtwork({
   });
 
   const liftY = useTransform(hoverSpring, [0, 1], [0, -12]);
-  const liftScale = useTransform(hoverSpring, [0, 1], [1, 1.045]);
+  const liftScale = useTransform(hoverSpring, [0, 1], [1, 1.04]);
   const liftZ = useTransform(hoverSpring, [0, 1], [0, 28]);
   const groundScale = useTransform(hoverSpring, [0, 1], [1, 0.62]);
   const groundOpacity = useTransform(hoverSpring, [0, 1], [0.72, 0.28]);
@@ -133,23 +148,20 @@ function ProductArtwork({
 
   const handleSwipeEnd = useCallback(
     (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-      const threshold = 55;
+      const threshold = 48;
 
       if (Math.abs(info.offset.x) < threshold) return;
       if (Math.abs(info.offset.x) <= Math.abs(info.offset.y)) return;
 
-      if (info.offset.x < 0) {
-        onNext();
-      } else {
-        onPrevious();
-      }
+      if (info.offset.x < 0) onNext();
+      else onPrevious();
     },
     [onNext, onPrevious],
   );
 
   if (!src) {
     return (
-      <div className="flex min-h-[430px] items-center justify-center px-8 text-center font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-text-subtle)] sm:min-h-[560px]">
+      <div className="flex min-h-[300px] items-center justify-center px-8 text-center font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-text-subtle)] sm:min-h-[430px]">
         Falta el asset del producto
       </div>
     );
@@ -168,18 +180,18 @@ function ProductArtwork({
 
   return (
     <motion.div
-      className="relative h-[clamp(360px,72vw,620px)] min-h-0 w-full select-none sm:h-[min(68vw,620px)] lg:h-[620px]"
+      className="relative h-[clamp(350px,90vw,540px)] w-full select-none sm:h-[min(68vw,620px)] lg:h-[620px]"
       style={{ touchAction: "pan-y" }}
-      drag="x"
+      drag={reducedMotion ? false : "x"}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.16}
+      dragElastic={0.12}
       dragDirectionLock
       onDragEnd={handleSwipeEnd}
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
       <motion.div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[54%] w-[54%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[82px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[52%] w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[72px] sm:h-[54%] sm:w-[54%] sm:blur-[82px]"
         style={{
           background: artwork.glow ?? "var(--color-accent)",
           opacity: hovered ? 0.48 : 0.25,
@@ -190,7 +202,7 @@ function ProductArtwork({
 
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[52%] h-[70%] w-[48%] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-[53%] h-[70%] w-[55%] -translate-x-1/2 -translate-y-1/2"
         style={{
           filter: "brightness(0) blur(7px)",
           opacity: backShadowOpacity,
@@ -200,11 +212,11 @@ function ProductArtwork({
         }}
       />
 
-      <div className="pointer-events-none absolute left-[2%] top-[7%] z-20 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-white/24">
+      <div className="pointer-events-none absolute left-2 top-3 z-20 hidden font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-[var(--color-text-subtle)] sm:block sm:left-[2%] sm:top-[7%] sm:tracking-[0.28em]">
         ORIGINAL PACKSHOT
       </div>
 
-      <div className="pointer-events-none absolute right-[2%] top-[7%] z-20 text-right font-mono text-[8px] uppercase tracking-[0.2em] text-white/22">
+      <div className="pointer-events-none absolute right-2 top-3 z-20 hidden text-right font-mono text-[8px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)] sm:block sm:right-[2%] sm:top-[7%] sm:tracking-[0.2em]">
         TAPROOM SERIES
       </div>
 
@@ -213,7 +225,7 @@ function ProductArtwork({
         onPointerDown={(event) => event.stopPropagation()}
         onClick={onPrevious}
         aria-label={previousLabel}
-        className="group absolute left-1 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/88 text-[var(--color-text)] shadow-[0_16px_42px_rgba(0,0,0,.28)] backdrop-blur-md transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-[var(--color-accent-border)] hover:bg-[var(--color-bg-elevated)] hover:shadow-[0_20px_52px_rgba(0,0,0,.36)] active:scale-95 sm:left-2 sm:h-12 sm:w-12"
+        className="group absolute left-1 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/90 text-[var(--color-text)] shadow-[0_16px_42px_rgba(0,0,0,.28)] backdrop-blur-md transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-[var(--color-accent-border)] hover:bg-[var(--color-bg-elevated)] active:scale-95 sm:left-2 sm:h-12 sm:w-12"
       >
         <ArrowLeft size={17} className="transition-transform duration-300 group-hover:-translate-x-0.5" />
       </button>
@@ -223,13 +235,13 @@ function ProductArtwork({
         onPointerDown={(event) => event.stopPropagation()}
         onClick={onNext}
         aria-label={nextLabel}
-        className="group absolute right-1 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/88 text-[var(--color-text)] shadow-[0_16px_42px_rgba(0,0,0,.28)] backdrop-blur-md transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-[var(--color-accent-border)] hover:bg-[var(--color-bg-elevated)] hover:shadow-[0_20px_52px_rgba(0,0,0,.36)] active:scale-95 sm:right-2 sm:h-12 sm:w-12"
+        className="group absolute right-1 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/90 text-[var(--color-text)] shadow-[0_16px_42px_rgba(0,0,0,.28)] backdrop-blur-md transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-[var(--color-accent-border)] hover:bg-[var(--color-bg-elevated)] active:scale-95 sm:right-2 sm:h-12 sm:w-12"
       >
         <ArrowRight size={17} className="transition-transform duration-300 group-hover:translate-x-0.5" />
       </button>
 
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[86%] w-[80%] max-w-[600px] -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-1/2 top-1/2 h-[92%] w-[82%] -translate-x-1/2 -translate-y-1/2 sm:h-[88%] sm:w-[82%] sm:max-w-[600px]"
         style={{
           y: liftY,
           z: liftZ,
@@ -245,9 +257,7 @@ function ProductArtwork({
             scale,
             transformStyle: "preserve-3d",
           }}
-          animate={{
-            rotate: rotation,
-          }}
+          animate={{ rotate: rotation }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.div
@@ -266,11 +276,9 @@ function ProductArtwork({
             src={src}
             alt={name}
             fill
-            sizes="(max-width: 1024px) 88vw, 620px"
+            sizes="(max-width: 639px) 82vw, (max-width: 1023px) 72vw, 620px"
             className="pointer-events-none select-none object-contain"
-            style={{
-              filter: buildProductShadow(artwork, hovered),
-            }}
+            style={{ filter: buildProductShadow(artwork, hovered) }}
             draggable={false}
             priority
           />
@@ -286,7 +294,7 @@ function ProductArtwork({
       </motion.div>
 
       <motion.div
-        className="pointer-events-none absolute bottom-[8%] left-1/2 h-7 w-[32%] -translate-x-1/2 rounded-[50%] blur-[17px]"
+        className="pointer-events-none absolute bottom-[7%] left-1/2 h-6 w-[42%] -translate-x-1/2 rounded-[50%] blur-[15px] sm:h-7 sm:w-[32%] sm:blur-[17px]"
         style={{
           background: artwork.shadowColor ?? "rgba(0,0,0,.78)",
           opacity: groundOpacity,
@@ -295,10 +303,10 @@ function ProductArtwork({
         }}
       />
 
-      <div className="pointer-events-none absolute bottom-[5%] left-1/2 h-px w-[48%] -translate-x-1/2 bg-white/[0.08]" />
+      <div className="pointer-events-none absolute bottom-[4%] left-1/2 h-px w-[58%] -translate-x-1/2 bg-[var(--color-border)] sm:w-[48%]" />
 
-      <div className="pointer-events-none absolute bottom-[2%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[8px] uppercase tracking-[0.22em] text-white/20">
-        {hovered ? "FOCUS / DEPTH ACTIVE" : "HOVER TO REVEAL"}
+      <div className="pointer-events-none absolute bottom-[1.5%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[7px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)] sm:bottom-[2%] sm:text-[8px] sm:tracking-[0.22em]">
+        {hovered ? "FOCUS / DEPTH ACTIVE" : "SWIPE · TAP FLECHAS"}
       </div>
     </motion.div>
   );
@@ -316,12 +324,12 @@ function ShowcaseStat({
   accent: string;
 }) {
   return (
-    <div className="min-w-0 border-t border-white/10 pt-3">
-      <div className="font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-[var(--color-text-subtle)]">
+    <div className="min-w-0 border-t border-[var(--color-border)] pt-3">
+      <div className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-subtle)]">
         {label}
       </div>
       <div
-        className="mt-1 font-mono text-[clamp(1.5rem,3vw,2.45rem)] font-black leading-none tracking-[-0.055em] tabular-nums"
+        className="mt-1 font-mono text-[clamp(1.35rem,7vw,2.45rem)] font-black leading-none tracking-[-0.055em] tabular-nums"
         style={{ color: highlight ? accent : "var(--color-text)" }}
       >
         {value}
@@ -407,11 +415,11 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
   return (
     <section
       id="destacados"
-      className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[var(--color-bg)] py-14 sm:py-18 lg:py-22"
+      className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[var(--color-bg)] py-12 sm:py-16 lg:py-22"
       style={{
         background: [
-          `radial-gradient(circle at 78% 36%, ${activeProduct.ambientGlow} 0%, transparent 30%)`,
-          `radial-gradient(circle at 22% 88%, ${activeProduct.ambientGlow} 0%, transparent 25%)`,
+          `radial-gradient(circle at 78% 30%, ${activeProduct.ambientGlow} 0%, transparent 32%)`,
+          `radial-gradient(circle at 18% 78%, ${activeProduct.ambientGlow} 0%, transparent 28%)`,
           "var(--color-bg)",
         ].join(","),
       }}
@@ -424,51 +432,51 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
             fill
             sizes="100vw"
             className="object-cover grayscale contrast-125 saturate-0"
-            style={{ opacity: 0.16 }}
+            style={{ opacity: 0.12 }}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-bg)_0%,rgba(0,0,0,.12)_36%,rgba(0,0,0,.08)_64%,var(--color-bg)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,transparent_24%,transparent_72%,var(--color-bg)_100%)]" />
-          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-bg)_0%,rgba(0,0,0,.10)_34%,rgba(0,0,0,.06)_66%,var(--color-bg)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,transparent_22%,transparent_76%,var(--color-bg)_100%)]" />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
       ) : null}
 
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:56px_56px]" />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:48px_48px] sm:[background-size:56px_56px]" />
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
-        <header className="mb-7 flex flex-col gap-6 border-b border-white/10 pb-6 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.28em] text-[var(--color-accent)]">
-              <Beer size={14} strokeWidth={1.7} />
-              <span>{showcase.header.eyebrow}</span>
+        <header className="mb-6 flex flex-col gap-4 border-b border-[var(--color-border)] pb-5 sm:mb-7 sm:gap-6 sm:pb-6 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="min-w-0 max-w-4xl">
+            <div className="flex items-center gap-2 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-[var(--color-accent)] sm:text-[9px] sm:tracking-[0.28em]">
+              <Beer size={13} strokeWidth={1.7} />
+              <span className="truncate">{showcase.header.eyebrow}</span>
             </div>
 
-            <h2 className="mt-3 text-[clamp(3rem,6.6vw,7.2rem)] font-black uppercase leading-[0.82] tracking-[-0.08em] text-[var(--color-text)]">
+            <h2 className="mt-3 max-w-[10ch] break-words text-[clamp(2.65rem,13vw,7.2rem)] font-black uppercase leading-[0.84] tracking-[-0.075em] text-[var(--color-text)] sm:max-w-none sm:text-[clamp(3rem,6.6vw,7.2rem)] sm:tracking-[-0.08em]">
               {showcase.header.titlePrefix}
-              <span className="ml-2 font-serif italic font-normal text-[var(--color-accent)]">
+              <span className="ml-1 font-serif italic font-normal text-[var(--color-accent)] sm:ml-2">
                 {showcase.header.titleAccent}
               </span>
               {showcase.header.titleSuffix ?? ""}
             </h2>
 
             {showcase.header.description ? (
-              <p className="mt-4 max-w-2xl text-[12px] leading-6 text-[var(--color-text-muted)] sm:text-sm">
+              <p className="mt-4 max-w-2xl text-[11px] leading-5 text-[var(--color-text-muted)] sm:text-[12px] sm:leading-6 md:text-sm">
                 {showcase.header.description}
               </p>
             ) : null}
           </div>
 
           <div className="flex items-end gap-3 font-mono">
-            <span className="text-[clamp(3rem,5vw,4.5rem)] font-black leading-none tracking-[-0.08em] text-[var(--color-text)]">
+            <span className="text-[clamp(2.75rem,13vw,4.5rem)] font-black leading-none tracking-[-0.08em] text-[var(--color-text)] sm:text-[clamp(3rem,5vw,4.5rem)]">
               {activeProduct.index}
             </span>
-            <span className="pb-2 text-[9px] font-bold uppercase tracking-[0.24em] text-[var(--color-text-subtle)]">
+            <span className="pb-1.5 text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-subtle)] sm:pb-2 sm:text-[9px] sm:tracking-[0.24em]">
               / {String(products.length).padStart(2, "0")} TAPS
             </span>
           </div>
         </header>
 
-        <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-8">
-          <div className="order-2 flex flex-col justify-center lg:order-1">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-center lg:gap-8">
+          <div className="order-2 min-w-0 lg:order-1">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeProduct.id}
@@ -482,43 +490,45 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                <div className="flex items-center gap-3 font-mono text-[9px] font-bold uppercase tracking-[0.24em]">
-                  <span style={{ color: activeProduct.accentColor }}>
+                <div className="flex min-w-0 items-center gap-2 font-mono text-[8px] font-bold uppercase tracking-[0.18em] sm:gap-3 sm:text-[9px] sm:tracking-[0.24em]">
+                  <span className="shrink-0" style={{ color: activeProduct.accentColor }}>
                     {activeProduct.badge ?? `TAP ${activeProduct.index}`}
                   </span>
-                  <span className="h-px w-10 bg-white/15" />
-                  <span className="text-[var(--color-text-subtle)]">{activeProduct.style}</span>
+                  <span className="h-px w-7 shrink-0 bg-[var(--color-border)] sm:w-10" />
+                  <span className="min-w-0 truncate text-[var(--color-text-subtle)]">
+                    {activeProduct.style}
+                  </span>
                 </div>
 
-                <h3 className="mt-4 max-w-[760px] text-[clamp(3rem,5.8vw,6rem)] font-black uppercase leading-[0.78] tracking-[-0.075em] text-[var(--color-text)]">
+                <h3 className="mt-3 max-w-[760px] break-words text-[clamp(2.55rem,12vw,6rem)] font-black uppercase leading-[0.82] tracking-[-0.07em] text-[var(--color-text)] sm:mt-4 sm:text-[clamp(3rem,5.8vw,6rem)] sm:tracking-[-0.075em]">
                   {activeProduct.name}
                 </h3>
 
                 {activeProduct.subtitle ? (
-                  <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--color-text-muted)] sm:text-xs">
+                  <p className="mt-3 max-w-xl text-[9px] font-semibold uppercase tracking-[0.16em] text-[var(--color-text-muted)] sm:mt-4 sm:text-[11px] sm:tracking-[0.2em] md:text-xs">
                     {activeProduct.subtitle}
                   </p>
                 ) : null}
 
-                <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--color-text-muted)] sm:text-[15px]">
+                <p className="mt-3 max-w-xl text-[12px] leading-6 text-[var(--color-text-muted)] sm:mt-4 sm:text-sm sm:leading-7 md:text-[15px]">
                   {activeProduct.description}
                 </p>
 
                 {activeProduct.award ? (
-                  <div className="mt-6 flex gap-3 border-y border-white/10 py-4">
+                  <div className="mt-5 flex gap-3 border-y border-[var(--color-border)] py-3.5 sm:mt-6 sm:py-4">
                     <Award size={17} className="mt-0.5 shrink-0" style={{ color: activeProduct.accentColor }} />
-                    <div>
+                    <div className="min-w-0">
                       <div className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-subtle)]">
                         {activeProduct.award.label}
                       </div>
-                      <div className="mt-1 text-xs font-semibold text-[var(--color-text)]">
+                      <div className="mt-1 text-[11px] font-semibold leading-5 text-[var(--color-text)] sm:text-xs">
                         {activeProduct.award.text}
                       </div>
                     </div>
                   </div>
                 ) : null}
 
-                <div className="mt-7 grid grid-cols-2 gap-x-5 gap-y-5 border-y border-white/10 py-5 sm:grid-cols-4 sm:gap-x-4">
+                <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-y border-[var(--color-border)] py-4 sm:mt-7 sm:grid-cols-4 sm:gap-x-4 sm:gap-y-5 sm:py-5">
                   {activeProduct.technical.map((spec) => (
                     <ShowcaseStat
                       key={`${activeProduct.id}-${spec.label}`}
@@ -531,33 +541,34 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
                 </div>
 
                 {activeProduct.secondary?.length ? (
-                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[8px] uppercase tracking-[0.16em] text-[var(--color-text-subtle)]">
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[7px] uppercase tracking-[0.13em] text-[var(--color-text-subtle)] sm:mt-4 sm:gap-x-5 sm:text-[8px] sm:tracking-[0.16em]">
                     {activeProduct.secondary.map((detail) => (
-                      <span key={`${activeProduct.id}-${detail.label}`}>
-                        <strong className="text-[var(--color-text)]">{detail.label}:</strong> {detail.value}
+                      <span key={`${activeProduct.id}-${detail.label}`} className="max-w-full break-words">
+                        <strong className="text-[var(--color-text)]">{detail.label}:</strong>{" "}
+                        {detail.value}
                       </span>
                     ))}
                   </div>
                 ) : null}
 
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-5 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:items-center">
                   <button
                     type="button"
                     onClick={handleOrder}
-                    className="group inline-flex min-h-12 items-center justify-between gap-8 border border-[var(--color-accent)] bg-[var(--color-accent)] px-5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--color-accent-contrast)] transition-[filter,transform] duration-300 hover:brightness-110 active:scale-[0.985]"
+                    className="group inline-flex min-h-12 w-full items-center justify-between gap-5 border border-[var(--color-accent)] bg-[var(--color-accent)] px-4 font-mono text-[8px] font-bold uppercase tracking-[0.13em] text-[var(--color-accent-contrast)] transition-[filter,transform] duration-300 hover:brightness-110 active:scale-[0.985] sm:w-auto sm:gap-8 sm:px-5 sm:text-[9px] sm:tracking-[0.16em]"
                   >
-                    <span className="flex items-center gap-2">
-                      <ShoppingBag size={14} />
-                      {activeProduct.actionText ?? showcase.labels.action}
+                    <span className="flex min-w-0 items-center gap-2">
+                      <ShoppingBag size={14} className="shrink-0" />
+                      <span className="truncate">{activeProduct.actionText ?? showcase.labels.action}</span>
                     </span>
                     {activeProduct.price !== undefined ? (
-                      formatMoney(activeProduct.price)
+                      <span className="shrink-0">{formatMoney(activeProduct.price)}</span>
                     ) : (
-                      <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight size={14} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
                     )}
                   </button>
 
-                  <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+                  <span className="font-mono text-[7px] uppercase tracking-[0.16em] text-[var(--color-text-subtle)] sm:text-[8px] sm:tracking-[0.18em]">
                     {activeProduct.footer?.[0] ?? "Cerveza artesanal"}
                   </span>
                 </div>
@@ -567,14 +578,14 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
 
           <div className="order-1 min-w-0 lg:order-2">
             <div className="relative overflow-visible">
-              <div className="pointer-events-none absolute left-0 top-[7%] z-20 flex h-[80%] flex-col justify-between pr-4">
-                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-white/20 [writing-mode:vertical-rl] rotate-180">
+              <div className="pointer-events-none absolute left-0 top-[7%] z-20 hidden h-[80%] flex-col justify-between pr-4 sm:flex">
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-subtle)] [writing-mode:vertical-rl] rotate-180">
                   TAPROOM / ORIGINAL SERIES
                 </span>
-                <ArrowDownRight size={16} className="text-white/18" />
+                <ArrowDownRight size={16} className="text-[var(--color-text-subtle)]" />
               </div>
 
-              <div className="pointer-events-none absolute right-0 top-[7%] z-20 text-right font-mono text-[8px] uppercase tracking-[0.2em] text-white/20">
+              <div className="pointer-events-none absolute right-0 top-[7%] z-20 hidden text-right font-mono text-[8px] uppercase tracking-[0.2em] text-[var(--color-text-subtle)] sm:block">
                 {activeProduct.footer?.[1] ?? "DRAFT / SERVICIO"}
               </div>
 
@@ -606,7 +617,7 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
           </div>
         </div>
 
-        <nav className="mt-4 border-y border-white/10" aria-label="Cervezas destacadas">
+        <nav className="mt-5 hidden border-y border-[var(--color-border)] sm:block" aria-label="Cervezas destacadas">
           <div className="flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {products.map((product, index) => {
               const active = index === selectedIndex;
@@ -617,7 +628,7 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
                   type="button"
                   onClick={() => changeTo(index, index > selectedIndex ? 1 : -1)}
                   aria-pressed={active}
-                  className="group relative min-w-[150px] flex-1 cursor-pointer border-r border-white/10 px-4 py-4 text-left last:border-r-0 sm:min-w-[185px] sm:px-5"
+                  className="group relative min-w-[165px] flex-1 cursor-pointer border-r border-[var(--color-border)] px-4 py-4 text-left last:border-r-0 sm:min-w-[185px] sm:px-5"
                 >
                   <span
                     className="font-mono text-[8px] font-bold tracking-[0.18em]"
@@ -644,20 +655,20 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
           </div>
         </nav>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between border-t border-[var(--color-border)] pt-3 sm:border-t-0 sm:pt-0">
           <button
             type="button"
             onClick={previous}
             aria-label={showcase.labels.previous}
-            className="group inline-flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+            className="group inline-flex min-h-9 items-center gap-2 font-mono text-[8px] font-bold uppercase tracking-[0.14em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] sm:text-[9px] sm:tracking-[0.16em]"
           >
-            <span className="flex h-9 w-9 items-center justify-center border border-white/10 transition-transform group-hover:-translate-x-1">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] transition-transform group-hover:-translate-x-1">
               <ArrowLeft size={14} />
             </span>
             <span className="hidden sm:inline">{showcase.labels.previous}</span>
           </button>
 
-          <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[var(--color-text-subtle)]">
+          <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-[var(--color-text-subtle)] sm:text-[8px] sm:tracking-[0.22em]">
             {String(selectedIndex + 1).padStart(2, "0")} / {String(products.length).padStart(2, "0")}
           </span>
 
@@ -665,10 +676,10 @@ export default function NicheShowcase({ onOpenDetail }: NicheShowcaseProps) {
             type="button"
             onClick={next}
             aria-label={showcase.labels.next}
-            className="group inline-flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+            className="group inline-flex min-h-9 items-center gap-2 font-mono text-[8px] font-bold uppercase tracking-[0.14em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] sm:text-[9px] sm:tracking-[0.16em]"
           >
             <span className="hidden sm:inline">{showcase.labels.next}</span>
-            <span className="flex h-9 w-9 items-center justify-center border border-white/10 transition-transform group-hover:translate-x-1">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] transition-transform group-hover:translate-x-1">
               <ArrowRight size={14} />
             </span>
           </button>
