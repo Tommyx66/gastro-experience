@@ -300,7 +300,7 @@ function ProductArtwork({
       <div className="pointer-events-none absolute bottom-[2%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[8px] uppercase tracking-[0.22em] text-white/20">
         {hovered ? "FOCUS / DEPTH ACTIVE" : "HOVER TO REVEAL"}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
